@@ -1,0 +1,2 @@
+- Just saving for my custom linux i3 :)
+- Also copied some ref from my idol, rexim/dotfiles. Search him in github, and follow/sub him 'tsoding' in twitch :)
