@@ -56,7 +56,7 @@
 ;; Bind C-- to zoom out
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 ;; helm
 ;;(rc/require 'helm 'helm-cmd-t 'helm-git-grep 'helm-ls-git)
 
@@ -103,7 +103,7 @@
     (forward-line line))
 (global-set-key (kbd "C-c j") 'jump-relative)
 
-
+(global-set-key (kbd "<f5>") '(lambda () (interactive) (revert-buffer nil t t)))
 
 
 (custom-set-variables
