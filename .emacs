@@ -27,6 +27,12 @@
 (setq save-interprogram-paste-before-kill t)
 (setq yank-pop-change-selection t)
 
+
+;;auto save
+(setq auto-save-default nil)
+(auto-save-visited-mode 1)
+(setq auto-save-visited-interval 1) ;;interval to save file 
+
 ;; Enable ido mode
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
