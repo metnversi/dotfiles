@@ -22,6 +22,8 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
+;;set font size
+(set-face-attribute 'default nil :height 140)
 (setq x-select-enable-clipboard t)
 (setq x-select-enable-primary t)
 (setq save-interprogram-paste-before-kill t)
@@ -111,6 +113,12 @@
 
 (global-set-key (kbd "<f5>") '(lambda () (interactive) (revert-buffer nil t t)))
 
+;; change font size
+;; Increase font size
+(global-set-key (kbd "C-+") 'text-scale-increase)
+
+;; Decrease font size
+(global-set-key (kbd "C--") 'text-scale-decrease)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
