@@ -1,6 +1,33 @@
 #!/bin/bash
 
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]
+    then echo "Please run as root"
+    exit
+fi
+
 SCRIPT_DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"
+
+# Install GDB
+echo "--- Installing GDB ---"
+apt-get update
+apt-get install -y gdb
+
+# Install GCC multilib, cross-compilers
+echo "--- Installing GCC multilib ---"
+apt-get install -y gcc-multilib
+
+# Install vim-nox
+echo "--- Installing vim-nox ---"
+apt-get install -y vim-nox
+
+# Install Vundle
+echo "--- Installing Vundle ---"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+# Install Jellybeans
+echo "--- Installing Jellybeans ---"
+git clone https://github.com/nanotech/jellybeans.vim.git ~/.vim/pack/themes/start/jellybeans
 
 
 symlinkFile() {
