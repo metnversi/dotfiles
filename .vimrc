@@ -1,4 +1,5 @@
-syntax enable
+
+#git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vimsyntax enable
 set number
 set relativenumber
 highlight LineNr ctermfg=167
