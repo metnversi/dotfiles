@@ -33,7 +33,7 @@
 ;;auto save
 (setq auto-save-default nil)
 (auto-save-visited-mode 1)
-(setq auto-save-visited-interval 1) ;;interval to save file 
+(setq auto-save-visited-interval nil) ;;interval to save file 
 
 ;; Enable ido mode
 (setq ido-enable-flex-matching t)
