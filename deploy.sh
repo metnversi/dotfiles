@@ -8,27 +8,44 @@ fi
 
 SCRIPT_DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"
 
+installPackage() {
+    package=$1
+    echo "--- Installing $package ---"
+    if dpkg -s $package >/dev/null 2>&1; then
+        echo "$package is already installed, SKIP"
+    else
+        apt-get install -y $package
+    fi
+}
+
 # Install GDB
-echo "--- Installing GDB ---"
-apt-get update
-apt-get install -y gdb
+installPackage gdb
 
 # Install GCC multilib, cross-compilers
-echo "--- Installing GCC multilib ---"
-apt-get install -y gcc-multilib
+installPackage gcc-multilib
 
 # Install vim-nox
-echo "--- Installing vim-nox ---"
-apt-get install -y vim-nox
+installPackage vim-nox
 
 # Install Vundle
 echo "--- Installing Vundle ---"
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+else
+    echo "Vundle is already installed"
+fi
 
 # Install Jellybeans
 echo "--- Installing Jellybeans ---"
-git clone https://github.com/nanotech/jellybeans.vim.git ~/.vim/pack/themes/start/jellybeans
+if [ ! -d ~/.vim/pack/themes/start/jellybeans ]; then
+    git clone https://github.com/nanotech/jellybeans.vim.git ~/.vim/pack/themes/start/jellybeans
+else
+    echo "Jellybeans is already installed"
+fi
 
+# Run :PluginInstall
+echo "--- Running :PluginInstall ---"
+vim +PluginInstall +qall
 
 symlinkFile() {
     filename="$SCRIPT_DIR/$1"
