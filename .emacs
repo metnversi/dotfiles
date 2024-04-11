@@ -33,8 +33,11 @@
 ;;auto save
 (setq auto-save-default nil)
 (auto-save-visited-mode 1)
-(setq auto-save-visited-interval nil) ;;interval to save file 
-
+(setq auto-save-visited-interval nil) ;;interval to save file
+;;auto saveing before leave :)
+(add-hook 'kill-emacs-hook
+          (lambda ()
+            (save-some-buffers t)))
 ;; Enable ido mode
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -119,6 +122,7 @@
 
 ;; Decrease font size
 (global-set-key (kbd "C--") 'text-scale-decrease)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
