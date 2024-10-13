@@ -66,8 +66,7 @@ alias vim='nvim'
 alias ff='firefox &'
 alias bb='librewolf &'
 alias cf='fortune | cowsay'
-alias ddr='echo'
-
+alias aa='ansible-playbook' 
 # add -p for no line number, and --paging=never to not go less pager.
 # bat --list-themes 
 alias cat='bat --theme="Catppuccin Macchiato"'
@@ -93,7 +92,7 @@ case ":$PATH:" in
 esac
 
 PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin:/usr/local/go/bin
-PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin"
+PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin:/home/$USER/cmake/bin"
 . "$HOME/.cargo/env"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
@@ -115,4 +114,4 @@ export LESSOPEN='|~/.lessfilter %s'
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
-
+eval "$(zoxide init zsh)"

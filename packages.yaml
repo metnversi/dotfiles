@@ -4,8 +4,9 @@ required:
   - python3-pip
   - tmux
   - autoconf
-  - gcc
-  - make
+  - xclip
+  - gcc make
+  - bpfcc-tools sysstat irqbalance numactl numad
   - pkg-config
   - libpam0g-dev
   - libcairo2-dev
@@ -24,19 +25,18 @@ required:
   - libjpeg-dev
   - yarn
   - vim-gtk3
-  - fortune
   - cowsay
   - bat
-  - feh
 
 gui:
   - x11-utils
+  - librewolf
   - xorg
   - emacs
   - i3
   - i3status
   - imagemagick
-  - copyq
+  - copyq feh
   - libnotify-bin
   - gimp
   - okular
