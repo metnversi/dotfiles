@@ -1,0 +1,36 @@
+❯ sudo systemctl disable --now vpnagentd
+Removed "/etc/systemd/system/multi-user.target.wants/vpnagentd.service".
+❯ sudo systemctl disable --now rpc-statd-notify
+❯ sudo systemctl disable --now rpcbind
+Synchronizing state of rpcbind.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable rpcbind
+Removed "/etc/systemd/system/multi-user.target.wants/rpcbind.service".
+Removed "/etc/systemd/system/sockets.target.wants/rpcbind.socket".
+Warning: Stopping rpcbind.service, but it can still be activated by:
+  rpcbind.socket
+❯ sudo systemctl disable --now rpcbind.socket
+❯ sudo systemctl disable lxcfs
+Synchronizing state of lxcfs.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable lxcfs
+Removed "/etc/systemd/system/multi-user.target.wants/lxcfs.service".
+❯ sudo systemctl disable lxc-monitord
+Removed "/etc/systemd/system/multi-user.target.wants/lxc-monitord.service".
+❯ sudo systemctl disable lxc-net
+Synchronizing state of lxc-net.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable lxc-net
+Removed "/etc/systemd/system/multi-user.target.wants/lxc-net.service".
+❯ sudo systemctl disable numad
+Synchronizing state of numad.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable numad
+Removed "/etc/systemd/system/multi-user.target.wants/numad.service".
+❯ sudo systemctl disable pmcd pmie
+Synchronizing state of pmcd.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable pmcd
+Synchronizing state of pmie.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable pmie
+Removed "/etc/systemd/system/multi-user.target.wants/pmie.service".
+❯ sudo systemctl disable --now lxc-monitor lxcfs lxc-net
+Synchronizing state of lxcfs.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable lxcfs
+Synchronizing state of lxc-net.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable lxc-net

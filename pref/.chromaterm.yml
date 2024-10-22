@@ -81,7 +81,7 @@ rules:
       1: f#e6e600 bold
 
   - description: Green
-    regex: (\b\w+(?=\([^)]*\)#|#)|R\d{1,8}|CSR\d{1,8})
+    regex: (running|\b\w+(?=\([^)]*\)#|#)|R\d{1,8}|CSR\d{1,8})
     color:
       1: f#5FF000 bold
 

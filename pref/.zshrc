@@ -115,3 +115,5 @@ export LESSOPEN='|~/.lessfilter %s'
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 eval "$(zoxide init zsh)"
+WEZTERM_LOG=debug
+alias sl='sudo systemctl enable --now libvirtd'

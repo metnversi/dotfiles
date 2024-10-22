@@ -42,6 +42,7 @@ config.background = {
 }
 --config.default_prog = { "/usr/bin/zsh", "-l" }
 config.bypass_mouse_reporting_modifiers = "SHIFT"
+--config.log_level = "ERROR"
 config.debug_key_events = true
 config.window_background_opacity = 0.5
 config.macos_window_background_blur = 50

@@ -1,7 +1,7 @@
 import = ["~/.config/alacritty/cyberdream.toml"]
 
 [window]
-opacity = 0.8
+opacity = 0.85
 padding.x = 8
 padding.y = 8
 decorations = "Full"
@@ -13,7 +13,7 @@ normal.family = "Iosevka Nerd Font"
 bold.family = "Iosevka Nerd Font"
 italic.family = "Iosevka Nerd Font"
 bold_italic.family = "Iosevka Nerd Font"
-size = 12
+size = 14
 
 [shell]
 program = "/bin/bash"

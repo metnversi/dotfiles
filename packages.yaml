@@ -6,7 +6,7 @@ required:
   - autoconf
   - xclip
   - gcc make
-  - bpfcc-tools sysstat irqbalance numactl numad
+  - bpfcc-tools strace sysstat irqbalance numactl numad bpftrace
   - pkg-config
   - libpam0g-dev
   - libcairo2-dev
