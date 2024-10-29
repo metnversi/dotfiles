@@ -64,6 +64,7 @@ rm nvim-linux64.tar.gz
 
 echo -e "\033[31m\033[1m ---In Rust we trust!--- \033[0m"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install --locked yazi-fm yazi-cli
 
 echo -e "\033[31m\033[1m --- nodejs come there! \033[0m"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash

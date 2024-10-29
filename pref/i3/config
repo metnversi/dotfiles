@@ -141,6 +141,8 @@ client.background       #FFFFFF
 
 bar {
   position top
+  output HDMI-0
+  #output primary
   #tray_output primary
   status_command i3status
   workspace_min_width 10
@@ -174,11 +176,10 @@ bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#128D09' -sf '#E
 bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
 exec --no-startup-id redshift -O 3500
 exec --no-startup-id xbacklight -set 82
-#exec --no-startup-id gromit-mpx
+exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 165
 exec --no-startup-id copyq
 bindsym $mod+v exec --no-startup-id copyq menu
-bindsym $mod+p exec --no-startup-id copy
-bindsym $mod+Shift+a exec --no-startup-id /home/anna/linkpomo.sh
+#bindsym $mod+Shift+a exec --no-startup-id /home/anna/linkpomo.sh
 bindsym Mod1+Shift+space exec --no-startup-id ibus engine Unikey
 bindsym F10 exec --no-startup-id shutter -f
 bindsym $mod+Shift+s exec --no-startup-id shutter -s
@@ -189,9 +190,10 @@ bindsym $mod+c exec --no-startup-id librewolf
 bindsym $mod+n exec --no-startup-id wireshark
 bindsym $mod+q exec --no-startup-id gromit-mpx
 bindsym $mod+Shift+i exec ~/record.sh
-exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
-bindsym $mod+Return exec alacritty -e zsh -i
-bindsym $mod+Shift+Return exec wezterm -e zsh -i
+#exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
+exec --no-startup-id feh --bg-scale /home/$USER/Pictures/e7/harshetti.png
+#bindsym $mod+Shift+Return exec alacritty -e zsh -i
+bindsym $mod+Return exec wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
 # remove -e zsh to use default shell.
 
@@ -207,7 +209,7 @@ bindsym $mod+l exec "i3lock -c 000000"
 #xrandr --output HDMI-0 --auto --left-of DP-4
 workspace_layout tabbed
 #hide_edge_borders both
-for_window [all] title_window_icon padding 4px
+for_window [all] title_window_icon padding 1px
 default_border pixel 3
 bindsym $mod+m bar mode toggle
 bindsym $mod+Shift+m bar hidden_state toggle

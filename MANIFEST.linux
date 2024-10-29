@@ -21,7 +21,11 @@ pref/starship.toml|symlink|.config/starship.toml
 pref/.chromaterm.yml|symlink|.chromaterm.yml
 pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
 
+pref/yazi|symlink|.config/yazi
+
 theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme
 theme/cyberdream.wezterm.lua|symlink|.config/wezterm/cyberdream.lua
+
+resource/harshetti.png|symlink|Pictures/e7/harshetti.png
 
