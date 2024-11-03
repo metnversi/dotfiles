@@ -104,7 +104,9 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+z exec emacs -fs
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit' -c ~/.config/i3/nagbar.css"
+
 
 bindsym $mod+r mode "resize"
 mode "resize" {
@@ -196,7 +198,7 @@ exec --no-startup-id feh --bg-scale /home/$USER/Pictures/e7/harshetti.png
 bindsym $mod+Return exec wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
 # remove -e zsh to use default shell.
-
+exec --no-startup-id nitrogen --restore
 bindsym $mod+l exec "i3lock -c 000000"
 #exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
 

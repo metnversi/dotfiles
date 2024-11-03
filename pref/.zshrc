@@ -126,4 +126,9 @@ complete -o nospace -C /usr/bin/terraform terraform
 eval "$(zoxide init zsh)"
 WEZTERM_LOG=debug
 alias sl='sudo systemctl enable --now libvirtd'
-alias music=ncmpcpp
+alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
+alias sss='sudo systemctl status'
+alias eee='sudo systemctl enable --now'
+alias ddd='sudo systemctl disable --now'
+alias sc='sudo systemctl'
+alias scat='sudo systemctl cat'

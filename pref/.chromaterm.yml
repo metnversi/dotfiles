@@ -26,7 +26,7 @@ rules:
     color: f#990099
 
   - description: Interfaces in shutdown (Red) no shutdown (Bright Green)
-    regex: (\b[uU]p[a-zA-Z0-9_-]*\b|Loopback\d{1,2}|\b[Ll]ocal[a-zA-Z0-9_-]*\b|\d{1,15} bytes)
+    regex: ((?<=")[^"]+(?=")|(?<=')[^']+(?=')|\b[uU]p[a-zA-Z0-9_-]*\b|Loopback\d{1,2}|\b[Ll]ocal[a-zA-Z0-9_-]*\b|\d{1,15} bytes)
     color:
       1: f#6CFF00 bold
 
@@ -46,7 +46,7 @@ rules:
       1: f#900000 bold
 
   - description: bad state
-    regex: (VoIP|#|\bdis[a-zA-Z0-9_-]*\b|\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down|not\ )
+    regex: (VoIP|\bdis[a-zA-Z0-9_-]*\b|\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down|not\ )
     color:
       1: f#900000 bold
 
@@ -61,7 +61,7 @@ rules:
       1: f#E6E600 bold
 
   - descripton: Gigabit Ethernet
-    regex: (\bGigabit\S*|G\d/\d{1,3}|Gi\d/\d{1,2}\.\d{1,10}|Gi\d/\d{1,2}|G\d/\d{1,2}\.\d{1,10}|(?<![ ,])[^ ,>]+(?=>))
+    regex: ((?<!#)"|\bGigabit\S*|G\d/\d{1,3}|Gi\d/\d{1,2}\.\d{1,10}|Gi\d/\d{1,2}|G\d/\d{1,2}\.\d{1,10}|(?<![ ,])[^ ,>]+(?=>))
     color:
       1: f#007FFF bold
 
@@ -86,7 +86,7 @@ rules:
       1: f#5FF000 bold
 
   - description: orange
-    regex: (\b[B](?!M\b|P\b)[A-Z]*\b|\bP[A-Z]*\b|[a-zA-Z]+[*]|route-map|filter-list|\b[A-B]+\b||iptables|SW\d{1,2}|BB\d|BB|PE\d{1,2}|CE\d{1,2}|Sw\d{1,2})
+    regex: ((?<!#)'|\b[B](?!M\b|P\b)[A-Z]*\b|\bP[A-Z]*\b|[a-zA-Z]+[*]|route-map|filter-list|\b[A-B]+\b||iptables|SW\d{1,2}|BB\d|BB|PE\d{1,2}|CE\d{1,2}|Sw\d{1,2})
     color:
       1: f#ff6600 bold
 
@@ -108,3 +108,7 @@ rules:
   - description: combined timestamp
     regex: \b(?<!\.)([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)(\.(\d{1,3}))?\b
     color: f#ff99ff
+
+  - description: comment out in python
+    regex: "#.*"
+    color: f#808080
