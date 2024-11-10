@@ -176,7 +176,7 @@ bar {
 bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#128D09' -sf '#EEEEEE' -fn 'Iosevka Nerd Font-10' -p 'dmenu prompt &gt;'"
 
 bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
-exec --no-startup-id redshift -O 3500
+exec --no-startup-id redshift -P -O 3500
 exec --no-startup-id xbacklight -set 82
 exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 165
 exec --no-startup-id copyq

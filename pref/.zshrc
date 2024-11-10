@@ -37,7 +37,7 @@ plugins=(
   vscode 
   asdf 
   fzf 
-  #starship 
+  starship 
   kubectl 
   zsh-interactive-cd 
   zoxide 
@@ -129,6 +129,7 @@ alias sl='sudo systemctl enable --now libvirtd'
 alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
 alias sss='sudo systemctl status'
 alias eee='sudo systemctl enable --now'
+alias rrr='sudo systemctl restart'
 alias ddd='sudo systemctl disable --now'
 alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'

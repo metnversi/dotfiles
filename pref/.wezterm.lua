@@ -8,9 +8,9 @@ config.font = wezterm.font_with_fallback({
 config.font_size = 18
 config.anti_alias_custom_block_glyphs = true
 config.hide_tab_bar_if_only_one_tab = true
--- config.use_fancy_tab_bar = true
--- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
--- config.native_macos_fullscreen_mode = true
+config.use_fancy_tab_bar = true
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.native_macos_fullscreen_mode = true
 config.window_padding = { top = "0.2cell" }
 config.mouse_bindings = {
 	-- Cmd-click will open the link under the mouse cursor
