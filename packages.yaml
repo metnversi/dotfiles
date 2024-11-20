@@ -2,12 +2,13 @@ required:
   - curl
   - zsh
   - python3-pip
+  - python3.11-venv
   - tmux
   - autoconf
   - xclip
   - gcc make
   - bpfcc-tools strace sysstat irqbalance numactl numad bpftrace
-  - pkg-config
+  - pkg-config collectd-core linux-cpupower
   - libpam0g-dev
   - libcairo2-dev
   - libfontconfig1-dev
@@ -30,7 +31,6 @@ required:
 
 gui:
   - x11-utils
-  - librewolf
   - xorg
   - emacs
   - i3

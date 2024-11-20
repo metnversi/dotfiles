@@ -37,7 +37,7 @@ plugins=(
   vscode 
   asdf 
   fzf 
-  starship 
+#  starship 
   kubectl 
   zsh-interactive-cd 
   zoxide 
@@ -100,7 +100,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin:/usr/local/go/bin
+PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin:/usr/local/go/bin
 PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin:/home/$USER/cmake/bin"
 . "$HOME/.cargo/env"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -124,7 +124,7 @@ export LESSOPEN='|~/.lessfilter %s'
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 eval "$(zoxide init zsh)"
-WEZTERM_LOG=debug
+export WEZTERM_LOG=error
 alias sl='sudo systemctl enable --now libvirtd'
 alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
 alias sss='sudo systemctl status'
@@ -134,4 +134,8 @@ alias ddd='sudo systemctl disable --now'
 alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'
-alias reboot='sudo efibootmgr -n 0004 && reboot'
+#alias reboot='sudo efibootmgr -n 0004 && reboot'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
