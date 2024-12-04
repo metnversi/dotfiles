@@ -2,7 +2,12 @@
 
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
-echo "deb http://ftp.hk.debian.org/debian bookworm main non-free" >>/etc/apt/sources.list
+check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
+if [[ -z $check ]]; then
+  echo "deb http://ftp.hk.debian.org/debian bookworm main non-free" | sudo tee -a /etc/apt/sources.list
+else
+  echo "we got this"
+fi
 sudo apt update
 echo -e "\033[31m\033[1m Make sure you checked packages.yaml for required packages, gui and optional packages! \033[0m"
 extract_section() {

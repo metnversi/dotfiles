@@ -3,11 +3,11 @@ required:
   - zsh
   - python3-pip
   - python3.11-venv
-  - tmux
-  - autoconf
+  - tmux busybox-static
+  - autoconf tlp
   - xclip
   - gcc make
-  - bpfcc-tools strace sysstat irqbalance numactl numad bpftrace
+  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower
   - libpam0g-dev
   - libcairo2-dev
@@ -33,7 +33,7 @@ gui:
   - x11-utils
   - xorg
   - emacs
-  - i3
+  - i3 rofi
   - i3status
   - imagemagick
   - copyq feh

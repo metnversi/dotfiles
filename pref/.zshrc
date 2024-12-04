@@ -72,8 +72,8 @@ alias aa='ansible-playbook'
 alias cat='bat --theme="Catppuccin Macchiato"'
 
 #ssh pair with ct. requires ct (chromaterm, install by pip3)
-alias mssh='ct multipass shell'
-alias ssh='TERM=xterm-256color ct ssh'
+#alias mssh='ct multipass shell'
+alias ssh='TERM=xterm-256color ssh'
 
 #colorized man page
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -139,3 +139,6 @@ alias sedit='sudo systemctl edit'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#if command -v tmux >/dev/null 2>&1; then
+#    [ -z "$TMUX" ] && exec tmux
+#fi

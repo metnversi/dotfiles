@@ -39,19 +39,19 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.project" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "plugins" },
-    {
-      "CopilotC-Nvim/CopilotChat.nvim",
-      branch = "canary",
-      dependencies = {
-        { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-        { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-      },
-      opts = {
-        debug = true, -- Enable debugging
-        -- See Configuration section for rest
-      },
-      -- See Commands section for default commands if you want to lazy load on them
-    },
+    --    {
+    --      "CopilotC-Nvim/CopilotChat.nvim",
+    --      branch = "canary",
+    --      dependencies = {
+    --        { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+    --        { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    --      },
+    --      opts = {
+    --        debug = true, -- Enable debugging
+    --        -- See Configuration section for rest
+    --      },
+    --      -- See Commands section for default commands if you want to lazy load on them
+    --    },
     {
       "iamcco/markdown-preview.nvim",
       cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -60,6 +60,17 @@ require("lazy").setup({
         vim.g.mkdp_filetypes = { "markdown" }
       end,
       ft = { "markdown" },
+    },
+    {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    {
+      "barrett-ruth/live-server.nvim",
+      build = "pnpm add -g live-server",
+      cmd = { "LiveServerStart", "LiveServerStop" },
+      config = true,
     },
   },
   defaults = {
