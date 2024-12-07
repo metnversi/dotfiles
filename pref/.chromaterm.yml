@@ -41,12 +41,12 @@ rules:
       1: f#900000 bold
 
   - description: bad state
-    regex: (\bG[A-Z]\b|\ esp\ |#|null|\ upgrade|Down\ |Down$|Null\d{1,2})
+    regex: (\bG[A-Z]\b|\ esp\ |null|\ upgrade|Down\ |Down$|Null\d{1,2})
     color:
       1: f#900000 bold
 
   - description: bad state
-    regex: (VoIP|#|\bdis[a-zA-Z0-9_-]*\b|\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down|not\ )
+    regex: (\bdis[a-zA-Z0-9_-]*\b|\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down|not\ )
     color:
       1: f#900000 bold
 
@@ -81,7 +81,7 @@ rules:
       1: f#e6e600 bold
 
   - description: Green
-    regex: (running|\b\w+(?=\([^)]*\)#|#)|R\d{1,8}|CSR\d{1,8})
+    regex: (running|R\d{1,8}|CSR\d{1,8})
     color:
       1: f#5FF000 bold
 
