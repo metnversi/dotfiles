@@ -25,7 +25,7 @@ deployManifest() {
       symlinkFile "$filename" "$destination"
       ;;
     *)
-      echo -e "\031[33m[SKIP]\033[0m $operation."
+      echo -e "\033[31m[SKIP]\033[0m $operation."
       ;;
     esac
   done <"$SCRIPT_DIR/$1"
@@ -33,5 +33,5 @@ deployManifest() {
 
 deployManifest MANIFEST.linux
 echo "************************************************************"
-echo -e "\e[32m[HELLO WORLD]\e[0m Begin install package...."
+echo -e "\e[32;41m[HELLO WORLD]\e[0m Begin install package...."
 "$(dirname $0)/install.sh"
