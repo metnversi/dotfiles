@@ -130,8 +130,20 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+eval "$(zoxide init zsh)"
+export WEZTERM_LOG=error
+alias sl='sudo systemctl enable --now libvirtd'
+alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
+alias sss='sudo systemctl status'
+alias eee='sudo systemctl enable --now'
+alias rrr='sudo systemctl restart'
+alias ddd='sudo systemctl disable --now'
+alias sc='sudo systemctl'
+alias scat='sudo systemctl cat'
+alias sedit='sudo systemctl edit'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
