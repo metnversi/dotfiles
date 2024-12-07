@@ -11,11 +11,11 @@ symlinkFile() {
 
   if [ -e "$destination" ] || [ -L "$destination" ]; then
     rm -rf "$destination"
-    echo -e "\033[31m [INFO]\033[0m $destination existed. Overwritten."
+    echo -e "\033[33m[INFO]\033[0m $destination existed. Overwritten."
   fi
 
   ln -s "$filename" "$destination"
-  echo -e "\033[32m [OK]\033[0m $filename -> $destination "
+  echo -e "\033[32m[OK]\033[0m $filename -> $destination "
 }
 
 deployManifest() {
@@ -25,7 +25,7 @@ deployManifest() {
       symlinkFile "$filename" "$destination"
       ;;
     *)
-      echo -e "\033[33m [WARNING]\033[0m $operation. Skipping..."
+      echo -e "\031[33m[SKIP]\033[0m $operation."
       ;;
     esac
   done <"$SCRIPT_DIR/$1"
@@ -33,6 +33,5 @@ deployManifest() {
 
 deployManifest MANIFEST.linux
 echo "************************************************************"
-echo "************************************************************"
-echo -e "\033[33m[HELLO WORLD]\0m Begin install package....\033"
+echo -e "\e[32m[HELLO WORLD]\e[0m Begin install package...."
 "$(dirname $0)/install.sh"

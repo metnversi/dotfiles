@@ -196,7 +196,7 @@ bindsym $mod+q exec --no-startup-id gromit-mpx
 bindsym $mod+Shift+i exec ~/record.sh
 #exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
 exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg
-bindsym $mod+Shift+Return exec alacritty
+#bindsym $mod+Shift+Return exec alacritty
 bindsym $mod+Return exec wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
 # remove -e zsh to use default shell.
