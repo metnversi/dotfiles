@@ -8,3 +8,13 @@ git clone https://github.com/metnversi/dotfiles.git
 cd dotfiles
 ./deploy.sh
 ```
+
+## GNS3 console command
+
+```bash
+/home/anna/.cargo/bin/alacritty --title %d -e bash -c 'telnet %h %p | /home/anna/myvenv/bin/ct'
+```
+
+```bash
+/usr/local/bin/wezterm start --title %d -- bash -c 'telnet %h %p | /home/anna/myvenv/bin/ct'
+```
