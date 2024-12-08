@@ -253,6 +253,35 @@ if ! exist "gh"; then
 else
   skip "github cli"
 fi
+
+if ! exist "betterlockscreen"; then
+  git clone https://github.com/betterlockscreen/betterlockscreen.git
+  bash i3lock-color/install-i3lock-color.sh
+  wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | sudo bash -s system
+  echo -e "betterlockscreen -w dim
+           source ~/.fehbg" >>~/.xinitrc
+  chmod +x ~/.xinitrc
+  echo -e "[Unit]
+Description = Lock screen when going to sleep/suspend
+Before=sleep.target
+Before=suspend.target
+
+[Service]
+User=%I
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/local/bin/betterlockscreen --lock
+TimeoutSec=infinity
+ExecStartPost=/usr/bin/sleep 1
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target" | sudo tee /etc/systemd/system/betterlockscreen@.service
+  systemctl enable betterlockscreen@$USER
+  installed "betterlockscreen"
+else
+  skip "betterlockscreen"
+fi
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
 if [ -d "$HOME/.oh-my-zsh" ]; then
   skip "omz"

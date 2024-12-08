@@ -201,8 +201,12 @@ bindsym $mod+Return exec wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
 # remove -e zsh to use default shell.
 #exec --no-startup-id nitrogen --restore
-bindsym $mod+l exec "i3lock -c 000000"
+#bindsym $mod+l exec "i3lock -c 000000"
+bindsym $mod+l exec betterlockscreen -l dim
 #exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
+
+exec --no-startup-id betterlockscreen -w dim
+exec --no-startup-id source ~/.fehbg
 
 #for_window [class="^.*"] border none
 #default_border pixel 0

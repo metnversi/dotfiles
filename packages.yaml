@@ -13,6 +13,7 @@ required:
   - yarn
   - vim-gtk3
   - cowsay bat
+  - autoconf gcc make pkg-config
 
 gui:
   - x11-utils xorg papirus-icon-theme
