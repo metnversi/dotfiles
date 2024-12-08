@@ -15,16 +15,14 @@ required:
   - cowsay bat
 
 gui:
-  - x11-utils xorg
+  - x11-utils xorg papirus-icon-theme
   - emacs
-  - i3 rofi i3status libnotify-bin
+  - i3 rofi i3status libnotify-bin light
   - imagemagick copyq feh
   - gimp
-  - okular
+  - okular mpd mpc vlc
   - libgtk-3-dev
-  - vlc
-  - acpi
-  - pulseaudio-utils
+  - acpi pulseaudio-utils
 
 optional:
   - shutter

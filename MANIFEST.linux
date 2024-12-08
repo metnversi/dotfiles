@@ -22,6 +22,7 @@ pref/.chromaterm.yml|symlink|.chromaterm.yml
 pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
 
 pref/yazi|symlink|.config/yazi
+pref/rofi|symlink|.config/rofi
 
 theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme

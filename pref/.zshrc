@@ -135,7 +135,10 @@ alias ddd='sudo systemctl disable --now'
 alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'
+alias i33='vim ~/.config/i3/config'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
+# Edit .zshrc and add this line
+export PATH=$HOME/.config/rofi/scripts:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

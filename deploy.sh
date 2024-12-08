@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 rm $HOME/.bashrc
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -11,11 +11,12 @@ symlinkFile() {
 
   if [ -e "$destination" ] || [ -L "$destination" ]; then
     rm -rf "$destination"
+    ln -s "$filename" "$destination"
     echo -e "\033[33m[INFO]\033[0m $destination existed. Overwritten."
+  else
+    ln -s "$filename" "$destination"
+    echo -e "\033[32m[OK]\033[0m $filename -> $destination"
   fi
-
-  ln -s "$filename" "$destination"
-  echo -e "\033[32m[OK]\033[0m $filename -> $destination "
 }
 
 deployManifest() {
@@ -32,6 +33,6 @@ deployManifest() {
 }
 
 deployManifest MANIFEST.linux
-echo "************************************************************"
-echo -e "\e[32;41m[HELLO WORLD]\e[0m Begin install package...."
+echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
+echo -e "\e[32m Begin install package....\e[0m"
 "$(dirname $0)/install.sh"

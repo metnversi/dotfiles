@@ -147,4 +147,5 @@ alias sedit='sudo systemctl edit'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
+PATH=$PATH:~/.config/rofi/scripts
 export PATH=$BUN_INSTALL/bin:$PATH
