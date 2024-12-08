@@ -34,5 +34,6 @@ deployManifest() {
 
 deployManifest MANIFEST.linux
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
-echo -e "\e[32m Begin install package....\e[0m"
+
+#echo -e "\e[32m*****Begin install package*****\e[0m"
 "$(dirname $0)/install.sh"
