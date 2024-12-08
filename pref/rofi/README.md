@@ -1,0 +1,2 @@
+- I deleted the rofi `applet/` folder.
+- May take a look at [original repo](https://github.com/adi1090x/rofi) to install reference.

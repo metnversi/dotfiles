@@ -105,7 +105,7 @@ bindsym $mod+z exec emacs -fs
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit'"
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit' -c ~/.config/i3/nagbar.css"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Log out?' -B 'Yes' 'i3-msg exit' -c ~/.config/i3/nagbar.css"
 
 
 bindsym $mod+r mode "resize"
@@ -175,7 +175,7 @@ bar {
 }
 
 #bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#128D09' -sf '#EEEEEE' -fn 'Iosevka Nerd Font-10' -p 'dmenu prompt &gt;'"
-bindsym $mod+d exec rofi -show run
+#bindsym $mod+d exec rofi -show run
 
 bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
 exec --no-startup-id redshift -P -O 3500
@@ -216,4 +216,7 @@ workspace_layout tabbed
 for_window [all] title_window_icon padding 1px
 default_border pixel 3
 bindsym $mod+m bar mode toggle
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-7/launcher.sh
+#bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
+bindsym $mod+x exec --no-startup-id /home/anna/.config/rofi/scripts/powermenu_t5
 bindsym $mod+Shift+m bar hidden_state toggle
