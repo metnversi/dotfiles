@@ -101,7 +101,7 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-/home/$USER/welcome.sh
+#/home/$USER/welcome.sh
 VDPAU_DRIVER=nvidia
 EDITOR=/opt/nvim-linux64/bin/
 
@@ -113,7 +113,7 @@ eval "$(fzf --bash)"
 eval "$(zoxide init bash)"
 #eval $(thefuck --alias)
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-source <(kubectl completion bash)
+#source <(kubectl completion bash)
 
 # pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
@@ -122,7 +122,7 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-ssh() { TERM=xterm-256color /usr/bin/ssh "$@" | ct; }
+#ssh() { TERM=xterm-256color /usr/bin/ssh "$@" | ct; }
 alias mssh='ct multipass shell'
 alias ssh='TERM=xterm-256color ct ssh'
 # bun
@@ -133,7 +133,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-eval "$(zoxide init zsh)"
 export WEZTERM_LOG=error
 alias sl='sudo systemctl enable --now libvirtd'
 alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
@@ -147,5 +146,4 @@ alias sedit='sudo systemctl edit'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-PATH=$PATH:~/.config/rofi/scripts
-export PATH=$BUN_INSTALL/bin:$PATH
+PATH="$PATH:/home/$USER/.config/rofi/scripts:/home/$USER/myvenv/bin"

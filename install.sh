@@ -282,7 +282,7 @@ WantedBy=suspend.target" | sudo tee /etc/systemd/system/betterlockscreen@.servic
 else
   skip "betterlockscreen"
 fi
-echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
+echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
 if [ -d "$HOME/.oh-my-zsh" ]; then
   skip "omz"
 else

@@ -100,9 +100,10 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin:/usr/local/go/bin
+VDPAU_DRIVER=nvidia
+PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin
 PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin:/home/$USER/cmake/bin"
-PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:/usr/local/go/bin:/home/$USER/.cargo/bin
 . "$HOME/.cargo/env"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
