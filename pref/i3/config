@@ -177,36 +177,36 @@ bar {
 #bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#128D09' -sf '#EEEEEE' -fn 'Iosevka Nerd Font-10' -p 'dmenu prompt &gt;'"
 #bindsym $mod+d exec rofi -show run
 
-bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
-exec --no-startup-id redshift -P -O 3500
-exec --no-startup-id xbacklight -set 88
-exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 165
-exec --no-startup-id copyq
-bindsym $mod+v exec --no-startup-id copyq menu
+#bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
+exec --no-startup-id /usr/bin/redshift -P -O 4000
+exec --no-startup-id /usr/bin/xbacklight -set 88
+exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
+exec --no-startup-id /usr/bin/copyq
+bindsym $mod+v exec --no-startup-id /usr/bin/copyq menu
 #bindsym $mod+Shift+a exec --no-startup-id /home/anna/linkpomo.sh
-bindsym Mod1+Shift+space exec --no-startup-id ibus engine Unikey
-bindsym F10 exec --no-startup-id shutter -f
-bindsym $mod+Shift+s exec --no-startup-id shutter -s
-bindsym $mod+Shift+w exec --no-startup-id shutter -w
+#bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
+bindsym F10 exec --no-startup-id /usr/bin/shutter -f
+bindsym $mod+Shift+s exec --no-startup-id /usr/bin/shutter -s
+bindsym $mod+Shift+w exec --no-startup-id /usr/bin/shutter -w
 #bindsym $mod+l exec --no-startup-id xset dpms force off
-bindsym $mod+g exec --no-startup-id gns3
-bindsym $mod+c exec --no-startup-id librewolf
-bindsym $mod+n exec --no-startup-id wireshark
-bindsym $mod+q exec --no-startup-id gromit-mpx
-bindsym $mod+Shift+i exec ~/record.sh
+#bindsym $mod+g exec --no-startup-id gns3
+bindsym $mod+Shift+g exec --no-startup-id /home/anna/.local/bin/gns3
+bindsym $mod+c exec --no-startup-id /usr/bin/librewolf
+bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
+bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
+#bindsym $mod+Shift+i exec ~/record.sh
 #exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
-exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg
-#bindsym $mod+Shift+Return exec alacritty
-bindsym $mod+Return exec wezterm -e zsh -i
+#exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg
+bindsym $mod+Shift+Return exec /home/anna/.cargo/bin/alacritty
+bindsym $mod+Return exec /usr/bin/wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
-# remove -e zsh to use default shell.
 #exec --no-startup-id nitrogen --restore
 #bindsym $mod+l exec "i3lock -c 000000"
 bindsym $mod+l exec betterlockscreen -l dim
 #exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
 
 exec --no-startup-id betterlockscreen -w dim
-exec --no-startup-id source ~/.fehbg
+#exec --no-startup-id source ~/.fehbg
 
 #for_window [class="^.*"] border none
 #default_border pixel 0

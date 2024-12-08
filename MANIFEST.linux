@@ -23,6 +23,8 @@ pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
 
 pref/yazi|symlink|.config/yazi
 pref/rofi|symlink|.config/rofi
+pref/.fehbg|symlink|.fehbg
+pref/.xinitrc|symlink|.xinitrc
 
 theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme
