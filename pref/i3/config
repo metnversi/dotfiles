@@ -216,7 +216,7 @@ workspace_layout tabbed
 for_window [all] title_window_icon padding 1px
 default_border pixel 3
 bindsym $mod+m bar mode toggle
-bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-7/launcher.sh
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/my-type/launcher.sh
 #bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
 bindsym $mod+x exec --no-startup-id /home/anna/.config/rofi/scripts/powermenu_t5
 bindsym $mod+Shift+m bar hidden_state toggle
