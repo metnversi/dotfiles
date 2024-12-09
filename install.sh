@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
@@ -21,6 +21,21 @@ if [[ -z $check ]]; then
 else
   skip "ftp mirror size"
 fi
+if [[ -e /var/lib/AccountsService/icons/anna.png ]]; then
+  skip "avatar anna"
+else
+  sudo -E cp "$WORKDIR/resource/anna.png" /var/lib/AccountsService/icons/
+  echo -e "[org.freedesktop.DisplayManager.AccountsService]
+BackgroundFile='/home/anna/Pictures/bg.jpg'
+   
+[User]
+Session=lightdm-xsession
+XSession=i3
+Icon=/var/lib/AccountsService/icons/anna.png
+SystemAccount=false" | sudo tee /var/lib/AccountsService/users/anna
+  installed "avatar anna"
+fi
+
 echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for required packages, gui and optional packages!"
 #extract_section() {
 #  local section=$1
