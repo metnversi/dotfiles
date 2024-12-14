@@ -194,6 +194,8 @@ bindsym $mod+Shift+g exec --no-startup-id /home/anna/.local/bin/gns3
 bindsym $mod+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
 bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
+#bindsym $mod+z exec --no-startup-id /usr/bin/xdotool click 1
+#bindsym $mod+a exec --no-startup-id /usr/bin/xdotool click 3
 #bindsym $mod+Shift+i exec ~/record.sh
 #exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
 #exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg

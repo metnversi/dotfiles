@@ -26,7 +26,7 @@ rules:
     color: f#990099
 
   - description: Interfaces in shutdown (Red) no shutdown (Bright Green)
-    regex: (\b[uU]p[a-zA-Z0-9_-]*\b|Loopback\d{1,2}|\b[Ll]ocal[a-zA-Z0-9_-]*\b|\d{1,15} bytes)
+    regex: (\b[uU]p[a-zA-Z0-9_-]*\b|Loopback\d{1,10}|\b[Ll]ocal[a-zA-Z0-9_-]*\b|\d{1,15} bytes)
     color:
       1: f#6CFF00 bold
 

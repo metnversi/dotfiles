@@ -2,6 +2,7 @@
 
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
+mkdir -p ~/.local/bin
 installed() {
   echo -e "\e[32m[OK]\e[0m $1"
 }
@@ -114,12 +115,6 @@ else
 fi
 
 sudo apt autoremove
-if exist "batcat"; then
-  skip "batcat"
-else
-  ln -s /usr/bin/batcat ~/.local/bin/bat
-  installed "batcat"
-fi
 #echo -e "\033[33m[WARNING]\033[0m Some packages maybe missing due to different naming."
 
 if fc-list | grep -i "Iosevka" >/dev/null; then
@@ -222,7 +217,7 @@ install_package() {
   esac
 }
 
-for pkg in brew thefuck zoxide fzf yazi; do
+for pkg in brew thefuck zoxide fzf yazi batcat; do
   if ! exist "$pkg"; then
     install_package "$pkg"
     installed "$pkg"

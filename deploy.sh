@@ -6,17 +6,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 symlinkFile() {
   filename="$SCRIPT_DIR/$1"
   destination="$HOME/$2"
-
   mkdir -p "$(dirname "$destination")"
-
-  if [ -e "$destination" ] || [ -L "$destination" ]; then
-    rm -rf "$destination"
-    ln -s "$filename" "$destination"
-    echo -e "\033[33m[INFO]\033[0m $destination existed. Overwritten."
-  else
-    ln -s "$filename" "$destination"
-    echo -e "\033[32m[OK]\033[0m $filename -> $destination"
-  fi
+  ln -sf "$filename" "$destination"
+  echo -e "\033[32m[OK]\033[0m $filename -> $destination"
 }
 
 deployManifest() {
