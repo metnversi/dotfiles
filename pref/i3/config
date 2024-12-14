@@ -182,7 +182,7 @@ exec --no-startup-id /usr/bin/redshift -P -O 4000
 exec --no-startup-id /usr/bin/greenclip daemon
 exec --no-startup-id /usr/bin/xbacklight -set 88
 exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
-exec --no-startup-id /usr/bin/copyq
+#exec --no-startup-id /usr/bin/copyq
 #bindsym $mod+v exec --no-startup-id /usr/bin/copyq menu
 #bindsym $mod+Shift+a exec --no-startup-id /home/anna/linkpomo.sh
 #bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
@@ -203,7 +203,7 @@ bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
 bindsym $mod+Return exec /home/anna/.cargo/bin/alacritty -e zsh
 bindsym $mod+Shift+Return exec /usr/bin/wezterm -e zsh -i
 #bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme /home/anna/.config/rofi/launchers/my-type/style-10.rasi 
-bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' 
+bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme /home/anna/.config/rofi/rounded-pink-dark.rasi
 #bindsym $mod+Return exec wezterm
 #exec --no-startup-id nitrogen --restore
 #bindsym $mod+l exec "i3lock -c 000000"
@@ -226,7 +226,7 @@ workspace_layout tabbed
 for_window [all] title_window_icon padding 1px
 default_border pixel 3
 bindsym $mod+m bar mode toggle
-bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/my-type/launcher.sh
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/launcher.sh
 #bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
 bindsym $mod+x exec --no-startup-id /home/anna/.config/rofi/scripts/powermenu_t5
 bindsym $mod+Shift+m bar hidden_state toggle
