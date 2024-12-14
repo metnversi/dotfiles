@@ -264,6 +264,15 @@ else
   skip "github cli"
 fi
 
+if ! exist "greenclip"; then
+  wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
+  chmmod +x greenclip
+  sudo mv greenclip /usr/bin/
+  installed "greenclip"
+else
+  skip "greenclip"
+fi
+
 if ! exist "betterlockscreen"; then
   git clone https://github.com/betterlockscreen/betterlockscreen.git
   bash i3lock-color/install-i3lock-color.sh

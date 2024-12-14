@@ -14,14 +14,14 @@ required:
   - libxcb-glx0-dev libxcb-present-dev  libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev
   - libxcb-xfixes0-dev meson ninja-build uthash-dev
   - yarn asciidoctor vim-gtk3
-  - cowsay bat
+  - cowsay bat xsel
   - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
 
 gui:
   - x11-utils xorg papirus-icon-theme
   - emacs
   - lightdm i3 rofi i3status libnotify-bin light
-  - imagemagick copyq feh
+  - imagemagick feh
   - gimp
   - okular mpd mpc vlc
   - libgtk-3-dev

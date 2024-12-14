@@ -179,10 +179,11 @@ bar {
 
 #bindsym Mod1+space exec --no-startup-id ibus engine xkb:us::eng
 exec --no-startup-id /usr/bin/redshift -P -O 4000
+exec --no-startup-id /usr/bin/greenclip daemon
 exec --no-startup-id /usr/bin/xbacklight -set 88
 exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
 exec --no-startup-id /usr/bin/copyq
-bindsym $mod+v exec --no-startup-id /usr/bin/copyq menu
+#bindsym $mod+v exec --no-startup-id /usr/bin/copyq menu
 #bindsym $mod+Shift+a exec --no-startup-id /home/anna/linkpomo.sh
 #bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
 bindsym F10 exec --no-startup-id /usr/bin/shutter -f
@@ -201,6 +202,8 @@ bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
 #exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg
 bindsym $mod+Return exec /home/anna/.cargo/bin/alacritty -e zsh
 bindsym $mod+Shift+Return exec /usr/bin/wezterm -e zsh -i
+#bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme /home/anna/.config/rofi/launchers/my-type/style-10.rasi 
+bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' 
 #bindsym $mod+Return exec wezterm
 #exec --no-startup-id nitrogen --restore
 #bindsym $mod+l exec "i3lock -c 000000"

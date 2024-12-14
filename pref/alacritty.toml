@@ -1,8 +1,8 @@
 
 [window]
-opacity = 0.85
-padding.x = 8
-padding.y = 8
+opacity = 0.95
+padding.x = 4
+padding.y = 4
 decorations = "Full"
 decorations_theme_variant = "Dark" # "Dark"
 
