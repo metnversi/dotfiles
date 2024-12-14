@@ -1,37 +1,24 @@
-# See dunst(5) for all configuration options
 
 [global]
-    ### Display ###
-
     # Which monitor should the notifications be displayed on.
     monitor = 0
 
-    # Display notification on focused monitor.  Possible modes are:
     #   mouse: follow mouse pointer
     #   keyboard: follow window with keyboard focus
     #   none: don't follow anything
-    #
-    # "keyboard" needs a window manager that exports the
+    #  "keyboard" needs a window manager that exports the
     # _NET_ACTIVE_WINDOW property.
-    # This should be the case for almost all modern window managers.
-    #
     # If this option is set to mouse or keyboard, the monitor option
     # will be ignored.
-    follow = none
+    follow = mouse
 
-    ### Geometry ###
-
-    # dynamic width from 0 to 300
     # width = (0, 300)
-    # constant width of 300
-    width = 240
+    width = (240,280)
     height = 300
     origin = bottom-right
     offset = 10x50
     scale = 0
-    notification_limit = 0
-
-    ### Progress bar ###
+    notification_limit = 10
 
     # Turn on the progess bar. It appears when a progress hint is passed with
     # for example dunstify -h int:value:12
@@ -41,7 +28,7 @@
     progress_bar_min_width = 150
     progress_bar_max_width = 300
     indicate_hidden = yes
-    transparency = 0
+    transparency = 10 #X11 only
     separator_height = 2
     padding = 8
     horizontal_padding = 8
@@ -49,7 +36,6 @@
     frame_width = 3
     gap_size = 10
 
-    # Define a color for the separator.
     # possible values are:
     #  * auto: dunst tries to find a color fitting to the background;
     #  * foreground: use the same color as the foreground;
@@ -62,12 +48,9 @@
     # Set to 0 to disable.
     # idle_threshold = 120
 
-    ### Text ###
-
     font = Iosevka Nerd Font 10
     line_height = 0
 
-    # Possible values are:
     # full: Allow a small subset of html markup in notifications:
     #        <b>bold</b>
     #        <i>italic</i>
@@ -76,22 +59,8 @@
     #
     #        For a complete reference see
     #        <https://docs.gtk.org/Pango/pango_markup.html>.
-    #
-    # strip: This setting is provided for compatibility with some broken
-    #        clients that send markup even though it's not enabled on the
-    #        server. Dunst will try to strip the markup but the parsing is
-    #        simplistic so using this option outside of matching rules for
-    #        specific applications *IS GREATLY DISCOURAGED*.
-    #
-    # no:    Disable markup parsing, incoming notifications will be treated as
-    #        plain text. Dunst will not advertise that it has the body-markup
-    #        capability if this is set as a global setting.
-    #
-    # It's important to note that markup inside the format option will be parsed
-    # regardless of what this is set to.
     markup = full
 
-    # The format of the message.  Possible variables are:
     #   %a  appname
     #   %s  summary
     #   %b  body
@@ -114,9 +83,8 @@
     icon_position = left
     min_icon_size = 32
     max_icon_size = 128
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_path = /usr/share/icons/ePapirus/16x16/status/:/usr/share/icons/ePapirus/16x16/devices/
 
-    ### History ###
     sticky_history = yes
     history_length = 20
     dmenu = /usr/bin/dmenu -p dunst:
@@ -128,22 +96,9 @@
     ignore_dbusclose = false
     force_xwayland = false
 
-    ### Legacy
+   force_xinerama = false
 
-    # Use the Xinerama extension instead of RandR for multi-monitor support.
-    # This setting is provided for compatibility with older nVidia drivers that
-    # do not support RandR and using it on systems that support RandR is highly
-    # discouraged.
-    #
-    # By enabling this setting dunst will not be able to detect when a monitor
-    # is connected or disconnected which might break follow mode if the screen
-    # layout changes.
-    force_xinerama = false
 
-    ### mouse
-
-    # Defines list of actions for each mouse event
-    # Possible values are:
     # * none: Don't do anything.
     # * do_action: Invoke the action determined by the action_name rule. If there is no
     #              such action, open the context menu.
@@ -153,8 +108,6 @@
     # * close_all: Close all notifications.
     # * context: Open context menu for the notification.
     # * context_all: Open context menu for all notifications.
-    # These values can be strung together for each mouse event, and
-    # will be executed in sequence.
     mouse_left_click = close_current
     mouse_middle_click = do_action, close_current
     mouse_right_click = open_url, close_current

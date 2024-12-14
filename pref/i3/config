@@ -199,8 +199,8 @@ bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
 #bindsym $mod+Shift+i exec ~/record.sh
 #exec --no-startup-id feh --bg-scale ~/Pictures/b1.jpg
 #exec --no-startup-id feh --bg-scale /home/$USER/Pictures/bg.jpg
-bindsym $mod+Shift+Return exec /home/anna/.cargo/bin/alacritty
-bindsym $mod+Return exec /usr/bin/wezterm -e zsh -i
+bindsym $mod+Return exec /home/anna/.cargo/bin/alacritty -e zsh
+bindsym $mod+Shift+Return exec /usr/bin/wezterm -e zsh -i
 #bindsym $mod+Return exec wezterm
 #exec --no-startup-id nitrogen --restore
 #bindsym $mod+l exec "i3lock -c 000000"
@@ -208,7 +208,7 @@ bindsym $mod+l exec betterlockscreen -l dim
 #exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
 
 exec --no-startup-id betterlockscreen -w dim
-exec --no-startup-id /usr/bin/picom 
+exec --no-startup-id /usr/bin/picom
 #exec --no-startup-id source ~/.fehbg
 
 #for_window [class="^.*"] border none
