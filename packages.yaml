@@ -1,5 +1,5 @@
 required:
-  - curl wget
+  - curl wget nftables
   - zsh
   - python3-pip python3.11-venv
   - tmux busybox-static
@@ -33,3 +33,4 @@ optional:
   - g++ gcc-multilib g++-multilib
   - dialog
   - libgl1-mesa-glx
+  - gnome

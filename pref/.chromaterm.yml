@@ -31,7 +31,7 @@ rules:
       1: f#6CFF00 bold
 
   - description: Interfaces in shutdown (Red) no shutdown (Bright Green)
-    regex: (\b[YCF][A-Z]*\b|\b[Ee]na[a-zA-Z0-9_-]*\b|\bC+\b|(?<=%)([A-Za-z0-9_]+)(?=-\d-)|\ OK|\ ON|\b[AEPSV][A-Z_]*\b)
+    regex: (\b[Ee]na[a-zA-Z0-9_-]*\b|\bC+\b|(?<=%)([A-Za-z0-9_]+)(?=-\d-)|\ OK|\ ON|\b[AEPSV][A-Z_]*\b)
     color:
       1: f#2CF000 bold
 
@@ -81,27 +81,27 @@ rules:
       1: f#e6e600 bold
 
   - description: Green
-    regex: (running|R\d{1,8}|CSR\d{1,8})
+    regex: (running)
     color:
       1: f#5FF000 bold
 
   - description: orange
-    regex: (\b[B](?!M\b|P\b)[A-Z]*\b|\bP[A-Z]*\b|[a-zA-Z]+[*]|route-map|filter-list|\b[A-B]+\b||iptables|SW\d{1,2}|BB\d|BB|PE\d{1,2}|CE\d{1,2}|Sw\d{1,2})
+    regex: (\b[B](?!M\b|P\b)[A-Z]*\b|\bP[A-Z]*\b|[a-zA-Z]+[*]|route-map|filter-list|\b[A-B]+\b||iptables|BB\d|BB|PE\d{1,2}|CE\d{1,2})
     color:
       1: f#ff6600 bold
 
   - descripton: OSPF
-    regex: (\b[MNO](?!N\b|FF\b)[A-Z]*\b|\ E[12]\ |E[12]\ \ |N[12]|IA\ |\*E[12]|NSSA\d*|\b[Oo][Ss][Pp][fF]\S*|VL\d{1,2}|SL\d{1,2}|Type\-\d)
+    regex: (\ E[12]\ |E[12]\ \ |N[12]|IA\ |\*E[12]|\b[Oo][Ss][Pp][fF]\S*|VL\d{1,2}|SL\d{1,2}|Type\-\d)
     color:
       1: f#9f0099 bold
 
   - description: uppercase word that start with P, Q, R, F
-    regex: ((\b[PQRV][A-Z]*\b|P2P|P2MP|vrf))
+    regex: (P2P|P2MP|vrf)
     color:
       1: f#007FFF bold
 
   - description: text start with L, IS-IS
-    regex: (\bL[A-Z]*\b|su\ |\ ia\ |IS-IS|2WAY|L[12]|https?:\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._-]+)*\/?)
+    regex: (su\ |\ ia\ |2WAY|L[12]|https?:\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._-]+)*\/?)
     color:
       1: f#28a9a5 bold
 

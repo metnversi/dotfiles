@@ -3,6 +3,7 @@
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
 mkdir -p ~/.local/bin
+mkidr -p ~/repos
 installed() {
   echo -e "\e[32m[OK]\e[0m $1"
 }
@@ -116,6 +117,13 @@ fi
 
 sudo apt autoremove
 #echo -e "\033[33m[WARNING]\033[0m Some packages maybe missing due to different naming."
+check=$(grep -v ^# /etc/nftables.conf | grep my_input)
+if [[ -z $check ]]; then
+  sudo cp $(pwd)/nftables.conf /etc/nftables.conf
+  installed "nftables"
+else
+  skip "nftables"
+fi
 
 if fc-list | grep -i "Iosevka" >/dev/null; then
   skip "Iosevka"
@@ -302,6 +310,23 @@ else
   skip "betterlockscreen"
 fi
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
+
+if [[ $DESKTOP_SESSION == 'gnome' ]]; then
+  if [[ -d "~/.local/share/icons/WhiteSur" ]]; then
+    git clone https://github.com/jothi-prasath/gnomintosh.git ~/repos/gnomintosh
+    chmod +x ~/repos/gnomintosh/main.sh
+    original_dir=$(pwd)
+    (
+      cd ~/repos/gnomintosh
+      ./main.sh
+    )
+    cd "$original_dir"
+  fi
+else
+  skip "gnome macOS theme"
+  echo "You may change desktop session to gnome to update this."
+fi
+
 if [ -d "$HOME/.oh-my-zsh" ]; then
   skip "omz"
 else
