@@ -170,9 +170,8 @@ exec --no-startup-id betterlockscreen -w dim
 exec --no-startup-id /usr/bin/picom
 #exec --no-startup-id source ~/.fehbg
 #bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
-bindsym F10 exec --no-startup-id /usr/bin/shutter -f
-bindsym $mod+Shift+s exec --no-startup-id /usr/bin/shutter -s
-bindsym $mod+Shift+w exec --no-startup-id /usr/bin/shutter -w
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui -c 
+bindsym Print exec --no-startup-id flameshot full
 #bindsym $mod+l exec --no-startup-id xset dpms force off
 #bindsym $mod+g exec --no-startup-id gns3
 bindsym $mod+Shift+g exec --no-startup-id /home/anna/.local/bin/gns3

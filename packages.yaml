@@ -21,8 +21,7 @@ gui:
   - x11-utils xorg papirus-icon-theme
   - emacs
   - lightdm i3 rofi i3status libnotify-bin light
-  - imagemagick feh
-  - gimp
+  - imagemagick feh gimp flameshot
   - okular mpd mpc vlc
   - libgtk-3-dev
   - acpi pulseaudio-utils
