@@ -117,13 +117,6 @@ fi
 
 sudo apt autoremove
 #echo -e "\033[33m[WARNING]\033[0m Some packages maybe missing due to different naming."
-check=$(grep -v ^# /etc/nftables.conf | grep my_input)
-if [[ -z $check ]]; then
-  sudo cp $(pwd)/nftables.conf /etc/nftables.conf
-  installed "nftables"
-else
-  skip "nftables"
-fi
 
 if fc-list | grep -i "Iosevka" >/dev/null; then
   skip "Iosevka"
@@ -338,3 +331,5 @@ else
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   installed "omz"
 fi
+
+"$(dirname $0)/security/verify.sh"

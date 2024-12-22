@@ -138,6 +138,7 @@ alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'
 alias i33='vim ~/.config/i3/config'
 alias enf='sudo vim /etc/nftables.conf'
+alias vis='sudo virsh list --all'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 # Edit .zshrc and add this line
 export PATH=$HOME/.config/rofi/scripts:$PATH
