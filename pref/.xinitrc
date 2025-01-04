@@ -4,3 +4,13 @@ betterlockscreen -w dim
 xset -b
 
 #source ~/.fehbg
+betterlockscreen -w dim
+           source ~/.fehbg
+betterlockscreen -w dim
+           source ~/.fehbg
+betterlockscreen -w dim
+           source ~/.fehbg
+betterlockscreen -w dim
+           source ~/.fehbg
+betterlockscreen -w dim
+           source ~/.fehbg

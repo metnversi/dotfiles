@@ -1,8 +1,3 @@
-.gitconfig|symlink|.gitconfig
-pref/emacs/.emacs|symlink|.emacs
-pref/emacs/.emacs.rc|symlink|.emacs.rc
-pref/emacs/.emacs.snippets|symlink|.emacs.snippets
-pref/emacs/.emacs.local|symlink|.emacs.local
 
 pref/nvim|symlink|.config/nvim
 pref/.vimrc|symlink|.vimrc

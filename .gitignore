@@ -6,3 +6,4 @@
 *.css
 .gitconfig
 nvim/pack/
+betterlockscreen/*

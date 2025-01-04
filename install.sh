@@ -3,7 +3,6 @@
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
 mkdir -p ~/.local/bin
-mkidr -p ~/repos
 installed() {
   echo -e "\e[32m[OK]\e[0m $1"
 }
@@ -15,61 +14,30 @@ exist() {
   command -v "$1" >/dev/null 2>&1
 }
 
-check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
-if [[ -z $check ]]; then
-  echo "deb http://ftp.hk.debian.org/debian bookworm main non-free" | sudo tee -a /etc/apt/sources.list
-  sudo apt update
-  installed "ftp mirror site"
-else
-  skip "ftp mirror size"
-fi
-if [[ -e /var/lib/AccountsService/icons/anna.png ]]; then
-  skip "avatar anna"
-else
-  sudo -E cp "$WORKDIR/resource/anna.png" /var/lib/AccountsService/icons/
-  echo -e "[org.freedesktop.DisplayManager.AccountsService]
-BackgroundFile='/home/anna/Pictures/bg.jpg'
-   
-[User]
-Session=lightdm-xsession
-XSession=i3
-Icon=/var/lib/AccountsService/icons/anna.png
-SystemAccount=false" | sudo tee /var/lib/AccountsService/users/anna
-  installed "avatar anna"
-fi
-
-echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for required packages, gui and optional packages!"
-#extract_section() {
-#  local section=$1
-#  awk -v section="$section" '
-#    $0 ~ section {flag=1; next}
-#    $0 ~ /^ *-/ && flag {print $2; next}
-#    $0 !~ /^ *-/ && flag {flag=0}
-#    ' packages.yaml
-#}
-#
-#required_packages=$(extract_section "required:" | paste -sd ' ' -)
-#gui_packages=$(extract_section "gui:" | paste -sd ' ' -)
-#optional_packages=$(extract_section "optional:" | paste -sd ' ' -)
-#read -p $'\033[31m\033[1m[WARNING]\033[0m Do you want optional [Y/n]?' include_optional
-#
-#if [[ "$include_optional" =~ ^[Yy]$ || -z "$include_optional" ]]; then
-#  if [ "$(systemctl get-default)" = "graphical.target" ]; then
-#    output="$required_packages $gui_packages $optional_packages"
-#  else
-#    output="$required_packages $optional_packages"
-#  fi
+#check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
+#if [[ -z $check ]]; then
+#  echo "deb http://ftp.hk.debian.org/debian bookworm main non-free" | sudo tee -a /etc/apt/sources.list
+#  sudo apt update
+#  installed "ftp mirror site"
 #else
-#  if [ "$(systemctl get-default)" = "graphical.target" ]; then
-#    output="$required_packages $gui_packages"
-#  else
-#    output="$required_packages"
-#  fi
+#  skip "ftp mirror size"
+#fi
+#if [[ -e /var/lib/AccountsService/icons/anna.png ]]; then
+#  skip "avatar anna"
+#else
+#  sudo -E cp "$WORKDIR/resource/anna.png" /var/lib/AccountsService/icons/
+#  echo -e "[org.freedesktop.DisplayManager.AccountsService]
+#BackgroundFile='/home/anna/Pictures/bg.jpg'
+#
+#[User]
+#Session=lightdm-xsession
+#XSession=i3
+#Icon=/var/lib/AccountsService/icons/anna.png
+#SystemAccount=false" | sudo tee /var/lib/AccountsService/users/anna
+#  installed "avatar anna"
 #fi
 #
-#sudo apt install -y --ignore-missing $output
-#sudo apt autoremove
-#
+echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for required packages, gui and optional packages!"
 extract_section() {
   local section=$1
   awk -v section="$section" '
@@ -80,7 +48,7 @@ extract_section() {
 }
 
 is_installed() {
-  dpkg -l | grep -qw "$1"
+  pacman -Q | grep -qw "$1"
 }
 
 required_packages=$(extract_section "required:" | paste -sd ' ' -)
@@ -110,12 +78,11 @@ for pkg in $packages; do
 done
 
 if [ -n "$packages_to_install" ]; then
-  sudo apt install -y --ignore-missing $packages_to_install
+  sudo pacman -S $packages_to_install
 else
   echo "All packages are already installed."
 fi
 
-sudo apt autoremove
 #echo -e "\033[33m[WARNING]\033[0m Some packages maybe missing due to different naming."
 
 if fc-list | grep -i "Iosevka" >/dev/null; then
@@ -207,32 +174,13 @@ fi
 #wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Macchiato.tmTheme
 #wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
 #bat cache --build
-install_package() {
-  case "$1" in
-  brew)
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ;;
-  *)
-    brew install "$1"
-    ;;
-  esac
-}
-
-for pkg in brew thefuck zoxide fzf yazi batcat; do
-  if ! exist "$pkg"; then
-    install_package "$pkg"
-    installed "$pkg"
-  else
-    skip "$pkg"
-  fi
-done
 #/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 #brew install thefuck
 #brew install zoxide
 #brew install fzf
 #brew install yazi
 if ! exist "ct"; then
-  pip3 install chromaterm
+  pip install chromaterm
   installed "chromaterm"
 else
   skip "chromaterm"
@@ -253,13 +201,8 @@ else
 fi
 
 if ! exist "gh"; then
-  (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) &&
-    sudo mkdir -p -m 755 /etc/apt/keyrings &&
-    wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
-    sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg &&
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
-    sudo apt update &&
-    sudo apt install gh -y
+  (type -p wget >/dev/null || (sudo pacman -Syu && sudo pacman -Sy wget)) &&
+    sudo pacman -Sy gh-cli
   installed "github cli"
 else
   skip "github cli"
@@ -267,7 +210,7 @@ fi
 
 if ! exist "greenclip"; then
   wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
-  chmmod +x greenclip
+  chmod +x greenclip
   sudo mv greenclip /usr/bin/
   installed "greenclip"
 else
@@ -331,5 +274,3 @@ else
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   installed "omz"
 fi
-
-"$(dirname $0)/security/verify.sh"

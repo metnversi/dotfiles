@@ -1,35 +1,23 @@
 required:
   - curl wget nftables
-  - zsh
-  - python3-pip python3.11-venv
+  - zsh python-pip
   - tmux busybox-static
-  - autoconf tlp xclip gcc make libimlib2-dev
-  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
+  - autoconf tlp xclip gcc make
+  - valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog
-  - libpam0g-dev libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev
-  - libx11-xcb-dev libxcb-xkb-dev
-  - libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev
-  - libxkbcommon-dev libxkbcommon-x11-dev libjpeg-dev
-  - libconfig-dev libdbus-1-dev libegl-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libxcb1-dev  libxcb-damage0-dev
-  - libxcb-glx0-dev libxcb-present-dev  libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev
-  - libxcb-xfixes0-dev meson ninja-build uthash-dev
-  - yarn asciidoctor vim-gtk3
-  - cowsay bat xsel
-  - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
+  - yarn asciidoctor vim-gtk3 wofi
+  - cowsay bat xsel thefuck zoxide fzf yazi which gcc
 
 gui:
-  - x11-utils xorg papirus-icon-theme
-  - emacs
-  - lightdm i3 rofi i3status libnotify-bin light
+  - papirus-icon-theme
+  - emacs playerctl
+  - lightdm i3 rofi i3status light
   - imagemagick feh gimp flameshot
   - okular mpd mpc vlc
-  - libgtk-3-dev
   - acpi pulseaudio-utils
 
 optional:
   - shutter
   - obs-studio
-  - g++ gcc-multilib g++-multilib
   - dialog
-  - libgl1-mesa-glx
   - gnome
