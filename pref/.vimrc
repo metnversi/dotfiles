@@ -1,27 +1,29 @@
-syntax enable
-let mapleader = " "
-set number
+syntax on
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set guifont=Iosevka\ 10
+set guioptions-=m
+set guioptions-=T
+set noesckeys
 set relativenumber
-highlight LineNr ctermfg=167
-highlight CursorLineNr ctermfg=167
-set background=dark
-"colorscheme jellybeans
-"set clipboard=unnamed
-set noerrorbells
-set novisualbell
-set t_vb=
-set nocompatible
-filetype off
+set number
+set ignorecase
+set smartcase
+set incsearch
+set cinoptions=l1
+set modeline
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+set autoindent
+set autochdir
+colorscheme habamax
+autocmd FileType yaml setlocal ai ts=2 sw=2 et
+autocmd FileType yml setlocal ai ts=2 sw=2 et
 
+autocmd BufEnter * if &filetype == "go" | setlocal noexpandtab
+autocmd BufNewFile,BufRead ?\+.c3 setf c
 
-nnoremap <leader>e :Explore toggle<CR>
-
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-
-"Plugin 'jiangmiao/auto-pairs'
-"Plugin 'VundleVim/Vundle.vim'
-
-"call vundle#end()
-
-filetype plugin indent on 
+map gf :e <cfile><CR>

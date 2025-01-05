@@ -101,3 +101,5 @@ require("lazy").setup({
     },
   },
 })
+
+require("mason").setup()

@@ -1,6 +1,11 @@
 #!/bin/env bash
 rm $HOME/.bashrc
-
+git clone --recurse-submodules https://github.com/rexim/dotfiles.git tsoding
+sed -i "/gitconfig/d" tsoding/MANIFEST
+sed -i "s/20/9/" tsoding/.emacs
+bash tsoding/deploy.sh MANIFEST
+echo -e "\e[32m Emacs \e[0m: Done"
+echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 symlinkFile() {

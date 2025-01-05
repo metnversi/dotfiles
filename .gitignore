@@ -2,7 +2,8 @@
 /ttf-unhinted/
 /woff/
 /woff2/
-*.zip
-*.css
-.gitconfig
-nvim/pack/
+/*.zip
+/*.css
+/pref/nvim/lua/plugins/
+/betterlockscreen/
+/tsoding/

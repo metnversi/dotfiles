@@ -3,7 +3,7 @@
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
 mkdir -p ~/.local/bin
-mkidr -p ~/repos
+mkdir -p ~/repos
 installed() {
   echo -e "\e[32m[OK]\e[0m $1"
 }
@@ -17,7 +17,9 @@ exist() {
 
 check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
 if [[ -z $check ]]; then
-  echo "deb http://ftp.hk.debian.org/debian bookworm main non-free" | sudo tee -a /etc/apt/sources.list
+  echo -e "deb http://ftp.hk.debian.org/debian bookworm main non-free 
+  deb http://deb.debian.org/debian trixie main
+  deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
   sudo apt update
   installed "ftp mirror site"
 else
@@ -267,7 +269,7 @@ fi
 
 if ! exist "greenclip"; then
   wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
-  chmmod +x greenclip
+  chmod +x greenclip
   sudo mv greenclip /usr/bin/
   installed "greenclip"
 else
@@ -331,5 +333,3 @@ else
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   installed "omz"
 fi
-
-"$(dirname $0)/security/verify.sh"
