@@ -2,6 +2,7 @@
 pref/nvim|symlink|.config/nvim
 pref/.vimrc|symlink|.vimrc
 
+pref/hyprland.conf|symlink|.config/hypr/hyprland.conf
 pref/i3/config|symlink|.config/i3/config
 pref/i3/.i3status.conf|symlink|.i3status.conf
 pref/i3/dunstrc|symlink|.config/dunst/dunstrc

@@ -1,7 +1,7 @@
 required:
-  - curl wget nftables
-  - zsh python-pip
-  - tmux busybox-static
+  - curl wget nftables dnsmasq
+  - zsh python-pip ethtool smartmontools mandb
+  - tmux busybox-static base-devel
   - autoconf tlp xclip gcc make
   - valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog
