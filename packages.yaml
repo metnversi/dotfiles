@@ -1,16 +1,16 @@
 required:
-  - curl wget nftables dnsmasq
+  - curl wget nftables dnsmasq rofi
   - zsh python-pip ethtool smartmontools mandb
   - tmux busybox-static base-devel
-  - autoconf tlp xclip gcc make
+  - autoconf tlp xclip gcc make cmake
   - valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog
-  - yarn asciidoctor vim-gtk3 wofi
+  - yarn asciidoctor vim-gtk3 ninja meson pavucontrol
   - cowsay bat xsel thefuck zoxide fzf yazi which gcc
 
 gui:
-  - papirus-icon-theme
-  - emacs playerctl
+  - papirus-icon-theme waybar mpd
+  - emacs playerctl otf-font-awesome
   - lightdm i3 rofi i3status light
   - imagemagick feh gimp flameshot
   - okular mpd mpc vlc

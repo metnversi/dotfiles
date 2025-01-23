@@ -1,16 +1,17 @@
 #!/bin/env bash
-/usr/bin/redshift -m randr -P -0 400
+/usr/local/bin/wlsunset -l 39.9 -L 116.3
 betterlockscreen -w dim
 xset -b
 
 #source ~/.fehbg
 betterlockscreen -w dim
-           source ~/.fehbg
+source ~/.fehbg
 betterlockscreen -w dim
-           source ~/.fehbg
+source ~/.fehbg
 betterlockscreen -w dim
-           source ~/.fehbg
+source ~/.fehbg
 betterlockscreen -w dim
-           source ~/.fehbg
+source ~/.fehbg
 betterlockscreen -w dim
-           source ~/.fehbg
+source ~/.fehbg
+/usr/local/bin/wlsunset -l 39.9 -L 116.3

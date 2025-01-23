@@ -139,6 +139,7 @@ alias sedit='sudo systemctl edit'
 alias i33='vim ~/.config/i3/config'
 alias enf='sudo vim /etc/nftables.conf'
 alias vis='sudo virsh list --all'
+alias red='wlsunset -l 39.9 -L 116.3 & && disown'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 # Edit .zshrc and add this line
 export PATH=$HOME/.config/rofi/scripts:$PATH
@@ -149,3 +150,4 @@ export NVM_DIR="$HOME/.nvm"
 #if command -v tmux >/dev/null 2>&1; then
 #    [ -z "$TMUX" ] && exec tmux
 #fi
+
