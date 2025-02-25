@@ -4,8 +4,14 @@ ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
 mkdir -p ~/.local/bin
 mkdir -p ~/repos
+
+if [[ $SHELL == "/bin/zsh" ]]; then
+  echo -e "Please run inside a bash shell. You can later use command \e[033mchsh -s /bin/zsh\e[0m to change default shell"
+  exit 1
+fi
 installed() {
   echo -e "\e[32m[OK]\e[0m $1"
+  source ~/.bashrc
 }
 skip() {
   echo -e "\e[31m[SKIP]\e[0m $1"
@@ -15,63 +21,49 @@ exist() {
   command -v "$1" >/dev/null 2>&1
 }
 
+is_installed() {
+  dpkg -l | grep -qw "$1"
+}
+
+check=$(grep -v ^# /etc/systemd/logind.conf | grep HandleLid)
+if [[ -z $check ]]; then
+  echo -e "HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore
+" | sudo tee -a /etc/systemd/logind.conf
+  installed 'Lid'
+else
+  skip 'Lid'
+fi
+
 check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
 if [[ -z $check ]]; then
   echo -e "deb http://ftp.hk.debian.org/debian bookworm main non-free 
-  deb http://deb.debian.org/debian trixie main
-  deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
+  deb http://ftp.us.debian.org/debian $(lsb_release -c | awk '{print $2}') main non-free
+  deb http://deb.debian.org/debian $(lsb_release -c | awk '{print $2}') main" | sudo tee -a /etc/apt/sources.list
   sudo apt update
   installed "ftp mirror site"
 else
   skip "ftp mirror size"
 fi
-if [[ -e /var/lib/AccountsService/icons/anna.png ]]; then
-  skip "avatar anna"
+
+if [[ -e "/var/lib/AccountsService/icons/$USER.png" ]]; then
+  skip "avatar $USER"
 else
-  sudo -E cp "$WORKDIR/resource/anna.png" /var/lib/AccountsService/icons/
+  sudo -E cp "$WORKDIR/asset/lisa.png" /var/lib/AccountsService/icons/lisa.png
   echo -e "[org.freedesktop.DisplayManager.AccountsService]
-BackgroundFile='/home/anna/Pictures/bg.jpg'
+BackgroundFile='/home/$USER/Pictures/bg.jpg'
    
 [User]
 Session=lightdm-xsession
 XSession=i3
-Icon=/var/lib/AccountsService/icons/anna.png
-SystemAccount=false" | sudo tee /var/lib/AccountsService/users/anna
-  installed "avatar anna"
+Icon=/var/lib/AccountsService/icons/$USER.png
+SystemAccount=false" | sudo tee /var/lib/AccountsService/users/lisa
+  installed "avatar $USER"
 fi
 
 echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for required packages, gui and optional packages!"
-#extract_section() {
-#  local section=$1
-#  awk -v section="$section" '
-#    $0 ~ section {flag=1; next}
-#    $0 ~ /^ *-/ && flag {print $2; next}
-#    $0 !~ /^ *-/ && flag {flag=0}
-#    ' packages.yaml
-#}
-#
-#required_packages=$(extract_section "required:" | paste -sd ' ' -)
-#gui_packages=$(extract_section "gui:" | paste -sd ' ' -)
-#optional_packages=$(extract_section "optional:" | paste -sd ' ' -)
-#read -p $'\033[31m\033[1m[WARNING]\033[0m Do you want optional [Y/n]?' include_optional
-#
-#if [[ "$include_optional" =~ ^[Yy]$ || -z "$include_optional" ]]; then
-#  if [ "$(systemctl get-default)" = "graphical.target" ]; then
-#    output="$required_packages $gui_packages $optional_packages"
-#  else
-#    output="$required_packages $optional_packages"
-#  fi
-#else
-#  if [ "$(systemctl get-default)" = "graphical.target" ]; then
-#    output="$required_packages $gui_packages"
-#  else
-#    output="$required_packages"
-#  fi
-#fi
-#
-#sudo apt install -y --ignore-missing $output
-#sudo apt autoremove
-#
+
 extract_section() {
   local section=$1
   awk -v section="$section" '
@@ -79,10 +71,6 @@ extract_section() {
     $0 ~ /^ *-/ && flag {print $2; next}
     $0 !~ /^ *-/ && flag {flag=0}
     ' packages.yaml
-}
-
-is_installed() {
-  dpkg -l | grep -qw "$1"
 }
 
 required_packages=$(extract_section "required:" | paste -sd ' ' -)
@@ -112,13 +100,10 @@ for pkg in $packages; do
 done
 
 if [ -n "$packages_to_install" ]; then
-  sudo apt install -y --ignore-missing $packages_to_install
+  sudo apt install -y $packages_to_install
 else
   echo "All packages are already installed."
 fi
-
-sudo apt autoremove
-#echo -e "\033[33m[WARNING]\033[0m Some packages maybe missing due to different naming."
 
 if fc-list | grep -i "Iosevka" >/dev/null; then
   skip "Iosevka"
@@ -145,11 +130,11 @@ else
   skip "tpm"
 fi
 
-if ! exist "/opt/nvim-linux64/bin/nvim"; then
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+if ! exist "nvim"; then
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
   sudo rm -rf /opt/nvim
-  sudo tar -C /opt -xzf nvim-linux64.tar.gz
-  rm nvim-linux64.tar.gz
+  sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+  rm nvim-linux-x86_64.tar.gz
   installed "nvim"
 else
   skip "nvim"
@@ -185,16 +170,12 @@ else
   installed "nodejs"
 fi
 
-#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-#nvm install 20
-
-#curl -sS https://starship.rs/install.sh | sh -s -- -y
-if exist "starship"; then
-  skip "starship"
-else
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
-  installed "starship"
-fi
+#if exist "starship"; then
+#  skip "starship"
+#else
+#  curl -sS https://starship.rs/install.sh | sh -s -- -y
+#  installed "starship"
+#fi
 
 if ! exist "bun"; then
   curl -fsSL https://bun.sh/install | bash
@@ -213,6 +194,7 @@ install_package() {
   case "$1" in
   brew)
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    bash
     ;;
   *)
     brew install "$1"
@@ -234,7 +216,7 @@ done
 #brew install fzf
 #brew install yazi
 if ! exist "ct"; then
-  pip3 install chromaterm
+  pipx install chromaterm
   installed "chromaterm"
 else
   skip "chromaterm"
@@ -277,7 +259,9 @@ else
 fi
 
 if ! exist "betterlockscreen"; then
+  echo "please build i3lock-color from source first!"
   git clone https://github.com/betterlockscreen/betterlockscreen.git
+  git clone https://github.com/Raymo111/i3lock-color.git
   bash i3lock-color/install-i3lock-color.sh
   wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | sudo bash -s system
   echo -e "betterlockscreen -w dim
@@ -306,30 +290,31 @@ else
 fi
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
 
-if [[ $DESKTOP_SESSION == 'gnome' ]]; then
-  if [[ -d "~/.local/share/icons/WhiteSur" ]]; then
-    git clone https://github.com/jothi-prasath/gnomintosh.git ~/repos/gnomintosh
-    chmod +x ~/repos/gnomintosh/main.sh
-    original_dir=$(pwd)
-    (
-      cd ~/repos/gnomintosh
-      ./main.sh
-    )
-    cd "$original_dir"
-  fi
-else
-  skip "gnome macOS theme"
-  echo "You may change desktop session to gnome to update this."
-fi
+#if [[ $DESKTOP_SESSION == 'gnome' ]]; then
+#  if [[ -d "~/.local/share/icons/WhiteSur" ]]; then
+#    git clone https://github.com/jothi-prasath/gnomintosh.git ~/repos/gnomintosh
+#    chmod +x ~/repos/gnomintosh/main.sh
+#    original_dir=$(pwd)
+#    (
+#      cd ~/repos/gnomintosh
+#      ./main.sh
+#    )
+#    cd "$original_dir"
+#  fi
+#else
+#  skip "gnome macOS theme"
+#  echo "You may change desktop session to gnome to update this."
+#fi
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
   skip "omz"
 else
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  mkdir -p ~/.oh-my-zsh/custom
   git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
   git clone https://github.com/oldratlee/hacker-quotes.git ~/.oh-my-zsh/custom/plugins/hacker-quotes
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   installed "omz"
 fi

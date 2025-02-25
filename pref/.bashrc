@@ -9,6 +9,8 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 HISTTIMEFORMAT="%F %T "
 shopt -s checkwinsize
+bind 'TAB:menu-complete'
+bind 'set show-all-if-ambiguous on'
 
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
@@ -17,7 +19,7 @@ case "$TERM" in
 xterm-color | *-256color) color_prompt=yes ;;
 esac
 
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -33,7 +35,8 @@ fi
 if [ "$color_prompt" = yes ]; then
   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 case "$TERM" in
@@ -54,23 +57,6 @@ if [ -x /usr/bin/dircolors ]; then
   #alias egrep='egrep --color=auto'
 fi
 
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-alias ll='ls -lrta'
-alias la='ls -a'
-alias ld='ls -ld'
-alias l='ls -CF'
-alias clr='clear'
-alias clea='clear'
-alias gg='google-chrome-stable &'
-alias vim='nvim'
-alias ff='firefox &'
-alias cat='bat --theme="Catppuccin Latte" -p '
-
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
-
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
@@ -84,7 +70,6 @@ if ! shopt -oq posix; then
 fi
 export LS_COLORS="di=34:fi=37"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -102,38 +87,54 @@ case ":$PATH:" in
 esac
 
 #/home/$USER/welcome.sh
-VDPAU_DRIVER=nvidia
-EDITOR=/opt/nvim-linux64/bin/
+#VDPAU_DRIVER=nvidia
 
-PATH=/home/$USER/.nimble/bin:/opt/nvim-linux64/bin:/home/$USER/bin:/usr/local/bin:/bin:/usr/local/games:/usr/games:/usr/bin:/snap/bin:/usr/sbin:/home/$USER/.local/bin:/usr/local/go/bin
-PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin"
-. "$HOME/.cargo/env"
-eval "$(starship init bash)"
-eval "$(fzf --bash)"
-eval "$(zoxide init bash)"
-#eval $(thefuck --alias)
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #source <(kubectl completion bash)
 
-# pnpm
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+export BUN_INSTALL="$HOME/.bun"
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+export KUBECONFIG="./kubeconfig"
+export WEZTERM_LOG=error
+export GTK_THEME="Adwaita"
+export RUST_BACKTRACE=full
+export LESS='-R'
+export TALOSCONFIG="./talosconfig"
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
-#ssh() { TERM=xterm-256color /usr/bin/ssh "$@" | ct; }
-alias mssh='ct multipass shell'
-alias ssh='TERM=xterm-256color ct ssh'
-# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-
+export WEZTERM_LOG=error
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+export ZOXIDE_CMD_OVERRIDE="cd"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin
+PATH=$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin:/home/$USER/cmake/bin
+PATH=$PATH:/usr/local/go/bin:/home/$USER/.cargo/bin
+export PATH="$HOME/.config/rofi/scripts:$BUN_INSTALL/bin:/opt/nvim-linux-x86_64/bin:$HOME/go/bin:$PATH"
 
-export WEZTERM_LOG=error
+source $HOME/.nvm/nvm.sh
+eval "$(zoxide init bash)"
+eval "$(fzf --bash)"
 alias sl='sudo systemctl enable --now libvirtd'
 alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
 alias sss='sudo systemctl status'
@@ -143,7 +144,14 @@ alias ddd='sudo systemctl disable --now'
 alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-PATH="$PATH:/home/$USER/.config/rofi/scripts:/home/$USER/myvenv/bin"
+alias ll='ls -lrta'
+alias la='ls -a'
+alias ld='ls -ld'
+alias l='ls -CF'
+alias clr='clear'
+alias clea='clear'
+alias gg='google-chrome-stable &'
+alias vim='nvim'
+alias ff='firefox &'
+alias cat='bat --theme="Catppuccin Latte" -p '
+bash /home/$USER/.welcome

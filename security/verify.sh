@@ -1,5 +1,5 @@
 #!/bin/env bash
-source install.sh
+source ../install.sh
 aidedb=/var/lib/aide/aide.db.gz
 aidedb_out=/var/lib/aide/aide.db.new.gz
 audit1="-a always,exit -S all -F exe=/usr/bin/sudo -F key=sudo-used"

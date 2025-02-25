@@ -33,5 +33,5 @@ yellow = "0xf1ff5e"
 #foreground = "0xffffff"
 
 [colors.selection]
-background = "0x3c4048"
+background = "0x111111"
 foreground = "0xffffff"

@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --no-fehbg --bg-fill --no-xinerama '/home/anna/.cache/betterlockscreen/current/wall_dim.png' 
+feh --no-fehbg --bg-fill --no-xinerama '/home/lisa/.cache/betterlockscreen/current/wall_dim.png' 

@@ -1,8 +1,8 @@
 [org.freedesktop.DisplayManager.AccountsService]
-BackgroundFile='/home/anna/Pictures/bg.jpg'
+BackgroundFile='/home/lisa/Pictures/bg.jpg'
 
 [User]
 Session=lightdm-xsession
 XSession=i3
-Icon=/var/lib/AccountsService/icons/anna.png
+Icon=/var/lib/AccountsService/icons/lisa.png
 SystemAccount=false

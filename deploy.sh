@@ -3,10 +3,13 @@ rm $HOME/.bashrc
 git clone --recurse-submodules https://github.com/rexim/dotfiles.git tsoding
 sed -i "/gitconfig/d" tsoding/MANIFEST
 sed -i "s/20/9/" tsoding/.emacs
+sed -i "s/Iosevka-/Iosevka Nerd Font-/" tsoding/.emacs
 bash tsoding/deploy.sh MANIFEST
-echo -e "\e[32m Emacs \e[0m: Done"
+echo -e "\e[32m[Emacs]\e[0m Done"
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
-find . -type f -exec sed -i 's/anna/'"$(whoami)"'/g' {} +
+find . -type f -exec sed -i 's/lisa/'"$(whoami)"'/g' {} +
+mv ./asset/lisa.png ./asset/"$(whoami)".png
+echo "echo 'Hello World'" >~/.welcome
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 symlinkFile() {
@@ -24,7 +27,7 @@ deployManifest() {
       symlinkFile "$filename" "$destination"
       ;;
     *)
-      echo -e "\033[31m[SKIP]\033[0m $operation."
+      echo -e "\033[31m[SKIP]\033[0m $filename"
       ;;
     esac
   done <"$SCRIPT_DIR/$1"
