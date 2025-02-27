@@ -156,6 +156,7 @@ source $ZSH/oh-my-zsh.sh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 alias ll='ls -lrta'
+alias ls='ls --color=auto'
 alias cc='google-chrome-stable &'
 alias vim='nvim'
 alias ff='firefox &'
@@ -180,5 +181,10 @@ alias vis='sudo virsh list --all'
 alias svis='sudo virsh start'
 alias dvis='sudo virsh destroy'
 alias uvis='sudo virsh undefine --nvram --remove-all-storage'
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 source $HOME/.nvm/nvm.sh

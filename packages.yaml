@@ -12,7 +12,7 @@ required:
   - libconfig-dev libdbus-1-dev libegl-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libxcb1-dev  libxcb-damage0-dev
   - libxcb-glx0-dev libxcb-present-dev  libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev
   - libxcb-xfixes0-dev meson ninja-build uthash-dev
-  - asciidoctor vim-gtk3 ruby-dev
+  - asciidoctor vim-gtk3 ruby-dev apt-file
   - cowsay bat xsel imagemagick pipx
   - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
 

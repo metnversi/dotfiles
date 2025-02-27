@@ -50,7 +50,7 @@ fi
 if [[ -e "/var/lib/AccountsService/icons/$USER.png" ]]; then
   skip "avatar $USER"
 else
-  sudo -E cp "$WORKDIR/asset/lisa.png" /var/lib/AccountsService/icons/lisa.png
+  sudo -E cp "$WORKDIR/asset/lisa.png" "/var/lib/AccountsService/icons/$USER.png"
   echo -e "[org.freedesktop.DisplayManager.AccountsService]
 BackgroundFile='/home/$USER/Pictures/bg.jpg'
    
@@ -146,13 +146,6 @@ else
   skip "cargo"
 fi
 
-#cargo install --locked yazi-fm yazi-cli
-#if cargo install --list | grep -q "yazi-fm"; then
-#  echo "yazi-fm is already installed."
-#else
-#  echo "Installing yazi-fm..."
-#  cargo install --locked yazi-fm
-#fi
 if exist "yazi"; then
   skip "yazi"
 else
@@ -183,13 +176,6 @@ if ! exist "bun"; then
 else
   skip "bun"
 fi
-#echo -e "\033[31m\033[1m ---Bat theme!--- \033[0m"
-#mkdir -p "$(bat --config-dir)/themes"
-#wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Latte.tmTheme
-#wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Frappe.tmTheme
-#wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Macchiato.tmTheme
-#wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme
-#bat cache --build
 install_package() {
   case "$1" in
   brew)
@@ -210,11 +196,6 @@ for pkg in brew thefuck zoxide fzf yazi batcat; do
     skip "$pkg"
   fi
 done
-#/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#brew install thefuck
-#brew install zoxide
-#brew install fzf
-#brew install yazi
 if ! exist "ct"; then
   pipx install chromaterm
   installed "chromaterm"
