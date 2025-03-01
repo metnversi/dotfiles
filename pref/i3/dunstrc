@@ -13,8 +13,8 @@
     follow = mouse
 
     # width = (0, 300)
-    width = (240,280)
-    height = 300
+    width = (240,340)
+    height = 400
     origin = bottom-right
     offset = 10x50
     scale = 0
@@ -48,7 +48,7 @@
     # Set to 0 to disable.
     # idle_threshold = 120
 
-    font = Iosevka Nerd Font 10
+    font = Iosevka Nerd Font 14
     line_height = 0
 
     # full: Allow a small subset of html markup in notifications:
@@ -79,7 +79,7 @@
     show_indicators = yes
 
     enable_recursive_icon_lookup = true
-    icon_theme = Adwaita
+    icon_theme = WhiteSur
     icon_position = left
     min_icon_size = 32
     max_icon_size = 128

@@ -27,11 +27,10 @@ red = "0xff6e5e"
 #white = "0xf0f4fa"
 yellow = "0xf1ff5e"
 
-# this can make your term fcking bright :)
-#[colors.primary]
-#background = "0x16181a"
-#foreground = "0xffffff"
+[colors.primary]
+background = "0x000000" #16181a
+foreground = "0xffffff"
 
 [colors.selection]
-background = "0x3c4048"
+background = "0x323568" #323568
 foreground = "0xffffff"
