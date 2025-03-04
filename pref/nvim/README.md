@@ -10,4 +10,4 @@ To load icon, u need to install a nerd fonts, refer [there](https://www.nerdfont
 - [Nvim telescope](https://github.com/nvim-telescope/telescope.nvim)
 - [Copilot](https://github.com/github/copilot.vim.git)
 - [Copilot Chat](https://github.com/CopilotC-Nvim/CopilotChat.nvim): require paid license
-  <img src="../../resource/vim.png" alt="My Image2" />
+  <img src="../asset/vim.png" alt="Vim" />

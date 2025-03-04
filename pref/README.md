@@ -16,11 +16,10 @@ Read those documents below and install yourself.
 ## Plugin for zsh
 
 NOTE: It should be installed as oh-my-zsh plugin!
-
 - [hacker-quotes](https://github.com/oldratlee/hacker-quotes?tab=readme-ov-file): try to be cool :)
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md): uh, color for bin?
 - [zoxide](https://github.com/ajeetdsouza/zoxide): smart cd, as they said
 - [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration): smart find
 - [awesome-zsh-plugins](https://github.com/unixorn/awesome-zsh-plugins?tab=readme-ov-file#ansible-role-zsh): list of common zsh plugin
 
-  <img src="../resource/shell.png" alt="terminal picture" />
+<img src="./asset/shell.png" alt="terminal picture" />
