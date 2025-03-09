@@ -40,6 +40,8 @@ HandleLidSwitchDocked=ignore
 else
   skip 'Lid'
 fi
+exist dyt && skip "dyt (yt mp3)" || { echo -e '#!/bin/env bash\nyt-dlp -f bestaudio --extract-audio --audio-format mp3 "$1"' | sudo tee /usr/bin/dyt >/dev/null && sudo chmod 755 /usr/bin/dyt && installed "dyt (YouTube MP3 script)"; }
+exist cyt && skip "cyt (yt mp4)" || { echo -e '#!/bin/env bash\nyt-dlp -f bestvideo+bestaudio --merge-output-format mp4 "$1"' | sudo tee /usr/bin/cyt >/dev/null && sudo chmod 755 /usr/bin/cyt && installed "cyt (YouTube MP4 script)"; }
 
 check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
 if [[ -z $check ]]; then
@@ -72,7 +74,8 @@ echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for requ
 required_packages=$(extract_section "required:")
 gui_packages=$(extract_section "gui:")
 optional_packages=$(extract_section "optional:")
-read -p $'\033[31m\033[1m[WARNING]\033[0m Do you want optional [Y/n]?' include_optional
+#read -p $'\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n$optional_packages [Y/n]?' include_optional
+read -p "$(echo -e '\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n'"$optional_packages"' [Y/n]? ')" include_optional
 [[ "$include_optional" =~ ^[Yy]$ || -z "$include_optional" ]] && include_optional=true || include_optional=false
 
 is_graphical=$([ "$(systemctl get-default)" = "graphical.target" ] && echo true || echo false)

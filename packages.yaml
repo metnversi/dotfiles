@@ -1,6 +1,6 @@
 required:
   - curl wget nftables rename
-  - zsh postcss
+  - zsh postcss yt-dlp
   - tmux busybox-static
   - autoconf tlp xclip gcc make libimlib2-dev
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
