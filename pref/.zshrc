@@ -145,7 +145,7 @@ function dtalos  (){
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 #typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 source $ZSH/oh-my-zsh.sh
-source ~/.secret
+[[ -f ~/.secret ]] && source ~/.secret
 #fortune | cowsay | hacker-quotes
 #export LESSOPEN='|~/.lessfilter %s'
 
@@ -164,10 +164,12 @@ alias cat='bat -p'
 alias sl='sudo systemctl enable --now libvirtd'
 alias ssh='TERM=xterm-256color ssh'
 alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
+alias cvpn='sudo systemctl enable --now vpnagentd && /opt/cisco/anyconnect/bin/vpn'
 alias sss='sudo systemctl status'
 alias eee='sudo systemctl enable --now'
 alias rrr='sudo systemctl restart'
 alias ddd='sudo systemctl disable --now'
+alias vid='ffplay -x 80 -y 24'
 alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'

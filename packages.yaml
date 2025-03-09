@@ -17,11 +17,11 @@ required:
   - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
 
 gui:
-  - x11-utils xorg papirus-icon-theme
+  - x11-utils xorg papirus-icon-theme xdg-utils
   - emacs
   - lightdm i3 rofi i3status libnotify-bin light
   - imagemagick feh gimp flameshot
-  - okular mpd mpc vlc
+  - okular mpd mpc vlc wildmidi
   - libgtk-3-dev
   - acpi pulseaudio-utils
 
