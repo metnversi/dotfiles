@@ -1,7 +1,7 @@
 required:
   - curl wget nftables rename
-  - zsh postcss yt-dlp
-  - tmux busybox-static
+  - zsh postcss yt-dlp mtp-tools
+  - tmux busybox-static adb ansible
   - autoconf tlp xclip gcc make libimlib2-dev
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
