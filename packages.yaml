@@ -1,7 +1,7 @@
 required:
   - curl wget nftables rename
-  - zsh postcss yt-dlp
-  - tmux busybox-static
+  - zsh postcss yt-dlp mtp-tools
+  - tmux busybox-static adb ansible
   - autoconf tlp xclip gcc make libimlib2-dev
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
@@ -11,17 +11,17 @@ required:
   - libxkbcommon-dev libxkbcommon-x11-dev libjpeg-dev
   - libconfig-dev libdbus-1-dev libegl-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libxcb1-dev  libxcb-damage0-dev
   - libxcb-glx0-dev libxcb-present-dev  libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev
-  - libxcb-xfixes0-dev meson ninja-build uthash-dev
-  - asciidoctor vim-gtk3 ruby-dev apt-file
-  - fortune cowsay bat xsel imagemagick pipx
+  - libxcb-xfixes0-dev meson ninja-build uthash-dev aptitude
+  - asciidoctor vim-gtk3 ruby-dev apt-file openvswitch-switch python3-sphinx
+  - fortune cowsay bat xsel pipx libelf-dev
   - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
 
 gui:
   - x11-utils xorg papirus-icon-theme xdg-utils
-  - emacs
+  - emacs default-jre imagemagick
   - lightdm i3 rofi i3status libnotify-bin light
   - imagemagick feh gimp flameshot
-  - okular mpd mpc vlc wildmidi
+  - okular qtspeech5-speechd-plugin mpd mpc vlc wildmidi
   - libgtk-3-dev
   - acpi pulseaudio-utils
 

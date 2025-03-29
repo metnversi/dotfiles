@@ -20,6 +20,7 @@ urls=(
     "https://discuss.kubernetes.io/"
     "https://cloud.redhat.com/learn"
     "https://developers.redhat.com/blog"
+    "https://kubernetes.io/blog/"
 )
 for url in "${urls[@]}"; do
     firefox "$url" &
@@ -31,7 +32,8 @@ https://www.phoronix.com/
 https://sadservers.com/scenarios
 https://discuss.kubernetes.io/
 https://cloud.redhat.com/learn
-https://developers.redhat.com/blog\e[0m
+https://developers.redhat.com/blog
+https://kubernetes.io/blog/\e[0m
 If you would like to open all of them in fifefox, press (i3)\e[32m Cmd+A\e[0m
 If you would like to open just one, press (alacritty)\e[32m Ctrl+Shift+o\e[0m, then the text appeared'" >~/.welcome
 
