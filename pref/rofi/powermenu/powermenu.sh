@@ -22,17 +22,17 @@ host=$(hostname)
 hibernate='󰒲'
 shutdown='󰐥'
 reboot=''
-lock=''
-suspend=''
-logout=''
-yes=''
-no=''
+lock=''
+suspend='󰤄'
+logout='󰍃'
+yes=''
+no=''
 
 # Rofi CMD
 rofi_cmd() {
   rofi -dmenu \
-    -p " $USER@$host" \
-    -mesg " Last Login: $lastlogin |  Uptime: $uptime" \
+    -p "  $USER@$host" \
+    -mesg "  Last Login: $lastlogin |   Uptime: $uptime" \
     -theme ${dir}/${theme}.rasi
 }
 

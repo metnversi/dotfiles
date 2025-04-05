@@ -8,10 +8,10 @@ export ZSH="$HOME/.oh-my-zsh"
 CASE_SENSITIVE="true"
 #ENABLE_CORRECTION="true"
 
-zstyle ':omz:update' mode auto     
+zstyle ':omz:update' mode disable    
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # zstyle ':omz:update' frequency 13
-# zstyle ':omz:update' mode disable
+# zstyle ':omz:update' mode auto
 # HYPHEN_INSENSITIVE="true"
 # DISABLE_MAGIC_FUNCTIONS="true"
 # DISABLE_LS_COLORS="true"
