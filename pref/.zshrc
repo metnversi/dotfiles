@@ -180,6 +180,11 @@ alias svis='sudo virsh start'
 alias dvis='sudo virsh destroy'
 alias uvis='sudo virsh undefine --nvram --remove-all-storage'
 alias bathelp='bat --plain --language=help'
+alias docker='sudo docker'
+alias exi='sudo docker exec -it'
+alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
+alias gg='google-chrome'
+alias dpip="docker ps -q | xargs -n 1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 function help() {
     "$@" --help 2>&1 | bathelp
 }

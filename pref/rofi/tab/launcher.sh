@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 dir="$HOME/.config/rofi/tab"
-theme='style-9'
+theme='tab'
 
 ## Run
 rofi \

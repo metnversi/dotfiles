@@ -48,6 +48,7 @@ if [[ -z $check ]]; then
   echo -e "deb http://ftp.hk.debian.org/debian bookworm main non-free 
   deb http://ftp.hk.debian.org/debian $(lsb_release -c | awk '{print $2}') main non-free
   deb http://deb.debian.org/debian $(lsb_release -c | awk '{print $2}') main" | sudo tee -a /etc/apt/sources.list
+  sudo dpkg --add-architecture i386
   sudo apt update
   installed "ftp mirror site"
 else
@@ -75,8 +76,8 @@ required_packages=$(extract_section "required:")
 gui_packages=$(extract_section "gui:")
 optional_packages=$(extract_section "optional:")
 #read -p $'\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n$optional_packages [Y/n]?' include_optional
-read -p "$(echo -e '\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n'"$optional_packages"' [Y/n]? ')" include_optional
-[[ "$include_optional" =~ ^[Yy]$ || -z "$include_optional" ]] && include_optional=true || include_optional=false
+read -p "$(echo -e '\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n'"$optional_packages"' [y/N]? ')" include_optional
+[[ "$include_optional" =~ ^[Nn]$ || -z "$include_optional" ]] && include_optional=false || include_optional=true
 
 is_graphical=$([ "$(systemctl get-default)" = "graphical.target" ] && echo true || echo false)
 packages="$required_packages"

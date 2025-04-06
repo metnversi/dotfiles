@@ -58,9 +58,10 @@ workspace 2 output $second_monitor
 workspace 3 output $first_monitor
 workspace 4 output $first_monitor
 
-set $ws1 "1:_INIT_"
-set $ws2 "2:_MAIN_"
-set $ws3 "3:_LAB_"
+set $ws1 "1"
+set $ws2 "2"
+#set $ws3 "3:_LAB_"
+set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
@@ -180,6 +181,7 @@ bindsym Shift+Print exec --no-startup-id flameshot screen
 bindsym $mod+g exec --no-startup-id /home/lisa/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+c exec --no-startup-id /usr/bin/firefox-esr
+bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
 bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
 bindsym $mod+a exec --no-startup-id /bin/bash /home/lisa/.run-web.sh
