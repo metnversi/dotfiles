@@ -51,8 +51,10 @@ bindsym $mod+space focus mode_toggle
 
 #bindsym $mod+d focus child
 
-set $first_monitor eDP-1
-set $second_monitor HDMI-1
+#set $first_monitor eDP-1
+#set $second_monitor HDMI-1
+set $first_monitor DP-4
+set $second_monitor HDMI-0
 workspace 1 output $second_monitor
 workspace 2 output $second_monitor
 workspace 3 output $first_monitor
@@ -158,11 +160,11 @@ bar {
 
 #bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#128D09' -sf '#EEEEEE' -fn 'Iosevka Nerd Font-10' -p 'dmenu prompt &gt;'"
 
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id nm-applet
+##exec --no-startup-id dex --autostart --environment i3
+#exec --no-startup-id nm-applet
 
 exec --no-startup-id /usr/bin/redshift -P -O 4000
-exec --no-startup-id /usr/bin/xrandr --output HDMI-1 --mode 1920x1080 --rate 165
+#exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
 exec --no-startup-id /usr/bin/xset -dpms
 exec --no-startup-id /usr/bin/xset s off
 exec --no-startup-id /usr/bin/xset b off
@@ -194,6 +196,7 @@ bindsym $mod+x exec --no-startup-id /home/lisa/.config/rofi/scripts/powermenu_t5
 bindsym Mod1+Tab exec --no-startup-id /home/lisa/.config/rofi/tab/launcher.sh
 
 bindsym $mod+Return exec /home/lisa/.cargo/bin/alacritty
+#bindsym $mod+Return exec /usr/bin/xterm
 #bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+Shift+Return exec /usr/bin/kitty
 bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme /home/lisa/.config/rofi/rounded-pink-dark.rasi

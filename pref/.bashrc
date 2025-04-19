@@ -172,3 +172,6 @@ export ZOXIDE_CMD_OVERRIDE="cd"
 eval "$(fzf --bash)"
 #eval "$(starship init bash)"
 eval "$(zoxide init bash)"
+
+# 
+#PS1='[\[\e[1;32m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]# '

@@ -3,12 +3,16 @@
 #####################################################################################################################
 ### This script can be run independently if the ./deploy.sh script is interrupted, or you cancel it by mistake. #####
 #####################################################################################################################
+set -o xtrace
+unset GREP_OPTIONS
+
 ORIGINAL_USER=$(logname)
 WORKDIR=$(pwd)
 mkdir -p ~/.local/bin
 mkdir -p ~/repos
+#rename 's/^(\d)\./0$1-/; y/A-Z/a-z/' *.md
 
-if [[ $SHELL == "/bin/zsh" ]]; then
+if [[ $SHELL != "/bin/bash" ]]; then
   echo -e "Please run inside a bash shell, or \e[32mexport SHELL=/bin/bash\e[0m before running the script."
   echo -e "You can later use command \e[033mchsh -s /bin/zsh\e[0m to change default shell to zsh for instance."
   exit 1
@@ -117,6 +121,7 @@ installations=(
   "! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun"
   "! exist ct && pipx install chromaterm && installed greenclip || skip chromaterm"
   "! exist greenclip && wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && install -m 0755 greenclip -d /usr/bin && installed greenclip || skip greenclip"
+  "[ ! -d \"$HOME/.vim/bundle\" && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall || skip Vundle"
 )
 
 for cmd in "${installations[@]}"; do
@@ -201,6 +206,31 @@ else
   skip "betterlockscreen"
 fi
 echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
+
+echo -e '#!/bin/bash
+urls=(
+    "https://lwn.net"
+    "https://www.phoronix.com/"
+    "https://sadservers.com/scenarios"
+    "https://discuss.kubernetes.io/"
+    "https://cloud.redhat.com/learn"
+    "https://developers.redhat.com/blog"
+    "https://kubernetes.io/blog/"
+)
+for url in "${urls[@]}"; do
+    firefox "$url" &
+done' >~/.run-web.sh
+echo -e "echo -e 'Hello World!
+Visit now:
+\e[034mhttps://lwn.net
+https://www.phoronix.com/
+https://sadservers.com/scenarios
+https://discuss.kubernetes.io/
+https://cloud.redhat.com/learn
+https://developers.redhat.com/blog
+https://kubernetes.io/blog/\e[0m
+If you would like to open all of them in fifefox, press (i3)\e[32m Cmd+A\e[0m
+If you would like to open just one, press (alacritty)\e[32m Ctrl+Shift+o\e[0m, then the text appeared'" >~/.welcome
 
 #if [[ $DESKTOP_SESSION == 'gnome' ]]; then
 #  if [[ -d "~/.local/share/icons/WhiteSur" ]]; then
