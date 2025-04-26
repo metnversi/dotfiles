@@ -26,16 +26,16 @@ HIST_STAMPS="dd.mm.yyyy"
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 export LANG=en_US.UTF-8
-if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
+#if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
 
 #if command -v tmux >/dev/null 2>&1; then
 #    [ -z "$TMUX" ] && exec tmux
 #fi
-[ -s "/home/lisa/.bun/_bun" ] && source "/home/lisa/.bun/_bun"
+[ -s "/home/rose/.bun/_bun" ] && source "/home/rose/.bun/_bun"
 
 export BUN_INSTALL="$HOME/.bun"
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -66,7 +66,7 @@ plugins=(
   git 
   hacker-quotes 
   zsh-autosuggestions 
-  zsh-syntax-highlighting 
+  #zsh-syntax-highlighting 
   direnv 
   thefuck 
   pyenv 
@@ -112,7 +112,7 @@ function ctalos() {
     name="k8s-control-$i"
     sudo virt-install --name "$name" \
       --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/lisa/iso/metal-amd64.iso \
+      --cdrom /home/rose/iso/metal-amd64.iso \
       --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
       --graphics vnc --vcpus 2 \
       --network bridge=virbr0 --noautoconsole \
@@ -124,7 +124,7 @@ function ctalos() {
     name="k8s-worker-$i"
     sudo virt-install --name "$name" \
       --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/lisa/iso/metal-amd64.iso \
+      --cdrom /home/rose/iso/metal-amd64.iso \
       --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
       --graphics vnc --vcpus 2 \
       --network bridge=virbr0 --noautoconsole \
@@ -154,7 +154,8 @@ complete -o nospace -C /usr/bin/terraform terraform
 alias ll='ls -lrta'
 alias ls='ls --color=auto'
 alias cc='google-chrome-stable &'
-alias vim='nvim'
+#alias vim='nvim'
+alias emacs='emacs -nw'
 alias ff='firefox &'
 alias bb='librewolf &'
 alias cf='fortune | cowsay'
@@ -195,3 +196,6 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+#source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source /home/rose/repos/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

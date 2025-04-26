@@ -23,6 +23,7 @@ pref/ncmpcpp/config|symlink|.config/ncmpcpp/config
 pref/mpd/mpd.conf|symlink|.config/mpd/mpd.conf
 pref/mpd/playlists|symlink|.config/mpd/playlists
 pref/kitty.conf|symlink|.config/kitty/kitty.conf
+pref/.emacs|symlink|.emacs
 
 pref/yazi|symlink|.config/yazi
 pref/rofi|symlink|.config/rofi

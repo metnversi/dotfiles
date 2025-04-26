@@ -13,8 +13,8 @@ sed -i "s/20/9/" tsoding/.emacs
 sed -i "s/Iosevka-/Iosevka Nerd Font-/" tsoding/.emacs
 bash tsoding/deploy.sh MANIFEST
 echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
-find . -type f -exec sed -i 's/lisa/'"$(whoami)"'/g' {} +
-if [[ -z "./pref/asset/$(whoami)".png ]]; then mv ./pref/asset/lisa.png ./pref/asset/"$(whoami)".png; fi
+find . -type f -exec sed -i 's/rose/'"$(whoami)"'/g' {} +
+if [[ -z "./pref/asset/$(whoami)".png ]]; then mv ./pref/asset/rose.png ./pref/asset/"$(whoami)".png; fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

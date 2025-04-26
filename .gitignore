@@ -8,3 +8,5 @@
 /betterlockscreen/
 /tsoding/
 /.gitconfig
+**/*database
+**/*.sql

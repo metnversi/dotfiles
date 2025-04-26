@@ -30,8 +30,8 @@ config.keys = {
 config.background = {
 	{
 		source = {
-			--File = "/home/lisa/Pictures/e7/harshetti.png",
-			File = "/home/lisa/Pictures/bg.png",
+			--File = "/home/rose/Pictures/e7/harshetti.png",
+			File = "/home/rose/Pictures/bg.png",
 		},
 		hsb = { brightness = 0.030 },
 	},

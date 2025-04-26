@@ -12,6 +12,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'preservim/vim-markdown'
 Plugin 'preservim/nerdtree'
 Plugin 'mhinz/vim-signify'
+Plugin 'stephpy/vim-yaml'
+Plugin 'bagrat/vim-buffet'
 Plugin 'ryanoasis/vim-devicons'
 call vundle#end()            
 filetype plugin indent on   
@@ -21,6 +23,7 @@ filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set relativenumber
 set ignorecase
 set incsearch
 set cinoptions=l1
@@ -39,6 +42,7 @@ autocmd FileType yml setlocal ai ts=2 sw=2 et
 
 autocmd BufEnter * if &filetype == "go" | setlocal noexpandtab
 autocmd BufNewFile,BufRead ?\+.c3 setf c
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_fenced_languages = ['csharp=cs','bash=sh','ini=dosini','shell=cpp']
@@ -47,4 +51,9 @@ let g:vim_markdown_frontmatter = 1
 let g:signify_vcs_list = ['git']
 
 map gf :e <cfile><CR>
-nnoremap <C-e> :NERDTreeToggle<CR>
+nnoremap <C-a> :NERDTreeToggle<CR>
+noremap <Tab> :bn<CR>
+noremap <S-Tab> :bp<CR>
+noremap <Leader><Tab> :Bw<CR>
+noremap <Leader><S-Tab> :Bw!<CR>
+noremap <C-t> :tabnew split<CR>

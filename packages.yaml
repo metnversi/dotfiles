@@ -22,7 +22,7 @@ gui:
   - lightdm i3 rofi i3status libnotify-bin light
   - imagemagick feh gimp flameshot
   - okular qtspeech5-speechd-plugin mpd mpc vlc wildmidi
-  - libgtk-3-dev
+  - libgtk-3-dev ddcutil
   - acpi pulseaudio-utils
 
 optional:

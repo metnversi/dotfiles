@@ -48,10 +48,16 @@ exist dyt && skip "dyt (yt mp3)" || { echo -e '#!/bin/env bash\nyt-dlp -f bestau
 exist cyt && skip "cyt (yt mp4)" || { echo -e '#!/bin/env bash\nyt-dlp -f bestvideo+bestaudio --merge-output-format mp4 "$1"' | sudo tee /usr/bin/cyt >/dev/null && sudo chmod 755 /usr/bin/cyt && installed "cyt (YouTube MP4 script)"; }
 
 check=$(grep -v ^# /etc/apt/sources.list | grep ftp)
+CODENAME=$(lsb_release -c | awk '{print $2}')
 if [[ -z $check ]]; then
-  echo -e "deb http://ftp.hk.debian.org/debian bookworm main non-free 
-  deb http://ftp.hk.debian.org/debian $(lsb_release -c | awk '{print $2}') main non-free
-  deb http://deb.debian.org/debian $(lsb_release -c | awk '{print $2}') main" | sudo tee -a /etc/apt/sources.list
+  echo -e "deb http://ftp.hk.debian.org/debian bookworm main contrib non-free non-free-firmware 
+  deb http://ftp.hk.debian.org/debian $CODENAME main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian/ $CODENAME main non-free-firmware
+  deb http://security.debian.org/debian-security $CODENAME-security main non-free-firmware
+  deb-src http://security.debian.org/debian-security $CODENAME-security main non-free-firmware
+
+  deb http://deb.debian.org/debian/ $CODENAME-updates main non-free-firmware
+  deb-src http://deb.debian.org/debian/ $CODENAME-updates main non-free-firmware" | sudo tee -a /etc/apt/sources.list
   sudo dpkg --add-architecture i386
   sudo apt update
   installed "ftp mirror site"
@@ -62,7 +68,7 @@ fi
 if [[ -e "/var/lib/AccountsService/icons/$USER.png" ]]; then
   skip "avatar $USER"
 else
-  sudo -E cp "$WORKDIR/asset/lisa.png" "/var/lib/AccountsService/icons/$USER.png"
+  sudo -E cp "$WORKDIR/pref/asset/rose.png" "/var/lib/AccountsService/icons/$USER.png"
   echo -e "[org.freedesktop.DisplayManager.AccountsService]
 BackgroundFile='/home/$USER/Pictures/bg.jpg'
    
@@ -70,7 +76,7 @@ BackgroundFile='/home/$USER/Pictures/bg.jpg'
 Session=lightdm-xsession
 XSession=i3
 Icon=/var/lib/AccountsService/icons/$USER.png
-SystemAccount=false" | sudo tee /var/lib/AccountsService/users/lisa
+SystemAccount=false" | sudo tee /var/lib/AccountsService/users/rose
   installed "avatar $USER"
 fi
 
@@ -122,6 +128,8 @@ installations=(
   "! exist ct && pipx install chromaterm && installed greenclip || skip chromaterm"
   "! exist greenclip && wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && install -m 0755 greenclip -d /usr/bin && installed greenclip || skip greenclip"
   "[ ! -d \"$HOME/.vim/bundle\" && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall || skip Vundle"
+  "[ ! -d \"$HOME/.vim/colors\" ] && curl https://raw.githubusercontent.com/tomasr/molokai/refs/heads/master/colors/molokai.vim > ~/.vim/colors/molokai.vim || skip molokai"
+  "[ ! -d \"$HOME/.vim/pack/css-color\" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color || skip css-color"
 )
 
 for cmd in "${installations[@]}"; do
@@ -132,7 +140,6 @@ install_brew_package() {
   case "$1" in
   brew)
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    bash
     ;;
   *)
     brew install "$1"

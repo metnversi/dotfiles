@@ -97,11 +97,11 @@ alias ll='ls -lrta'
 alias la='ls -a'
 alias ld='ls -ld'
 alias l='ls -CF'
-alias vim='nvim'
 alias ff='firefox &'
 alias cd='z'
 alias ls='ls --color=auto'
-alias vim='nvim'
+#alias vim='nvim'
+alias emacs='emacs -nw'
 alias bb='brave-browser'
 alias cf='fortune | cowsay'
 alias aa='ansible-playbook'
@@ -175,3 +175,12 @@ eval "$(zoxide init bash)"
 
 # 
 #PS1='[\[\e[1;32m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]# '
+. "$HOME/.cargo/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+  #export PS1='[🌐 \u@\h:\w\]$ '
+  export PS1='\[\e[1;32m\](🌐SSH)\[\e[0m\][\[\e[1;35m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]$ '
+fI
