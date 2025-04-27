@@ -9,15 +9,6 @@
 (load "~/.emacs.rc/org-mode-rc.el")
 (load "~/.emacs.rc/autocommit-rc.el")
 
-;;(load "~/.emacs.rc/color-theme.el")
-;;(add-to-list 'load-path "~/.emacs.rc/color-theme.el")
-;;(require 'color-theme)
-;;(eval-after-load "color-theme"
-;;  '(progn
-;;     (color-theme-initialize)
-;;     (color-theme-hober)))
-
-
 ;;; Appearance
 (defun rc/get-default-font ()
   (cond
@@ -32,14 +23,16 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 
-;;(require 'color-theme)
-;;(color-theme-initialize)
-;;(color-theme-robin-hood)
 (rc/require-theme 'gruber-darker)
 ;;(load "~/.emacs-molokai.el")
 ;;(color-theme-molokai)
 ;;(rc/require-theme 'zenburn)
 ;;(load-theme 'solarized-dark t)
+(use-package outline-magic
+  :after markdown-mode
+  :hook (markdown-mode . outline-minor-mode)
+  :bind (:map outline-minor-mode-map
+              ("<tab>" . outline-cycle)))  ;; make Tab collapse/expand
 
 (unless (package-installed-p 'vimrc-mode)
   (package-refresh-contents)
@@ -52,6 +45,9 @@
 
 (eval-after-load 'zenburn
   (set-face-attribute 'line-number nil :inherit 'default))
+
+;;(add-to-list 'auto-mode-alist '(".*" . python-mode))
+(add-to-list 'auto-mode-alist '("^[^.]+\\'" . conf-mode))
 
 ;;; ido
 (rc/require 'smex 'ido-completing-read+)
@@ -226,10 +222,7 @@
 ;;; http://stackoverflow.com/questions/13794433/how-to-disable-autosave-for-tramp-buffers-in-emacs
 (setq tramp-auto-save-directory "/tmp")
 
-;;; powershell
-(rc/require 'powershell)
-(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode))
-(add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
+;;(global-set-key (kbd "C-x C-f") (lambda () (interactive) (find-file "~")) )
 
 ;;; eldoc mode
 (defun rc/turn-on-eldoc-mode ()
@@ -319,13 +312,6 @@
  'rfc-mode
  'sml-mode
  )
-
-(use-package tree-sitter
-  :ensure t
-  :hook (yaml-mode . tree-sitter-mode))
-
-(use-package tree-sitter-langs
-  :ensure t)
 
 (load "~/.emacs.shadow/shadow-rc.el" t)
 

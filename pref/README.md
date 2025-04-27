@@ -3,8 +3,8 @@ Title: README
 Description: A list of plugin used
 ---
 
-To load icon, u need to install a nerd fonts, refer [there](https://www.nerdfonts.com/font-downloads). My config auto download Iosevka nerd fonts.
-Read those documents below and install yourself.
+- To load icon, u need to install a nerd fonts, refer [there](https://www.nerdfonts.com/font-downloads). My config auto download Iosevka nerd fonts.
+- Read those documents below and install yourself.
 
 ## General tweak
 
@@ -15,7 +15,7 @@ Read those documents below and install yourself.
 - [tmux plugin manager](https://github.com/tmux-plugins/tpm.git)
 - [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
 - [bun](https://github.com/oven-sh/bun)
-- [catppuccin for bat](https://github.com/catppuccin/bat/tree/d714cc1d358ea51bfc02550dabab693f70cccea0)
+- [catppuccin](https://github.com/catppuccin/bat/tree/d714cc1d358ea51bfc02550dabab693f70cccea0)
 - [nerd font](https://www.nerdfonts.com/font-downloads)
 
 ### Plugin for zsh

@@ -183,4 +183,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
   #export PS1='[🌐 \u@\h:\w\]$ '
   export PS1='\[\e[1;32m\](🌐SSH)\[\e[0m\][\[\e[1;35m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]$ '
-fI
+fi

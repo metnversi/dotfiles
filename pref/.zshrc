@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 CASE_SENSITIVE="true"
 #ENABLE_CORRECTION="true"
 
-zstyle ':omz:update' mode disable    
+zstyle ':omz:update' mode auto    
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # zstyle ':omz:update' frequency 13
 # zstyle ':omz:update' mode auto
@@ -23,8 +23,6 @@ zstyle ':omz:update' mode disable
 
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="dd.mm.yyyy"
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 export LANG=en_US.UTF-8
 #if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -196,6 +194,4 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
-#source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source /home/rose/repos/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
