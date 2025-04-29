@@ -13,7 +13,7 @@ required:
   - libxcb-glx0-dev libxcb-present-dev  libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev
   - libxcb-xfixes0-dev meson ninja-build uthash-dev aptitude deborphan apt-show-versions
   - asciidoctor vim-gtk3 ruby-dev apt-file openvswitch-switch python3-sphinx
-  - fortune cowsay bat xsel pipx libelf-dev quota sqlite3
+  - fortune cowsay bat xsel pipx libelf-dev quota sqlite3 pass
   - qemu-system uml-utilities virt-manager libguestfs-tools p7zip-full make dmg2img tesseract-ocr tesseract-ocr-eng genisoimage net-tools screen
 
 gui:

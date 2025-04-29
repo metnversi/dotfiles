@@ -10,3 +10,6 @@
 /.gitconfig
 **/*database
 **/*.sql
+**/*database*
+**/*.sql
+**/*.iso

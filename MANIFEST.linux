@@ -18,10 +18,7 @@ pref/.chromaterm.yml|symlink|.chromaterm.yml
 pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
 #pref/picom.conf|symlink|.config/picom.conf
 pref/batconfig|symlink|.config/bat/config
-pref/mpd|symlink|.config/mpd
 pref/ncmpcpp/config|symlink|.config/ncmpcpp/config
-pref/mpd/mpd.conf|symlink|.config/mpd/mpd.conf
-pref/mpd/playlists|symlink|.config/mpd/playlists
 pref/kitty.conf|symlink|.config/kitty/kitty.conf
 pref/.emacs|symlink|.emacs
 
