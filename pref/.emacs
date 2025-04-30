@@ -1,10 +1,12 @@
+;; This is modified version of tsoding's one
+;;
+
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.local/")
 
 (load "~/.emacs.rc/rc.el")
-
 (load "~/.emacs.rc/misc-rc.el")
 (load "~/.emacs.rc/org-mode-rc.el")
 (load "~/.emacs.rc/autocommit-rc.el")
@@ -12,10 +14,9 @@
 ;;; Appearance
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-15")))
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-20")))
 
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
-;;(add-to-list 'auto-mode-alist '("\\.rc\\'" . sh-mode))
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -24,30 +25,16 @@
 (show-paren-mode 1)
 
 (rc/require-theme 'gruber-darker)
-;;(load "~/.emacs-molokai.el")
-;;(color-theme-molokai)
-;;(rc/require-theme 'zenburn)
-;;(load-theme 'solarized-dark t)
-(use-package outline-magic
-  :after markdown-mode
-  :hook (markdown-mode . outline-minor-mode)
-  :bind (:map outline-minor-mode-map
-              ("<tab>" . outline-cycle)))  ;; make Tab collapse/expand
+;; (rc/require-theme 'zenburn)
+;; (load-theme 'adwaita t)
+;; (eval-after-load 'zenburn
+;;  (set-face-attribute 'line-number nil :inherit 'default))
 
 (unless (package-installed-p 'vimrc-mode)
   (package-refresh-contents)
   (package-install 'vimrc-mode))
 
 (set-face-background 'default "#000000")
-
-;; Associate .vimrc and .vim files
-(add-to-list 'auto-mode-alist '("\\.vim\\(rc\\)?\\'" . vimrc-mode))
-
-(eval-after-load 'zenburn
-  (set-face-attribute 'line-number nil :inherit 'default))
-
-;;(add-to-list 'auto-mode-alist '(".*" . python-mode))
-(add-to-list 'auto-mode-alist '("^[^.]+\\'" . conf-mode))
 
 ;;; ido
 (rc/require 'smex 'ido-completing-read+)
@@ -66,20 +53,20 @@
               c-default-style '((java-mode . "java")
                                 (awk-mode . "awk")
                                 (other . "bsd")))
-(setq vc-follow-symlinks t)
-(setq confirm-kill-emacs nil)
-(setq auto-save-timeout 10)
-(setq auto-save-interval 0)
 
 (add-hook 'c-mode-hook (lambda ()
                          (interactive)
                          (c-toggle-comment-style -1)))
+
 ;;; Paredit
 (rc/require 'paredit)
-
 (defun rc/turn-on-paredit ()
   (interactive)
   (paredit-mode 1))
+
+;;; No confirmation if quit emacs/follow symlinks
+(setq confirm-kill-emacs nil)
+(setq vc-follow-symlinks t)
 
 (add-hook 'emacs-lisp-mode-hook  'rc/turn-on-paredit)
 (add-hook 'clojure-mode-hook     'rc/turn-on-paredit)
@@ -96,12 +83,10 @@
 (add-to-list 'auto-mode-alist '("Cask" . emacs-lisp-mode))
 
 ;;; uxntal-mode
-
 (rc/require 'uxntal-mode)
 
 ;;; Haskell mode
 (rc/require 'haskell-mode)
-
 (setq haskell-process-type 'cabal-new-repl)
 (setq haskell-process-log t)
 
@@ -156,11 +141,8 @@
   (global-display-line-numbers-mode))
 
 ;;; magit
-;; magit requres this lib, but it is not installed automatically on
-;; Windows.
 (rc/require 'cl-lib)
 (rc/require 'magit)
-
 (setq magit-auto-revert-mode nil)
 
 (global-set-key (kbd "C-c m s") 'magit-status)
@@ -222,7 +204,10 @@
 ;;; http://stackoverflow.com/questions/13794433/how-to-disable-autosave-for-tramp-buffers-in-emacs
 (setq tramp-auto-save-directory "/tmp")
 
-;;(global-set-key (kbd "C-x C-f") (lambda () (interactive) (find-file "~")) )
+;;; powershell
+(rc/require 'powershell)
+(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode))
+(add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
 
 ;;; eldoc mode
 (defun rc/turn-on-eldoc-mode ()
@@ -243,8 +228,8 @@
             (company-mode 0)))
 
 ;;; Typescript
-(rc/require 'typescript-mode)
-(add-to-list 'auto-mode-alist '("\\.mts\\'" . typescript-mode))
+;;(rc/require 'typescript-mode)
+;;(add-to-list 'auto-mode-alist '("\\.mts\\'" . typescript-mode))
 
 ;;; Tide
 (rc/require 'tide)

@@ -68,11 +68,10 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 complete -C /usr/bin/terraform terraform
-#/home/$USER/welcome.sh
 #VDPAU_DRIVER=nvidia
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#source <(kubectl completion bash)
+source <(kubectl completion bash)
 
 export PNPM_HOME="/home/$USER/.local/share/pnpm"
 case ":$PATH:" in
@@ -166,14 +165,11 @@ export QT_IM_MODULE=ibus
 export ZOXIDE_CMD_OVERRIDE="cd"
 export NVM_DIR="$HOME/.nvm"
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 export ZOXIDE_CMD_OVERRIDE="cd"
 eval "$(fzf --bash)"
 #eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 
-# 
 #PS1='[\[\e[1;32m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]# '
 . "$HOME/.cargo/env"
 

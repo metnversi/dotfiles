@@ -1,8 +1,8 @@
 required:
-  - curl wget nftables rename
+  - curl wget nftables rename kubectl
   - zsh postcss yt-dlp mtp-tools strongswan network-manager-strongswan
   - tmux busybox-static adb ansible openvpn wireguard openresolv
-  - autoconf tlp xclip gcc make libimlib2-dev
+  - autoconf tlp xclip gcc make libimlib2-dev gettext nodejs npm
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
   - libpam0g-dev libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev

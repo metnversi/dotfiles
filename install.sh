@@ -8,12 +8,12 @@
 #set -o xtrace
 unset GREP_OPTIONS
 
-USER={USER:-"$(logname)"}
+USER=${USER:-"$(logname)"}
 WORKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mkdir -p "${HOME}/.local/bin" "${HOME}/repos"
 
 if [[ ${SHELL} != "/bin/bash" ]]; then
-  echo -e "Please run inside a bash shell, or \e[32mexport SHELL=/bin/bash\e[0m before running the script."
+  echo -e "Please run inside a bash shell, or \e[32mexport SHELL=/bin/bash\e[0m before running the script, with caution."
   echo -e "You can later use command \e[033mchsh -s /bin/zsh\e[0m to change default shell to zsh for instance."
   exit 1
 fi
@@ -102,8 +102,10 @@ dependencies () {
 	required_packages=$(extract_section "required:")
 	gui_packages=$(extract_section "gui:")
 	optional_packages=$(extract_section "optional:")
-	read -p "$(echo -e '\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n'"$optional_packages"' [y/N]? ')" include_optional
-	[[ "$include_optional" =~ ^[Nn]$ || -z "$include_optional" ]] && include_optional=false || include_optional=true
+    echo -e "\033[31m\033[1m[WARNING]\033[0m Do you want optional package\n${optional_packages} [y/N]? (auto-selects 'N' in 5s)"
+    read -t 5 -p "> " include_optional
+    [[ "$include_optional" =~ ^[Yy]$ ]] && include_optional=true || include_optional=false
+	#[[ "$include_optional" =~ ^[Nn]$ || -z "$include_optional" ]] && include_optional=false || include_optional=true
 	
 	is_graphical=$([ "$(systemctl get-default)" = "graphical.target" ] && echo true || echo false)
 	packages="${required_packages}"
@@ -145,7 +147,6 @@ miscInstall () {
         '! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && sudo rm -rf /opt/nvim && sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim'
         '! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo || skip cargo'
         '! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi'
-        '! exist node && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.nvm}" && [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh" && nvm install 20 && installed nodejs || skip nodejs'
         '! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship'
         '! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun'
         '! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm'
@@ -159,25 +160,6 @@ miscInstall () {
         eval "$cmd"
     done
 }
-
-
-#miscInstall () {
-#installations=(
-#  "[ ! -d \"${HOME}/.tmux/plugins/tpm\" ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && installed tpm || skip tpm"
-#  "! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && sudo rm -rf /opt/nvim && sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim"
-#  "! exist cargo && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo || skip cargo"
-#  "! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi"
-#  "! exist node && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && export NVM_DIR=\"$([ -z \"${XDG_CONFIG_HOME-}\" ] && printf %s \"${HOME}/.nvm\" || printf %s \"${XDG_CONFIG_HOME}/nvm\")\" && [ -s \"${NVM_DIR}/nvm.sh\" ] && \. \"${NVM_DIR}/nvm.sh\" && nvm install 20 && installed nodejs || skip nodejs"
-#  "! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship"
-#  "! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun"
-#  "! exist ct && pipx install chromaterm && installed greenclip || skip chromaterm"
-#  "! exist greenclip && wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && install -m 0755 greenclip -d /usr/bin && installed greenclip || skip greenclip"
-#  "[ ! -d \"$HOME/.vim/bundle\" && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall || skip Vundle"
-#  "[ ! -d \"${HOME}/.vim/colors\" ] && curl https://raw.githubusercontent.com/tomasr/molokai/refs/heads/master/colors/molokai.vim > ~/.vim/colors/molokai.vim || skip molokai"
-#  "[ ! -d \"${HOME}/.vim/pack/css-color\" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color || skip css-color"
-#)
-#  for cmd in "${installations[@]}"; do eval "$cmd"; done
-#}
 
 brew_package() {
   case "$1" in
@@ -281,7 +263,7 @@ urls=(
     "https://kubernetes.io/blog/"
 )
 for url in "${urls[@]}"; do
-    firefox "$url" &
+    /bin/google-chrome-stable "$url" &
 done' > ~/.run-web.sh
 echo -e "echo -e 'Hello World!
 Visit now:
@@ -311,17 +293,21 @@ fi
 }
 
 main () {
-    laptoplid
-    laptopTouchPadX11
-    lockScreen
-
+    if [ -d /sys/class/power_supply/BAT0 ]; then
+        laptoplid
+        laptopTouchPadX11
+    fi
+    if [ -n "$DISPLAY" ]; then
+        lockScreen
+        avatar
+        iosevka
+    fi
+    
     echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
-    avatar
-    iosevka
-    youtube 
 
     trixieftp
     dependencies
+    youtube
     miscInstall
 
     brew_install

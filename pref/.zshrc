@@ -190,8 +190,4 @@ function help() {
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 
-#this NVM must be after the PATH, since it modify the env PATH variable.
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
