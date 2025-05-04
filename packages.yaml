@@ -1,12 +1,12 @@
 required:
-  - curl wget nftables rename kubectl
+  - curl wget nftables rename kubectl libbpfcc-dev
   - zsh postcss yt-dlp mtp-tools strongswan network-manager-strongswan
   - tmux busybox-static adb ansible openvpn wireguard openresolv
   - autoconf tlp xclip gcc make libimlib2-dev gettext nodejs npm
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
   - libpam0g-dev libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev
-  - libx11-xcb-dev libxcb-xkb-dev postgresql-client ipcalc
+  - libx11-xcb-dev libxcb-xkb-dev postgresql-client ipcalc libtool libtool-bin
   - libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev
   - libxkbcommon-dev libxkbcommon-x11-dev libjpeg-dev
   - libconfig-dev libdbus-1-dev libegl-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libxcb1-dev  libxcb-damage0-dev

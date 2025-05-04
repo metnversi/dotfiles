@@ -21,6 +21,7 @@ pref/batconfig|symlink|.config/bat/config
 pref/ncmpcpp/config|symlink|.config/ncmpcpp/config
 pref/kitty.conf|symlink|.config/kitty/kitty.conf
 pref/.emacs|symlink|.emacs
+pref/mpd|symlink|.config/mpd
 
 pref/yazi|symlink|.config/yazi
 pref/rofi|symlink|.config/rofi
