@@ -30,12 +30,32 @@
 ;; (eval-after-load 'zenburn
 ;;  (set-face-attribute 'line-number nil :inherit 'default))
 
+(use-package lsp-mode
+  :ensure t
+  :hook ((terraform-mode . lsp-deferred)))
+
+(use-package terraform-mode
+  :ensure t
+  :mode ("\\.tf\\'" . terraform-mode)
+  :hook (terraform-mode . lsp-deferred))
+
 (unless (package-installed-p 'vimrc-mode)
-  (package-refresh-contents)
-  (package-install 'vimrc-mode))
+    (package-refresh-contents)
+    (package-install 'vimrc-mode))
 
 (set-face-background 'default "#000000")
 
+(with-eval-after-load 'lsp-mode
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "unified-language-server")
+    :major-modes '(markdown-mode gfm-mode)
+    :priority -1
+    :server-id 'unified-ls)))
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+(setq lsp-diagnostics-provider :flycheck)
 ;;; ido
 (rc/require 'smex 'ido-completing-read+)
 

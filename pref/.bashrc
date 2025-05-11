@@ -91,9 +91,9 @@ y() {
   rm -f -- "$tmp"
 }
 
-source $HOME/.nvm/nvm.sh
-alias ll='ls -lrta'
-alias la='ls -a'
+#source $HOME/.nvm/nvm.sh
+alias ll='ls -l'
+alias la='ls -lrta'
 alias ld='ls -ld'
 alias l='ls -CF'
 alias ff='firefox &'
@@ -101,14 +101,15 @@ alias cd='z'
 alias ls='ls --color=auto'
 #alias vim='nvim'
 alias emacs='emacs -nw'
+alias e='emacs -nw'
 alias bb='brave-browser'
 alias cf='fortune | cowsay'
 alias aa='ansible-playbook'
 # bat: add -p for no line number, and --paging=never to not go less pager.
 alias cat='bat -p'
-alias sl='sudo systemctl enable --now libvirtd'
+#alias sl='sudo systemctl enable --now libvirtd'
 alias ssh='TERM=xterm-256color ssh'
-alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
+#alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
 alias cvpn='sudo systemctl enable --now vpnagentd && /opt/cisco/anyconnect/bin/vpn'
 alias sss='sudo systemctl status'
 alias eee='sudo systemctl enable --now'
@@ -119,7 +120,7 @@ alias sc='sudo systemctl'
 alias scat='sudo systemctl cat'
 alias sedit='sudo systemctl edit'
 alias i33='vim ~/.config/i3/config'
-alias enf='sudo vim /etc/nftables.conf'
+alias enf='sudo emacs -nw /etc/nftables.conf'
 alias vis='sudo virsh list --all'
 alias svis='sudo virsh start'
 alias dvis='sudo virsh destroy'
@@ -157,7 +158,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 export BUN_INSTALL="$HOME/.bun"
-export WEZTERM_LOG=error
+#export WEZTERM_LOG=error
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
