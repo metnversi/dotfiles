@@ -24,16 +24,32 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 
-(rc/require-theme 'gruber-darker)
+;;(rc/require-theme 'gruber-darker)
+(rc/require-theme 'molokai)
 ;; (rc/require-theme 'zenburn)
 ;; (load-theme 'adwaita t)
 ;; (eval-after-load 'zenburn
 ;;  (set-face-attribute 'line-number nil :inherit 'default))
+;; Set relative line number color
+(custom-set-faces
+ '(line-number ((t (:foreground "#5c6370"))))  
+ '(line-number-current-line ((t (:foreground "#ffffff" :weight bold))))) 
+
+(use-package lsp-mode
+  :ensure t
+  :hook ((terraform-mode . lsp-deferred)))
+
+(use-package terraform-mode
+  :ensure t
+  :mode ("\\.tf\\'" . terraform-mode)
+  :hook (terraform-mode . lsp-deferred))
 
 (unless (package-installed-p 'vimrc-mode)
-  (package-refresh-contents)
-  (package-install 'vimrc-mode))
+    (package-refresh-contents)
+    (package-install 'vimrc-mode))
 
+(load-theme 'molokai t)
+(set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
 (set-face-background 'default "#000000")
 
 ;;; ido
@@ -63,7 +79,7 @@
 (defun rc/turn-on-paredit ()
   (interactive)
   (paredit-mode 1))
-
+(rc/require 'toml-mode)
 ;;; No confirmation if quit emacs/follow symlinks
 (setq confirm-kill-emacs nil)
 (setq vc-follow-symlinks t)
@@ -100,15 +116,24 @@
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . fasm-mode))
 
 (require 'porth-mode)
-
 (require 'noq-mode)
-
 (require 'jai-mode)
-
 (require 'simpc-mode)
 (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-
 (require 'c3-mode)
+
+(require 'conf-mode)
+(defun my/use-conf-mode-for-unknown-extensions ()
+  "If buffer is in `fundamental-mode' due to unknown file extension,
+switch to `conf-mode`."
+  (when (and buffer-file-name
+             (eq major-mode 'fundamental-mode)
+             (let ((ext (file-name-extension buffer-file-name)))
+               (or (not ext) ;; no extension -> conf-mode anyway
+                   t)))
+    (conf-mode)))
+
+(add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
 
 ;;; Whitespace mode
 (defun rc/set-up-whitespace-handling ()
@@ -125,7 +150,7 @@
 (add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'erlang-mode-hook 'rc/set-up-whitespace-handling)
@@ -133,7 +158,7 @@
 (add-hook 'fasm-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'go-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
 (add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
 
 ;;; display-line-numbers-mode

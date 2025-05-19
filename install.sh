@@ -296,7 +296,8 @@ main () {
     if [ -d /sys/class/power_supply/BAT0 ]; then
         laptoplid
         laptopTouchPadX11
-    fi
+        sudo apt install -y tlp 
+    else sudo apt install tuned -y; fi
     if [ -n "$DISPLAY" ]; then
         lockScreen
         avatar
