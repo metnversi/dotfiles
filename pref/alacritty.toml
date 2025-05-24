@@ -7,7 +7,7 @@ padding.y = 4
 decorations = "Full"
 decorations_theme_variant = "Dark" # "Dark"
 #startup_mode = "Fullscreen"
-title = "Hello world!"
+#title = "Hello world!"
 
 [font]
 normal.family = "Iosevka Nerd Font"
