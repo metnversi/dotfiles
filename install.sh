@@ -196,6 +196,10 @@ else
   EndSection' | sudo tee /etc/X11/xorg.conf.d/90-touchpad.conf
   installed "touchpad"
 fi
+cat > ~/.xsession <<EOF
+exec i3
+EOF
+chmod +x ~/.xsession 
 }
 
 github_cli () {
@@ -292,6 +296,30 @@ else
 fi
 }
 
+sysctl(){
+    sudo tee /etc/sysctl.d/dot.conf > /dev/null <<EOF
+vm.swappiness=5
+vm.drop_caches=3
+net.core.busy_read=50
+net.core.busy_poll=50
+net.ipv4.tcp_fastopen=3
+kernel.nmi_watchdog = 0
+vm.stat_interval = 10
+kernel.timer_migration = 0
+EOF
+sudo sysctl --system
+}
+
+emacsrun () {
+    cat > ~/.local/bin/emacsscript.sh <<'EOF'
+#!/bin/env bash
+
+(emacsclient -e "(emacs-pid)" >/dev/null 2>&1 || emacs --daemon) && exec emacsclient -t "$@"
+EOF
+    
+chmod +x ~/.local/bin/emacsscript.sh
+}
+
 main () {
     if [ -d /sys/class/power_supply/BAT0 ]; then
         laptoplid
@@ -315,7 +343,10 @@ main () {
     github_cli
     motd
     #gdmMacOS
+    sysctl
+    emacsrun
     omzshInstall
+    echo "Please source bashrc/zshrc after done install to make change applied, or just simply logout and login back."
 }
 
 main

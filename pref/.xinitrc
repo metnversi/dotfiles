@@ -1,8 +1,5 @@
 #!/bin/env bash
 #/usr/bin/redshift -m randr -P -0 400
-/usr/local/bin/betterlockscreen -w dim
-source $HOME/.fehbg
-betterlockscreen -w dim
-           source ~/.fehbg
-betterlockscreen -w dim
-           source ~/.fehbg
+#source $HOME/.fehbg
+#exec dbus-launch --sh-syntax --exit-with-session i3
+exec i3

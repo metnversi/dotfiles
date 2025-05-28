@@ -13,6 +13,7 @@ bash tsoding/deploy.sh MANIFEST
 echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
 if [[ -z "./pref/asset/$(whoami)".png ]]; then mv ./pref/asset/rose.png ./pref/asset/"$(whoami)".png; fi
 find . -type f -exec sed -i 's/rose/'"$(whoami)"'/g' {} +
+ln -sf ~/.startup ~/.bash_profile 
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

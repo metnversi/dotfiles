@@ -33,7 +33,7 @@
 ;; Set relative line number color
 (custom-set-faces
  '(line-number ((t (:foreground "#5c6370"))))  
- '(line-number-current-line ((t (:foreground "#ffffff" :weight bold))))) 
+ '(line-number-current-line ((t (:foreground "#a83264" :weight bold))))) 
 
 (use-package lsp-mode
   :ensure t
@@ -73,6 +73,13 @@
 (add-hook 'c-mode-hook (lambda ()
                          (interactive)
                          (c-toggle-comment-style -1)))
+
+;;;neotree
+;;(add-to-list 'load-path "~/.emacs.d/neotree")
+(rc/require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(rc/require 'nerd-icons)
+(setq neo-theme (if (display-graphic-p) 'icons 'nerd-icons))
 
 ;;; Paredit
 (rc/require 'paredit)
@@ -141,25 +148,33 @@ switch to `conf-mode`."
   (whitespace-mode 1)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace))
 
-(add-hook 'tuareg-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'c++-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'c-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'simpc-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
-(add-hook 'java-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'tuareg-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'c++-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'c-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'simpc-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
+;;(add-hook 'java-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
 ;;(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'erlang-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'asm-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'fasm-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'go-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'erlang-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'asm-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'fasm-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'go-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
 ;;(add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
-(add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
+
+(use-package ivy
+  :ensure t
+  :init (ivy-mode 1))
+
+(use-package counsel
+  :ensure t)
+(global-set-key (kbd "C-c b") 'counsel-switch-buffer)
 
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
@@ -342,6 +357,28 @@ switch to `conf-mode`."
             (setq-local fill-paragraph-function 'astyle-buffer)))
 
 (require 'compile)
+
+;;mail
+;;(add-to-list 'load-path "~/.emacs.d/epla/mu4e") ;; adjust path as needed
+;;(require 'mu4e)
+;;(setq
+;; mu4e-maildir       "~/Mail/gmail"
+;; mu4e-get-mail-command "mbsync gmail"
+;; mu4e-update-interval 300
+;; mu4e-view-show-images t
+;; mu4e-view-show-addresses t
+;; user-mail-address "nguyenthevinh2002.xuantruong@gmail.com"
+;; user-full-name  "Vinh Nguyen"
+;; mu4e-sent-folder   "/[Gmail]/Sent Mail"
+;; mu4e-drafts-folder "/[Gmail]/Drafts"
+;; mu4e-trash-folder  "/[Gmail]/Trash"
+;; mu4e-refile-folder "/[Gmail]/All Mail")
+;;(setq message-send-mail-function 'smtpmail-send-it
+;;      smtpmail-stream-type 'starttls
+;;      smtpmail-default-smtp-server "smtp.gmail.com"
+;;      smtpmail-smtp-server "smtp.gmail.com"
+;;      smtpmail-smtp-service 587
+;;      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "nguyenthevinh2002.xuantruong@gmail.com" nil)))
 
 ;; pascalik.pas(24,44) Error: Can't evaluate constant expression
 
