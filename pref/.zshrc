@@ -186,6 +186,9 @@ alias exi='sudo docker exec -it'
 alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
 alias gg='google-chrome'
 alias dpip="docker ps -q | xargs -n 1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
+alias sdf='df -h --output=source,fstype,size,used,avail,pcent,itotal,iused,iavail,ipcent,target'
+alias bsa='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+alias bpa='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 function help() {
     "$@" --help 2>&1 | bathelp
 }
@@ -193,3 +196,4 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/dev/bin/activate 

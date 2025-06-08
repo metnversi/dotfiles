@@ -131,6 +131,10 @@ alias exi='sudo docker exec -it'
 alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
 alias dpip="docker ps -q | xargs -n 1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 alias gg='google-chrome'
+#alias sdf='df -h --output=fstype,size,used,avail,pcent,itotal,iused,iavail,ipcent,source'
+alias sdf='df -h --output=source,fstype,size,used,avail,pcent,itotal,iused,iavail,ipcent,target'
+alias bsa='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+alias bpa='echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
 
 help() {
   "$@" --help 2>&1 | bathelp || "$@" help 2>&1 | bathelp
@@ -181,3 +185,4 @@ if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
   #export PS1='[🌐 \u@\h:\w\]$ '
   export PS1='\[\e[1;32m\](🌐SSH)\[\e[0m\][\[\e[1;35m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]$ '
 fi
+source ~/dev/bin/activate 

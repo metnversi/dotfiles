@@ -320,6 +320,10 @@ EOF
 chmod +x ~/.local/bin/emacsscript.sh
 }
 
+ipv6(){
+echo "precedence ::ffff:0:0/96  10" | sudo tee -a /etc/gai.conf 
+}
+
 main () {
     if [ -d /sys/class/power_supply/BAT0 ]; then
         laptoplid
@@ -344,6 +348,7 @@ main () {
     motd
     #gdmMacOS
     sysctl
+    ipv6
     emacsrun
     omzshInstall
     echo "Please source bashrc/zshrc after done install to make change applied, or just simply logout and login back."
