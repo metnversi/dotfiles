@@ -32,3 +32,6 @@ optional:
   - libgl1-mesa-glx
   - gnome synaptic
   - wine ttf-mscorefonts-installer
+
+hyprland:
+  - cava nwg-displays scdoc bison meson 

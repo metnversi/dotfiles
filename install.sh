@@ -89,7 +89,6 @@ avatar () {
 	  sudo -E cp "${WORKDIR}/pref/asset/rose.png" "/var/lib/AccountsService/icons/${USER}.png"
 	  echo -e "[org.freedesktop.DisplayManager.AccountsService]\nBackgroundFile='/home/${USER}/Pictures/bg.jpg'
 	[User]
-	Session=lightdm-xsession
 	XSession=i3
 	Icon=/var/lib/AccountsService/icons/${USER}.png
 	SystemAccount=false" | sudo tee /var/lib/AccountsService/users/rose
@@ -144,12 +143,12 @@ iosevka () {
 miscInstall () {
     installations=(
         '! exist tpm && [ ! -d "${HOME}/.tmux/plugins/tpm" ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && installed tpm || skip tpm'
-        '! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && sudo rm -rf /opt/nvim && sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim'
+        #'! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && sudo rm -rf /opt/nvim && sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim'
         '! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo || skip cargo'
         '! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi'
         '! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship'
         '! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun'
-        '! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm'
+        #'! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm'
         '! exist greenclip && wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && sudo install -m 0755 greenclip /usr/bin && installed greenclip || skip greenclip'
         '[ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle'
         '[ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai || skip molokai'
@@ -161,26 +160,9 @@ miscInstall () {
     done
 }
 
-brew_package() {
-  case "$1" in
-  brew)
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ;;
-  *)
-    brew install "$1"
-    ;;
-  esac
-}
-
 brew_install () {
-	for pkg in brew thefuck zoxide fzf yazi batcat; do
-	  if ! exist "$pkg"; then
-	    install_brew_package "$pkg"
-	    installed "$pkg"
-	  else
-	    skip "$pkg"
-	  fi
-	done
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew install thefuck zoxide fzf yazi batcat 
 }
 
 laptopTouchPadX11 () {
@@ -324,6 +306,83 @@ ipv6(){
 echo "precedence ::ffff:0:0/96  10" | sudo tee -a /etc/gai.conf 
 }
 
+chromeWayland(){
+cat > /usr/bin/chrome <<EOF
+#!/bin/env bash
+extra_flags="--enable-features=UseOzonePlatform"
+
+if [[ -n "$WAYLAND_DISPLAY" ]]; then
+	extra_flags+=" --ozone-platform=wayland"
+fi
+
+exec google-chrome $extra_flags "$@"
+EOF
+}
+
+astal_ags(){
+    sudo apt install meson valac valadoc libgtk-3-dev libgtk-layer-shell-dev gobject-introspection libgirepository1.0-dev
+    git clone https://github.com/aylur/astal.git /tmp/astal
+    cd /tmp/astal/lib/astal/io
+    meson setup --prefix /usr build
+    sudo meson install -C build
+    cd /tmp/astal/lib/astal/gtk3
+    meson setup --prefix /usr build
+    sudo meson install -C build
+    git clone https://github.com/aylur/astal
+    cd astal/lang/gjs
+    meson setup --prefix /usr build
+    sudo meson install -C build
+    git clone https://github.com/aylur/ags.git
+    cd ags
+    go install -ldflags "\
+    -X 'main.gtk4LayerShell=$(pkg-config --variable=libdir gtk4-layer-shell-0)/libgtk4-layer-shell.so' \
+    -X 'main.astalGjs=$(pkg-config --variable=srcdir astal-gjs)'"
+    cd $WORKDIR && git clone https://github.com/LGFae/swww.git
+    cargo build --release
+}
+
+hyprland_dep(){
+sudo apt install libpugixml-dev \
+ libgbm-dev libdisplay-info-dev \
+ hwdata libmagic-dev \
+ libtomlplusplus-dev libudis86-dev \
+ libxcb-errors-dev libnotify-dev \
+ qt6-base-dev qt6-declarative-dev \
+ qt6-wayland-dev qml-module-qtquick-layouts \
+ qml-module-qtquick-shapes libsdbus-c++-dev \
+ libgbm-dev libaudit-dev 
+
+mkdir -p ~/repos/hyprland && cd ~/repos/hyprland
+list=$(cat <<EOF
+https://github.com/hyprwm/aquamarine.git
+https://github.com/end-4/dots-hyprland.git
+https://codeberg.org/dnkl/fuzzel.git
+https://github.com/hyprwm/hyprcursor.git
+https://github.com/hyprwm/hyprgraphics.git
+https://github.com/hyprwm/hypridle.git
+https://github.com/hyprwm/Hyprland.git
+https://github.com/hyprwm/hyprland-plugins.git
+https://github.com/hyprwm/hyprland-protocols.git
+https://github.com/hyprwm/hyprlang.git
+https://github.com/hyprwm/hyprlock.git
+https://github.com/Gustash/Hyprshot.git
+https://github.com/KZDKM/Hyprspace.git
+https://github.com/shezdy/hyprsplit.git
+https://github.com/hyprwm/hyprutils.git
+https://github.com/hyprwm/hyprwayland-scanner.git
+https://github.com/Horus645/swww.git
+https://github.com/marzer/tomlplusplus.git
+https://github.com/SimplyCEO/wofi.git
+EOF
+    )
+echo "$list" | xargs -n 1 git clone
+#for repo in "${list[@]}"; do
+#    git clone "$repo"
+#done
+
+}
+
+
 main () {
     if [ -d /sys/class/power_supply/BAT0 ]; then
         laptoplid
@@ -334,6 +393,7 @@ main () {
         lockScreen
         avatar
         iosevka
+        chromeWayland
     fi
     
     echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '=')\e[0m"
@@ -343,15 +403,16 @@ main () {
     youtube
     miscInstall
 
-    brew_install
-    github_cli
+    #brew_install
+    #github_cli
     motd
     #gdmMacOS
     sysctl
-    ipv6
+    #ipv6
     emacsrun
-    omzshInstall
+    #omzshInstall
     echo "Please source bashrc/zshrc after done install to make change applied, or just simply logout and login back."
 }
 
 main
+

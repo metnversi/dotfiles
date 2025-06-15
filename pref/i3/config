@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Iosevka Nerd Font 13
+font pango:Iosevka Nerd Font 15
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -130,7 +130,7 @@ client.background       #FFFFFF
 
 bar {
   position top
-  #output DP-4
+  output HDMI-0
   #output primary
   tray_output none
   #tray_output primary
@@ -187,7 +187,7 @@ bindsym Shift+Print exec --no-startup-id flameshot screen
 bindsym $mod+g exec --no-startup-id /home/rose/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+c exec --no-startup-id /usr/bin/firefox
-#bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable
+bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable
 #bindsym $mode+Shift+c exec --no-startup-id /bin/brave-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
 bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx

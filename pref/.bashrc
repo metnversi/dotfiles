@@ -23,9 +23,10 @@ force_color_prompt=yes
 color_prompt=yes
 
 if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
   #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
@@ -130,7 +131,8 @@ alias docker='sudo docker'
 alias exi='sudo docker exec -it'
 alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
 alias dpip="docker ps -q | xargs -n 1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
-alias gg='google-chrome'
+alias google-chrome='chrome &'
+alias gg='chrome &'
 #alias sdf='df -h --output=fstype,size,used,avail,pcent,itotal,iused,iavail,ipcent,source'
 alias sdf='df -h --output=source,fstype,size,used,avail,pcent,itotal,iused,iavail,ipcent,target'
 alias bsa='echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
@@ -186,3 +188,9 @@ if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
   export PS1='\[\e[1;32m\](🌐SSH)\[\e[0m\][\[\e[1;35m\]\u@\h \[\e[1;34m\]\W\[\e[0m\]]$ '
 fi
 source ~/dev/bin/activate 
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "$HOME/.local/bin/env"

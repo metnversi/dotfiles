@@ -2,7 +2,6 @@
 /ttf-unhinted/
 /woff/
 /woff2/
-/*.zip
 /*.css
 /pref/nvim/lua/plugins/
 /betterlockscreen/
@@ -11,5 +10,9 @@
 **/*database
 **/*.sql
 **/*database*
-**/*.sql
+**/*.db
 **/*.iso
+**/*.toml-*
+**/*.tar*
+**/*.zip
+**/*.tgz*

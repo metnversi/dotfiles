@@ -21,6 +21,8 @@ symlinkFile() {
   filename="${SCRIPT_DIR}/$1"
   destination="${HOME}/$2"
   mkdir -p "$(dirname "$destination")"
+  #rm -rf "$destination"
+  #ln -sf will not work for dir, so I use rsync. If it is first time install, ln -sf is much better.
   ln -sf "$filename" "$destination"
   echo -e "\033[32m[OK]\033[0m $filename -> $destination"
 }
