@@ -193,3 +193,4 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -

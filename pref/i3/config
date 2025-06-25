@@ -1,5 +1,8 @@
 set $mod Mod4
-font pango:Iosevka Nerd Font 15
+font pango:Iosevka Nerd Font 8
+gaps inner 4
+gaps outer 3
+#smart_gaps on 
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -130,11 +133,13 @@ client.background       #FFFFFF
 
 bar {
   position top
-  output HDMI-0
+  #output HDMI-0
+  output none
+  #mode hide
   #output primary
   tray_output none
   #tray_output primary
-  status_command i3status
+  #status_command i3status
   Workspace_min_width 10
   workspace_buttons no
   binding_mode_indicator no
@@ -168,11 +173,14 @@ bar {
 
 exec --no-startup-id /usr/bin/redshift -P -O 4000
 #exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 exec --no-startup-id /usr/bin/xset -dpms
 exec --no-startup-id /usr/bin/xset s off
 exec --no-startup-id /usr/bin/xset b off
 exec --no-startup-id /usr/bin/greenclip daemon
 exec --no-startup-id /usr/bin/dunst
+#exec --no-starup-id /usr/bin/picom
 #exec --no-startup-id /usr/bin/xbacklight -set 88
 
 exec --no-startup-id betterlockscreen -w dim
