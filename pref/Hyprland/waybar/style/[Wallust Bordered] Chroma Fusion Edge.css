@@ -149,12 +149,12 @@ tooltip {
 }
 
 #temperature {
-    color: @rosewater;
+    color: @orianawater;
 }
 
 #network {
 	padding-left: 2px;
-	color: @rosewater;
+	color: @orianawater;
 }
 
 #custom-swaync,
@@ -259,7 +259,7 @@ tooltip {
 }
 
 #battery {
-	color: @rosewater;
+	color: @orianawater;
 }
 
 #disk {

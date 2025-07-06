@@ -16,7 +16,7 @@ window#waybar {
   transition-property: background-color;
   transition-duration: 0.5s;
   padding: 4px;
-  border-top: 1px solid @rosewater;
+  border-top: 1px solid @orianawater;
   border-bottom: 3px solid @sapphire;
   background: alpha(@crust, 0.4);
   border-radius: 10px;
@@ -206,7 +206,7 @@ window#waybar.hidden {
 }
 
 #custom-menu {
-  	color: @rosewater;
+  	color: @orianawater;
 }
 
 #custom-power {

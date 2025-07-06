@@ -611,8 +611,8 @@ exit
 💐 bouquet flowers nature spring
 🌸 cherry blossom nature plant spring flower
 💮 white flower japanese spring
-🏵️ rosette flower decoration military
-🌹 rose flowers valentines love spring
+🏵️ orianatte flower decoration military
+🌹 oriana flowers valentines love spring
 🥀 wilted flower plant nature flower
 🌺 hibiscus plant vegetable flowers beach
 🌻 sunflower nature plant fall

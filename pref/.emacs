@@ -20,7 +20,7 @@
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-(scroll-bar-mode 0)
+;;(scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
 
@@ -37,7 +37,13 @@
 
 (use-package lsp-mode
   :ensure t
-  :hook ((terraform-mode . lsp-deferred)))
+  :hook  (
+	     (yaml-mode . lsp)
+         (terraform-mode . lsp-deferred)
+         (markdown-mode . lsp-deferred)
+         (bash-mode . lsp-deferred)
+	 )
+  :commands lsp lsp-deferred)
 
 (use-package terraform-mode
   :ensure t

@@ -153,7 +153,7 @@ tooltip {
 }
 #network,
 #temperature {
-    color: @rosewater;
+    color: @orianawater;
 }
 
 #custom-hint,
@@ -261,7 +261,7 @@ tooltip {
 }
 
 #battery {
-	color: @rosewater;
+	color: @orianawater;
 }
 
 #disk {

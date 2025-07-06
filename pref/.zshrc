@@ -33,7 +33,7 @@ export LANG=en_US.UTF-8
 #if command -v tmux >/dev/null 2>&1; then
 #    [ -z "$TMUX" ] && exec tmux
 #fi
-[ -s "/home/rose/.bun/_bun" ] && source "/home/rose/.bun/_bun"
+[ -s "/home/oriana/.bun/_bun" ] && source "/home/oriana/.bun/_bun"
 
 export BUN_INSTALL="$HOME/.bun"
 export LESS_TERMCAP_mb=$'\e[1;32m'
@@ -110,7 +110,7 @@ function ctalos() {
     name="k8s-control-$i"
     sudo virt-install --name "$name" \
       --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/rose/iso/metal-amd64.iso \
+      --cdrom /home/oriana/iso/metal-amd64.iso \
       --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
       --graphics vnc --vcpus 2 \
       --network bridge=virbr0 --noautoconsole \
@@ -122,7 +122,7 @@ function ctalos() {
     name="k8s-worker-$i"
     sudo virt-install --name "$name" \
       --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/rose/iso/metal-amd64.iso \
+      --cdrom /home/oriana/iso/metal-amd64.iso \
       --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
       --graphics vnc --vcpus 2 \
       --network bridge=virbr0 --noautoconsole \

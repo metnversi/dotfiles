@@ -34,6 +34,8 @@ set conceallevel=2
 set encoding=UTF-8
 set guifont=Iosevka\ Nerd\ Font\ 11
 colorscheme molokai
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NonText guibg=NONE ctermbg=NONE
 autocmd FileType yaml setlocal ai ts=2 sw=2 et
 autocmd FileType yml setlocal ai ts=2 sw=2 et
 

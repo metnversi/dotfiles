@@ -86,12 +86,12 @@ avatar () {
 	if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
 	  skip "avatar ${USER}"
 	else
-	  sudo -E cp "${WORKDIR}/pref/asset/rose.png" "/var/lib/AccountsService/icons/${USER}.png"
+	  sudo -E cp "${WORKDIR}/pref/asset/oriana.png" "/var/lib/AccountsService/icons/${USER}.png"
 	  echo -e "[org.freedesktop.DisplayManager.AccountsService]\nBackgroundFile='/home/${USER}/Pictures/bg.jpg'
 	[User]
 	XSession=i3
 	Icon=/var/lib/AccountsService/icons/${USER}.png
-	SystemAccount=false" | sudo tee /var/lib/AccountsService/users/rose
+	SystemAccount=false" | sudo tee /var/lib/AccountsService/users/oriana
 	  installed "avatar ${USER}"
 	fi
 }

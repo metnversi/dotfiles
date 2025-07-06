@@ -48,7 +48,7 @@ tooltip label {
 
 #taskbar button.focused,
 #workspaces button.focused {
-  color: @rosewater;
+  color: @orianawater;
   background: transparent;
   border-radius: 15px;
 }
@@ -135,7 +135,7 @@ tooltip label {
 }
 
 #mpris {
-  color: @rosewater;
+  color: @orianawater;
 }
 
 #battery {
