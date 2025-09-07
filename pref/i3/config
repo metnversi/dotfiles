@@ -191,6 +191,7 @@ bindsym $mod+Shift+s exec --no-startup-id flameshot gui -c
 bindsym $mod+Shift+a exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id flameshot screen -c
 bindsym Shift+Print exec --no-startup-id flameshot screen
+bindsym $mod+Shift+F4 exec --no-startup-id systemctl poweroff
 #bindsym $mod+l exec --no-startup-id xset dpms force off
 #bindsym $mod+g exec --no-startup-id gns3
 bindsym $mod+g exec --no-startup-id /home/oriana/.local/bin/gns3
