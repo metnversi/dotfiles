@@ -43,12 +43,12 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
-export KUBECONFIG="./kubeconfig"
+#export KUBECONFIG="./kubeconfig"
 export WEZTERM_LOG=error
 export GTK_THEME="Adwaita"
 export RUST_BACKTRACE=full
 export LESS='-R'
-export TALOSCONFIG="./talosconfig"
+#export TALOSCONFIG="./talosconfig"
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
@@ -57,7 +57,7 @@ export FZF_DEFAULT_OPTS=" \
 
 PATH=/home/$USER/.nimble/bin:/home/$USER/bin:/home/$USER/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/home/$USER/.local/bin
 PATH=$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:.config/emacs/bin:/home/$USER/cmake/bin
-PATH=$PATH:/usr/local/go/bin:$HOME/.cargo/bin:$HOME/.linkerd2/bin
+PATH=$PATH:/usr/local/go/bin:$HOME/.cargo/bin:$HOME/.linkerd2/bin:$HOME/dev/bin
 export PATH="$HOME/.config/rofi/scripts:$BUN_INSTALL/bin:/opt/nvim-linux-x86_64/bin:$HOME/go/bin:$PATH"
 
 plugins=(
@@ -104,40 +104,7 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
-function ctalos() {
-  for i in {1..3}; do
-    MEM=$((3 * 1024))
-    name="k8s-control-$i"
-    sudo virt-install --name "$name" \
-      --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/oriana/iso/metal-amd64.iso \
-      --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
-      --graphics vnc --vcpus 2 \
-      --network bridge=virbr0 --noautoconsole \
-      --boot uefi,firmware.feature0.name=secure-boot,firmware.feature0.enabled=no --machine q35
-  done
 
-  for i in {1..2}; do
-    MEM=$((27 * 1024 / 10))
-    name="k8s-worker-$i"
-    sudo virt-install --name "$name" \
-      --memory "$MEM" --os-variant linux2024 \
-      --cdrom /home/oriana/iso/metal-amd64.iso \
-      --disk "path=/var/lib/libvirt/images/${name}-$(date +%d%S),bus=virtio,size=40" \
-      --graphics vnc --vcpus 2 \
-      --network bridge=virbr0 --noautoconsole \
-      --boot uefi,firmware.feature0.name=secure-boot,firmware.feature0.enabled=no --machine q35
-  done
-}
-function dtalos  (){
-  for i in $(sudo virsh list --all --name);do 
-    if [[ $i =~ '^k8s.*' ]]; then 
-      sudo virsh destroy $i 
-      sudo virsh undefine --nvram --remove-all-storage $i
-    fi
-  done
-
-}
 #VDPAU_DRIVER=nvidia
 . "$HOME/.cargo/env"
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -149,43 +116,6 @@ source $ZSH/oh-my-zsh.sh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
-alias ll='ls -l'
-alias la='ls -lrta'
-alias ls='ls --color=auto'
-alias cc='google-chrome-stable &'
-#alias vim='nvim'
-alias emacs='~/.local/bin/emacsscript.sh'
-alias e='~/.local/bin/emacsscript.sh'
-alias ff='firefox &'
-#alias bb='librewolf &'
-alias cf='fortune | cowsay'
-alias aa='ansible-playbook' 
-# bat: add -p for no line number, and --paging=never to not go less pager.
-alias cat='bat -p'
-alias sl='sudo systemctl enable --now libvirtd'
-alias ssh='TERM=xterm-256color ssh'
-#alias vpn='sudo systemctl enable --now openvpn && protonvpn-app &'
-alias cvpn='sudo systemctl enable --now vpnagentd && /opt/cisco/anyconnect/bin/vpn'
-alias sss='sudo systemctl status'
-alias eee='sudo systemctl enable --now'
-alias rrr='sudo systemctl restart'
-alias ddd='sudo systemctl disable --now'
-alias vid='ffplay -x 80 -y 24'
-alias sc='sudo systemctl'
-alias scat='sudo systemctl cat'
-alias sedit='sudo systemctl edit'
-alias i33='emacs -nw ~/.config/i3/config'
-alias enf='sudo vim /etc/nftables.conf'
-alias vis='sudo virsh list --all'
-alias svis='sudo virsh start'
-alias dvis='sudo virsh destroy'
-alias uvis='sudo virsh undefine --nvram --remove-all-storage'
-alias bathelp='bat --plain --language=help'
-alias docker='sudo docker'
-alias exi='sudo docker exec -it'
-alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
-alias gg='google-chrome'
-alias dpip="docker ps -q | xargs -n 1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 function help() {
     "$@" --help 2>&1 | bathelp
 }
@@ -193,4 +123,12 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 #alias reboot='sudo efibootmgr -n 0004 && reboot'
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source <(talosctl completion zsh)
+source <(oc completion zsh)
+source ~/.dev/bin/activate
+export TALOSCONFIG=$HOME/.kube/.talosconfig
+export KUBECONFIG="$HOME/.kube/config:$HOME/.kube/ocpconfig"
+function abbrev() { a='[0-9a-fA-F]' b=$a$a c=$b$b; sed "s/$b-$c-$c-$c-$c$c$c//g"; }
 pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
+
+complete -o nospace -C /usr/bin/mc mc

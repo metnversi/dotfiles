@@ -1,0 +1,55 @@
+export urls=(
+     "https://lwn.net"
+     "https://www.phoronix.com/"
+     "https://sadservers.com/scenarios"
+     "https://discuss.kubernetes.io/"
+     "https://cloud.redhat.com/learn"
+     "https://developers.redhat.com/blog"
+     "https://kubernetes.io/blog/"
+)
+
+
+export LS_COLORS="di=34:fi=37"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+export PNPM_HOME="/home/$USER/.local/share/pnpm"
+
+case ":$PATH:" in
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+PATH="$HOME/.nimble/bin:$HOME/bin:$HOME/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/$HOME/.local/bin"
+PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/emacs/bin:$HOME/.bun/bin:$HOME/cmake/bin:$HOME/.linkerd2/bin"
+PATH="$PATH:/usr/local/go/bin:/home/$USER/.cargo/bin"
+export PATH="$HOME/.config/rofi/scripts:$BUN_INSTALL/bin:/opt/nvim-linux-x86_64/bin:$HOME/go/bin:$PATH"
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+export BUN_INSTALL="$HOME/.bun"
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+export ZOXIDE_CMD_OVERRIDE="cd"
+export NVM_DIR="$HOME/.nvm"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+export ZOXIDE_CMD_OVERRIDE="cd"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export TALOSCONFIG=$HOME/.kube/.talosconfig
+export KUBECONFIG="$HOME/.kube/config:$HOME/.kube/ocpconfig"

@@ -11,7 +11,6 @@
 (load "~/.emacs.rc/org-mode-rc.el")
 (load "~/.emacs.rc/autocommit-rc.el")
 
-;;; Appearance
 (defun rc/get-default-font ()
   (cond
    ((eq system-type 'gnu/linux) "Iosevka Nerd Font-20")))
@@ -42,8 +41,18 @@
          (terraform-mode . lsp-deferred)
          (markdown-mode . lsp-deferred)
          (bash-mode . lsp-deferred)
-	 )
-  :commands lsp lsp-deferred)
+         (c-mode . lsp-deferred) 
+         (c++-mode . lsp-deferred)
+         )     
+  :commands lsp lsp-deferred
+  :config
+
+  ;; Optional: extra settings for clangd
+  (setq lsp-clients-clangd-args
+        '("--header-insertion=never" "--background-index"))
+  (setq lsp-prefer-capf t)
+)
+
 
 (use-package terraform-mode
   :ensure t
@@ -62,10 +71,11 @@
 (rc/require 'smex 'ido-completing-read+)
 
 (require 'ido-completing-read+)
-
 (ido-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
+
+(electric-pair-mode 1)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
@@ -80,6 +90,30 @@
                          (interactive)
                          (c-toggle-comment-style -1)))
 
+;; Automatically save all buffers before exiting Emacs
+;; (defun save-all-buffers-before-exit ()
+;;   "Save all modified buffers without prompting before exiting."
+;;   (save-some-buffers t))
+;; (add-hook 'kill-emacs-hook #'save-all-buffers-before-exit)
+
+;; (defun save-all-buffers-no-prompt ()
+;;   "Save all file-visiting buffers without prompting."
+;;   (dolist (buf (buffer-list))
+;;     (with-current-buffer buf
+;;       (when (and (buffer-file-name)    ;; buffer is visiting a file
+;;                  (buffer-modified-p)  ;; buffer is modified
+;;                  (file-writable-p (buffer-file-name))) ;; file writable
+;;         (save-buffer)))))
+;; 
+;; (defun save-buffers-delete-frame-no-prompt ()
+;;   "Save all buffers without prompting, then delete current frame (exit client)."
+;;   (interactive)
+;;   (save-all-buffers-no-prompt)
+;;   (delete-frame))
+;; (global-set-key (kbd "C-x C-c") 'save-buffers-delete-frame-no-prompt)
+
+
+
 ;;;neotree
 ;;(add-to-list 'load-path "~/.emacs.d/neotree")
 (rc/require 'neotree)
@@ -93,9 +127,23 @@
   (interactive)
   (paredit-mode 1))
 (rc/require 'toml-mode)
-;;; No confirmation if quit emacs/follow symlinks
 (setq confirm-kill-emacs nil)
 (setq vc-follow-symlinks t)
+
+(require 'smartparens-config)
+(add-hook 'prog-mode-hook #'smartparens-mode)
+(global-set-key (kbd "C-M-a") #'sp-forward-sexp)
+(global-set-key (kbd "C-M-z") #'sp-backward-sexp)
+
+
+(defun sp-toggle-inner-outer-sexp ()
+  "Toggle cursor between the current sexp and its enclosing sexp."
+  (interactive)
+  (if (or (looking-at-p "\\s(")    ;; cursor at opening
+          (looking-back "\\s)" 1)) ;; cursor at closing
+      (sp-down-sexp)               ;; go inside
+    (sp-up-sexp)))    ;; go outside
+(define-key smartparens-mode-map (kbd "C-c t") 'sp-toggle-inner-outer-sexp)
 
 (add-hook 'emacs-lisp-mode-hook  'rc/turn-on-paredit)
 (add-hook 'clojure-mode-hook     'rc/turn-on-paredit)
@@ -124,7 +172,6 @@
 (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 
 (require 'basm-mode)
-
 (require 'fasm-mode)
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . fasm-mode))
 
@@ -147,6 +194,22 @@ switch to `conf-mode`."
     (conf-mode)))
 
 (add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
+
+(require 'treesit)
+(setq major-mode-remap-alist
+      '(
+;;        (python-mode . python-ts-mode)
+        (bash-mode . bash-ts-mode)
+        (c-mode . c-ts-mode)
+        (c++-mode . c++-ts-mode)
+        (json-mode . json-ts-mode)
+        (js-mode . js-ts-mode)
+        (go-mode . go-ts-mode)
+        (java-mode . java-ts-mode)
+        (html-mode . html-mode)
+        (css-mode . css-mode)
+        )
+      )
 
 ;;; Whitespace mode
 (defun rc/set-up-whitespace-handling ()
@@ -190,6 +253,7 @@ switch to `conf-mode`."
 (rc/require 'cl-lib)
 (rc/require 'magit)
 (setq magit-auto-revert-mode nil)
+(setq magit-log-arguments '("--graph" "--decorate" "--color"))
 
 (global-set-key (kbd "C-c m s") 'magit-status)
 (global-set-key (kbd "C-c m l") 'magit-log)
@@ -224,6 +288,7 @@ switch to `conf-mode`."
 (global-set-key (kbd "C-c h a") 'helm-org-agenda-files-headings)
 (global-set-key (kbd "C-c h r") 'helm-recentf)
 
+
 ;;; yasnippet
 (rc/require 'yasnippet)
 
@@ -250,12 +315,10 @@ switch to `conf-mode`."
 ;;; http://stackoverflow.com/questions/13794433/how-to-disable-autosave-for-tramp-buffers-in-emacs
 (setq tramp-auto-save-directory "/tmp")
 
-;;; powershell
 (rc/require 'powershell)
 (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode))
 (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
 
-;;; eldoc mode
 (defun rc/turn-on-eldoc-mode ()
   (interactive)
   (eldoc-mode 1))
@@ -273,11 +336,9 @@ switch to `conf-mode`."
             (interactive)
             (company-mode 0)))
 
-;;; Typescript
-;;(rc/require 'typescript-mode)
-;;(add-to-list 'auto-mode-alist '("\\.mts\\'" . typescript-mode))
+(rc/require 'typescript-mode)
+(add-to-list 'auto-mode-alist '("\\.mts\\'" . typescript-mode))
 
-;;; Tide
 (rc/require 'tide)
 
 (defun rc/turn-on-tide-and-flycheck ()  ;Flycheck is a dependency of tide
@@ -302,15 +363,12 @@ switch to `conf-mode`."
 
 (setq font-latex-fontify-sectioning 'color)
 
-;;; Move Text
 (rc/require 'move-text)
 (global-set-key (kbd "M-p") 'move-text-up)
 (global-set-key (kbd "M-n") 'move-text-down)
 
-;;; Ebisp
 (add-to-list 'auto-mode-alist '("\\.ebi\\'" . lisp-mode))
 
-;;; Packages that don't require configuration
 (rc/require
  'scala-mode
  'd-mode
@@ -363,30 +421,6 @@ switch to `conf-mode`."
             (setq-local fill-paragraph-function 'astyle-buffer)))
 
 (require 'compile)
-
-;;mail
-;;(add-to-list 'load-path "~/.emacs.d/epla/mu4e") ;; adjust path as needed
-;;(require 'mu4e)
-;;(setq
-;; mu4e-maildir       "~/Mail/gmail"
-;; mu4e-get-mail-command "mbsync gmail"
-;; mu4e-update-interval 300
-;; mu4e-view-show-images t
-;; mu4e-view-show-addresses t
-;; user-mail-address "nguyenthevinh2002.xuantruong@gmail.com"
-;; user-full-name  "Vinh Nguyen"
-;; mu4e-sent-folder   "/[Gmail]/Sent Mail"
-;; mu4e-drafts-folder "/[Gmail]/Drafts"
-;; mu4e-trash-folder  "/[Gmail]/Trash"
-;; mu4e-refile-folder "/[Gmail]/All Mail")
-;;(setq message-send-mail-function 'smtpmail-send-it
-;;      smtpmail-stream-type 'starttls
-;;      smtpmail-default-smtp-server "smtp.gmail.com"
-;;      smtpmail-smtp-server "smtp.gmail.com"
-;;      smtpmail-smtp-service 587
-;;      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "nguyenthevinh2002.xuantruong@gmail.com" nil)))
-
-;; pascalik.pas(24,44) Error: Can't evaluate constant expression
 
 compilation-error-regexp-alist-alist
 

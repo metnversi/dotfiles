@@ -24,7 +24,7 @@ pref/.emacs|symlink|.emacs
 pref/mpd|symlink|.config/mpd
 #pref/.bash_profile|symlink|.startup
 
-pref/yazi|symlink|.config/yazi
+#pref/yazi|symlink|.config/yazi
 #pref/rofi|symlink|.config/rofi
 pref/.fehbg|symlink|.fehbg
 #pref/.xinitrc|symlink|.xinitrc
@@ -34,12 +34,12 @@ pref/asset/theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 pref/asset/theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme
 #pref/asset/theme/cyberdream.wezterm.lua|symlink|.config/wezterm/cyberdream.lua
 
-pref/Hyprland/hypr|symlink|.config/hypr
-pref/Hyprland/waybar|symlink|.config/waybar
-pref/Hyprland/wallust|symlink|.config/wallust
-pref/Hyprland/cava|symlink|.config/cava
-pref/Hyprland/ags|symlink|.config/ags
-pref/Hyprland/yad.conf|symlink|.config/yad.conf
-pref/Hyprland/qt5ct|symlink|.config/qt5ct
-pref/Hyprland/qt6ct|symlink|.config/qt6ct
-pref/Hyprland/rofi|symlink|.config/rofi
+#pref/Hyprland/hypr|symlink|.config/hypr
+#pref/Hyprland/waybar|symlink|.config/waybar
+#pref/Hyprland/wallust|symlink|.config/wallust
+#pref/Hyprland/cava|symlink|.config/cava
+#pref/Hyprland/ags|symlink|.config/ags
+#pref/Hyprland/yad.conf|symlink|.config/yad.conf
+#pref/Hyprland/qt5ct|symlink|.config/qt5ct
+#pref/Hyprland/qt6ct|symlink|.config/qt6ct
+#pref/Hyprland/rofi|symlink|.config/rofi

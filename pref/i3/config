@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Iosevka Nerd Font 15
+font pango:Iosevka Nerd Font 14
 #gaps inner 2
 #gaps outer 2
 #smart_gaps on 
@@ -31,6 +31,12 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
+# bindsym Ctrl+Shift+Left focus left
+# bindsym Ctrl+Shift+Down focus down
+# bindsym Ctrl+Shift+Up focus up
+# bindsym Ctrl+Shift+Right focus right
+
 
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
@@ -95,6 +101,16 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
+
+# bindsym Ctrl+Shift+1 move container to workspace number $ws1
+# bindsym Ctrl+Shift+2 move container to workspace number $ws2
+# bindsym Ctrl+Shift+3 move container to workspace number $ws3
+# bindsym Ctrl+Shift+4 move container to workspace number $ws4
+# bindsym Ctrl+Shift+5 move container to workspace number $ws5
+# bindsym Ctrl+Shift+6 move container to workspace number $ws6
+# bindsym Ctrl+Shift+7 move container to workspace number $ws7
+# bindsym Ctrl+Shift+8 move container to workspace number $ws8
+# bindsym Ctrl+Shift+9 move container to workspace number $ws9
 
 
 #bindsym $mod+z exec emacs -fs
@@ -191,6 +207,7 @@ bindsym $mod+Shift+s exec --no-startup-id flameshot gui -c
 bindsym $mod+Shift+a exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id flameshot screen -c
 bindsym Shift+Print exec --no-startup-id flameshot screen
+bindsym $mod+Shift+F4 exec --no-startup-id systemctl poweroff
 #bindsym $mod+l exec --no-startup-id xset dpms force off
 #bindsym $mod+g exec --no-startup-id gns3
 bindsym $mod+g exec --no-startup-id /home/oriana/.local/bin/gns3
@@ -211,6 +228,7 @@ bindsym Mod1+Tab exec --no-startup-id /home/oriana/.config/rofi/tab/launcher.sh
 bindsym $mod+o exec --no-startup-id /usr/bin/steam
 
 bindsym $mod+Return exec /usr/bin/kitty
+bindsym Ctrl+Shift+Return exec /usr/bin/kitty
 #bindsym $mod+Return exec /usr/bin/xterm
 #bindsym $mod+Return exec /usr/bin/urxvt
 #bindsym $mod+Shift+Return exec /usr/bin/kitty

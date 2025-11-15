@@ -15,7 +15,7 @@ normal.style = "SemiBold"
 bold.family = "Iosevka Nerd Font"
 italic.family = "Iosevka Nerd Font"
 bold_italic.family = "Iosevka Nerd Font"
-size = 12
+size = 10
 
 [scrolling]
 history = 3000

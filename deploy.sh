@@ -1,53 +1,53 @@
 #!/bin/env bash
 
-#set -o xtrace
-#unset GREP_OPTIONS
+# set -o xtrace
 
-mv "${HOME}/.bashrc" "${HOME}/.bashrc.bak"
-[ -d "tsoding/.git" ] && \
-  git -C tsoding pull --recurse-submodules && \
-  git -C tsoding submodule update --init --recursive || \
-  git clone --recurse-submodules https://github.com/rexim/dotfiles.git tsoding 2>/dev/null 
-sed -i "/gitconfig/d" tsoding/MANIFEST
-bash tsoding/deploy.sh MANIFEST
-echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
-if [[ -z "./pref/asset/$(whoami)".png ]]; then mv ./pref/asset/oriana.png ./pref/asset/"$(whoami)".png; fi
-find . -type f -exec sed -i 's/oriana/'"$(whoami)"'/g' {} +
-ln -sf ~/.startup ~/.bash_profile 
+# Avoid to run the script as shell other than bash.
+if [[ ${SHELL} != "/bin/bash" ]]; then
+  echo -e "Please run inside a bash shell, or \e[32mexport SHELL=/bin/bash\e[0m before running the script, with caution."
+  echo -e "You can later use command \e[033mchsh -s /bin/zsh\e[0m to change default shell to zsh for instance."
+  exit 1
+fi
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+unset GREP_OPTIONS
+USER=${USER:-"$(logname)"}
+WORKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source ${WORKDIR}/function
 
-symlinkFile() {
-  filename="${SCRIPT_DIR}/$1"
-  destination="${HOME}/$2"
-  mkdir -p "$(dirname "$destination")"
-  #rm -rf "$destination"
-  #ln -sf will not work for dir, so I use rsync. If it is first time install, ln -sf is much better.
-  ln -sf "$filename" "$destination"
-  echo -e "\033[32m[OK]\033[0m $filename -> $destination"
-}
+if [ -d /sys/class/power_supply/BAT0 ]; then
+    laptoplid
+    laptopTouchPadX11
+    sudo apt install -y tlp 
+else 
+    sudo apt install tuned -y
+fi
 
-deployManifest() {
-  while IFS='|' read -r filename operation destination; do
-    [[ -z "$filename" ]] && continue
-    if [[ $filename =~ ^# ]]; then
-      echo -e "\033[33m[DELETE]\033[0m $destination"
-      rm -f "${HOME}/$destination"
-      continue
-    fi
+if [ -n "$DISPLAY" ]; then
+    lockScreen
+    avatar
+    iosevka
+    chromeWayland
+fi
 
-    case $operation in
-    symlink | override)
-      symlinkFile "$filename" "$destination"
-      ;;
-    *)
-      echo -e "\033[31m[ERROR]\033[0m You fucked up with $filename"
-      ;;
-    esac
-  done <"${SCRIPT_DIR}/$1"
-}
+header
+prepare
+tsoding_update
+# deployManifest ${WORKDIR}/MANIFEST.linux
+trixieftp
+dependencies
+youtube
+miscInstall
 
-deployManifest MANIFEST.linux
-source "${HOME}/.bashrc"
-echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
-bash "${SCRIPT_DIR}/install.sh"
+# brew_install
+# github_cli
+motd
+# gdmMacOS
+sysctl
+# ipv6
+emacsrun
+# omzshInstall
+alias_add
+echo "Please source bashrc/zshrc after done install to \
+make change applied, \
+or just simply logout and login back."
+header
