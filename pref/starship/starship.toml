@@ -1,0 +1,55 @@
+palette = "cyberdream"
+"$schema" = '~/.config/starship-schema.json'
+
+#format = "$all$directory$character"
+format = """
+$os\
+$username\
+$directory\
+$git_branch\
+$git_status\
+$c\
+$elixir\
+$python\
+$golang\
+$gradle\
+$haskell\
+$java\
+$nodejs\
+$rust\
+$docker_context\
+$time\
+$kubernetes\
+$character\
+"""
+
+add_newline = false
+
+[kubernetes]
+disabled = false
+symbol = '⎈ '
+format = '[$symbol](bold blue)[$context](magenta)[( \($namespace\))](yellow) in '
+
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold red)'
+
+[direnv]
+disabled = false
+
+[os]
+disabled = false
+
+[os.symbols]
+Debian = " " 
+
+[palettes.cyberdream]
+blue = "#5ea1ff"
+green = "#5eff6c"
+cyan = "#5ef1ff"
+red = "#ff6e5e"
+yellow = "#f1ff5e"
+magenta = "#ff5ef1"
+pink = "#ff5ea0"
+orange = "#ffbd5e"
+purple = "#bd5eff"

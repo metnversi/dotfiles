@@ -1,0 +1,55 @@
+[env]
+
+[window]
+opacity = 0.92
+padding.x = 4
+padding.y = 4
+decorations = "Full"
+decorations_theme_variant = "Dark" # "Dark"
+#startup_mode = "Fullscreen"
+#title = "Hello world!"
+
+[font]
+normal.family = "Iosevka Nerd Font"
+normal.style = "SemiBold"
+bold.family = "Iosevka Nerd Font"
+italic.family = "Iosevka Nerd Font"
+bold_italic.family = "Iosevka Nerd Font"
+size = 10
+
+[scrolling]
+history = 3000
+multiplier = 3
+
+[bell]
+#command = ""
+#animation = "Linear"
+#duration = 5
+
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+blink_interval = 300
+blink_timeout = 2
+
+[mouse]
+hide_when_typing = true
+bindings = [{ mouse = "Right", mods = "Control", action = "Paste" },]
+
+[general]
+import = ["~/.config/alacritty/cyberdream.toml"]
+
+[selection]
+save_to_clipboard = true
+
+[terminal]
+shell = { program = "/bin/bash"}
+
+[[hints.enabled]]
+command = "xdg-open" 
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = true
+binding = { key = "O", mods = "Control|Shift" }
+regex ="(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
+

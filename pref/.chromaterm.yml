@@ -1,0 +1,116 @@
+rules:
+  # GENERAL
+  - description: For your (username)@(devicename)>   (Green Light) (Light Blue)
+    regex: (^\w*)@([a-zA-Z0-9\,\-]*>)
+    color:
+      1: f#00DF3A
+      2: f#00D1DB bold
+
+  - description: IPv4s (Light Blue)
+    regex: \b(?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?(?!\.)\b
+    color: f#00D1DB bold
+
+  - description: IPv6s (Light Blue)
+    regex: \s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:)))(/\d+)?(?!\.)\b
+    color: f#00D1DB bold
+
+  ## ARISTA / CISCO
+
+  - description: Cisco MAC Address Notation (Purple)
+    regex: ([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4}).*
+    color: f#990099
+
+  - description: Linux MAC address (Purple)
+    regex: \b([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})\b
+    color: f#990099
+
+  - description: Interfaces in shutdown (Red) no shutdown (Bright Green)
+    #regex: (\b[uU]p[a-zA-Z0-9_-]*\b|Loopback\d{1,10}|\b[Ll]ocal[a-zA-Z0-9_-]*\b|\d{1,15} bytes)
+    regex: (Loopback\d{1,10}|\d{1,15} bytes)
+    color:
+      1: f#6CFF00 bold
+
+  - description: Interfaces in shutdown (Red) no shutdown (Bright Green)
+    #regex: (\b[Ee]na[a-zA-Z0-9_-]*\b|\bC+\b|(?<=%)([A-Za-z0-9_]+)(?=-\d-)|\ OK|\ ON|\b[AEPSV][A-Z_]*\b)
+    regex: (\ OK|\ ON)
+    color:
+      1: f#2CF000 bold
+
+  - description: 100Gigabit ethernet
+    regex: (\bHundred\S*)
+    color:
+      1: f#900000 bold
+
+  - description: bad state
+    regex: (\bG[A-Z]\b|\ esp\ |null|\ upgrade|Down\ |Down$|Null\d{1,2})
+    color:
+      1: f#900000 bold
+
+  - description: bad state
+    #regex: (\bdis[a-zA-Z0-9_-]*\b|\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down|not\ )
+    regex: (\ DOWN|\b[Ee]rr[a-zA-Z0-9_-]*\b|\ ERROR||down\ |down$|shutdown|administratively down)
+    color:
+      1: f#900000 bold
+
+  - description: text within parentheses
+    #regex: ((?<=-\d-)([A-Za-z0-9_]+)|(?<=\[)[^\]]+(?=\])|(?<=\()[^\)]+(?=\))|no\ |stopped|\ DISABLED|\ OFF)
+    regex: ((?<=\[)[^\]]+(?=\])|(?<=\()[^\)]+(?=\))|stopped|\ DISABLED|\ OFF)
+    color:
+      1: f#9F0049 bold
+
+  - description: seconds, S-start
+    #regex: (\b[S](?!O\b|G\b)[A-Z]*\b|\d{2,5} secs)
+    regex: (\d{2,5} secs)
+    color:
+      1: f#E6E600 bold
+
+  - descripton: Gigabit Ethernet
+    regex: (\bGigabit\S*|G\d/\d{1,3}|Gi\d/\d{1,2}\.\d{1,10}|Gi\d/\d{1,2}|G\d/\d{1,2}\.\d{1,10}|(?<![ ,])[^ ,>]+(?=>))
+    color:
+      1: f#007FFF bold
+
+  - description: Ethernet
+    regex: (\bEthernet\S*|vlan)
+    color:
+      1: f#007FFF bold
+
+  - description: FastEthernet
+    regex: (\bFastEt\S*|Fa\d/\d{1,2}\.\d{1,10}|Fa\d/\d{1,2}|F\d/\d{1,2}\.\d{1,10}|F\d/\d{1,2})
+    color:
+      1: f#007FFF bold
+
+  - description: Serial
+    #regex: (\b[DEU](?!G\b|G\b)[A-Z]*\b|>|Sr\d/\d{1,2}\.\d{1,10}|Sr\d/\d{1,2}|S\d/\d{1,2}.\d{1,10}|S\d/\d{1,2}|\bSerial\S*)
+    regex: (>|Sr\d/\d{1,2}\.\d{1,10}|Sr\d/\d{1,2}|S\d/\d{1,2}.\d{1,10}|S\d/\d{1,2}|\bSerial\S*)
+    color:
+      1: f#e6e600 bold
+
+  - description: Green
+    regex: (running)
+    color:
+      1: f#5FF000 bold
+
+  - description: orange
+    #regex: (\b[B](?!M\b|P\b)[A-Z]*\b|\bP[A-Z]*\b|[a-zA-Z]+[*]|route-map|filter-list|\b[A-B]+\b||iptables|BB\d|BB|PE\d{1,2}|CE\d{1,2})
+    regex: (route-map|filter-list|\b[A-B]+\b||iptables|BB\d|BB|PE\d{1,2}|CE\d{1,2})
+    color:
+      1: f#ff6600 bold
+
+  - descripton: OSPF
+    regex: (\ E[12]\ |E[12]\ \ |N[12]|IA\ |\*E[12]|\b[Oo][Ss][Pp][fF]\S*|VL\d{1,2}|SL\d{1,2}|Type\-\d)
+    color:
+      1: f#9f0099 bold
+
+  #  - description: uppercase word that start with P, Q, R, F
+  #    regex: (P2P|P2MP|vrf)
+  #    color:
+  #      1: f#007FFF bold
+
+  - description: text start with L, IS-IS
+    regex: (su\ |\ ia\ |2WAY|L[12]|https?:\/\/[a-zA-Z0-9.-]+(:[0-9]+)?(\/[a-zA-Z0-9._-]+)*\/?)
+    color:
+      1: f#28a9a5 bold
+
+  - description: combined timestamp
+    regex: \b(?<!\.)([0-1]?\d|2[0-3]):([0-5]?\d):([0-5]?\d)(\.(\d{1,3}))?\b
+    color: f#ff99ff
