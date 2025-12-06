@@ -425,8 +425,8 @@ st(){
     curl -LO https://dl.suckless.org/st/st-0.9.tar.gz
     tar xvzf st-0.9.tar.gz
     sudo chown $USER:$USER st-0.9 -R
-    cp pref/config.h st-0.9/
+    rm st-0.9/config.h 
+    ln -sf $(pwd)/pref/config.h st-0.9/config.h
     cd st-0.9 && sudo make clean install
     cd ..
-
 }

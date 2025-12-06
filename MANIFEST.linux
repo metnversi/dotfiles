@@ -15,7 +15,7 @@ pref/.zshrc|symlink|.zshrc
 #pref/.p10k.zsh|symlink|.p10k.zsh
 pref/starship/starship.toml|symlink|.config/starship.toml
 pref/.chromaterm.yml|symlink|.chromaterm.yml
-#pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
+pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
 #pref/picom.conf|symlink|.config/picom.conf
 pref/batconfig|symlink|.config/bat/config
 pref/ncmpcpp/config|symlink|.config/ncmpcpp/config

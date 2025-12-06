@@ -187,7 +187,7 @@ bar {
 ##exec --no-startup-id dex --autostart --environment i3
 #exec --no-startup-id nm-applet
 
-exec --no-startup-id sh -c "pkill -9 gammastep; /usr/bin/gammastep -l 14:108 -t 6500:4000"
+exec --no-startup-id sh -c "pkill -9 gammastep; gammastep -P -O 4000"
 #exec --no-startup-id /usr/bin/gammastep -l 14:108 -t 6500:4000
 #exec --no-startup-id /usr/bin/xrandr --output HDMI-0 --mode 1920x1080 --rate 165
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -202,6 +202,8 @@ exec --no-startup-id /usr/bin/dunst
 
 exec --no-startup-id betterlockscreen -w dim
 exec --no-startup-id ibus-daemon -drx
+exec --no-startup-id flameshot
+#exec --no-startup-id "pkill -9 conky; sleep 2; /usr/bin/conky"
 #exec --no-startup-id source ~/.fehbg
 #bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui -c 
@@ -249,3 +251,4 @@ workspace_layout tabbed
 #hide_edge_borders both
 for_window [all] title_window_icon padding 1px
 default_border pixel 3
+#for_window [class="Conky"] floating enable, border pixel 0, sticky enable, manage off

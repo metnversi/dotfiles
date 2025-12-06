@@ -52,4 +52,3 @@ echo "Please source bashrc/zshrc after done install to \
 make change applied, \
 or just simply logout and login back."
 header
-
