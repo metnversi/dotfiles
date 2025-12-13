@@ -1,8 +1,8 @@
 required:
   - curl wget nftables rename kubectl libbpfcc-dev libdevmapper-dev libgpgme-dev
-  - zsh postcss yt-dlp mtp-tools clangd
+  - zsh yt-dlp mtp-tools clangd
   - tmux busybox-static adb ansible wireguard openresolv rpm rpmlint
-  - autoconf tlp xclip gcc make libimlib2-dev gettext nodejs npm
+  - autoconf tlp xclip gcc make libimlib2-dev gettext
   - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
   - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
   - libpam0g-dev libcairo2-dev libfontconfig1-dev libxcb-composite0-dev libev-dev

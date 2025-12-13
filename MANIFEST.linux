@@ -1,4 +1,3 @@
-#.gitconfig|symlink|.gitconfig
 
 #pref/nvim|symlink|.config/nvim
 pref/.vimrc|symlink|.vimrc
@@ -22,10 +21,10 @@ pref/ncmpcpp/config|symlink|.config/ncmpcpp/config
 #pref/kitty.conf|symlink|.config/kitty/kitty.conf
 pref/.emacs|symlink|.emacs
 pref/mpd|symlink|.config/mpd
-#pref/.bash_profile|symlink|.startup
+pref/.bash_profile|symlink|.bash_profile
 
 #pref/yazi|symlink|.config/yazi
-#pref/rofi|symlink|.config/rofi
+pref/rofi|symlink|.config/rofi
 pref/.fehbg|symlink|.fehbg
 #pref/.xinitrc|symlink|.xinitrc
 #pref/.Xresources|symlink|.Xresources

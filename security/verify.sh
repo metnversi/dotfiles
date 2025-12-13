@@ -1,5 +1,6 @@
 #!/bin/env bash
-source ../install.sh
+
+
 aidedb=/var/lib/aide/aide.db.gz
 aidedb_out=/var/lib/aide/aide.db.new.gz
 audit1="-a always,exit -S all -F exe=/usr/bin/sudo -F key=sudo-used"
@@ -34,13 +35,13 @@ fi
 
 check=$(grep -v ^# /etc/nftables.conf | grep my_input)
 if [[ -z $check ]]; then
-  sudo cp $(pwd)/security/nftables.conf /etc/nftables.conf
-  installed "nftables"
+  cp $(pwd)/security/nftables.conf /etc/nftables.conf
 else
   skip "nftables"
 fi
 echo -e "\e[31m[WARNING]\e[0m Please run aide with idle state, turn off all process now!"
-sudo aideinit
+
+aideinit
 if [ ! -f "$aidedb" ]; then
   echo "$aidedb not found" >&2
   exit 1

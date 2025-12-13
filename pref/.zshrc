@@ -120,7 +120,6 @@ function help() {
     "$@" --help 2>&1 | bathelp
 }
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-#alias reboot='sudo efibootmgr -n 0004 && reboot'
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source <(talosctl completion zsh)

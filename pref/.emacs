@@ -12,8 +12,10 @@
 
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-16")))
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-18"))
+  )
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
+
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -25,22 +27,31 @@
  '(line-number ((t (:foreground "#5c6370"))))  
  '(line-number-current-line ((t (:foreground "#a83264" :weight bold))))) 
 
+;;(rc/require 'lsp-pyright)
+;;(use-package lsp-pyright
+;;  :ensure t
+;;  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+;;  :hook (python-mode . (lambda ()
+;;                          (require 'lsp-pyright)
+;;                          (lsp))))  ; or lsp-deferred
+
 (use-package lsp-mode
   :ensure t
   :hook  (
-	     (yaml-mode . lsp)
-         (terraform-mode . lsp-deferred)
-         (markdown-mode . lsp-deferred)
-         (bash-mode . lsp-deferred)
-         (go-mode . lsp-deferred)
-         )     
+	      (yaml-mode . lsp)
+          (terraform-mode . lsp-deferred)
+          (markdown-mode . lsp-deferred)
+          (bash-mode . lsp-deferred)
+          (go-mode . lsp-deferred)
+  ;;        (python-mode . lsp-deferred)
+          )     
   :commands lsp lsp-deferred
   :config
 
   (setq lsp-clients-clangd-args
         '("--header-insertion=never" "--background-index"))
   (setq lsp-prefer-capf t)
-)
+  )
 
 (use-package terraform-mode
   :ensure t
@@ -54,6 +65,7 @@
 (set-face-background 'default "#000000")
 
 (rc/require 'smex 'ido-completing-read+)
+
 
 (require 'ido-completing-read+)
 (ido-mode 1)

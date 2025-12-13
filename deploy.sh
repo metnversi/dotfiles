@@ -14,17 +14,7 @@ USER=${USER:-"$(logname)"}
 WORKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source ${WORKDIR}/function
 
-if [ -d /sys/class/power_supply/BAT0 ]; then
-    laptoplid
-    laptopTouchPadX11
-    sudo apt install -y tlp 
-else 
-    sudo apt install tuned -y
-fi
-
 if [ -n "$DISPLAY" ]; then
-    lockScreen
-    avatar
     iosevka
     chromeWayland
 fi
@@ -32,23 +22,16 @@ fi
 header
 prepare
 tsoding_update
-# deployManifest ${WORKDIR}/MANIFEST.linux
-trixieftp
-dependencies
+deployManifest MANIFEST.linux
 youtube
 miscInstall
 
 # brew_install
-# github_cli
 motd
 # gdmMacOS
-sysctl
+# sysctl
 # ipv6
 emacsrun
 # omzshInstall
-alias_add
-st
-echo "Please source bashrc/zshrc after done install to \
-make change applied, \
-or just simply logout and login back."
+echo "Please source bashrc/zshrc after done install to make change applied, or just simply logout and login back."
 header

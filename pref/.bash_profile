@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 # Intended for high advance usage - Designed to exec startx from TTY login
 
-# Ensure ~/.xinitrc is executable if it exists
 [[ -f $HOME/.xinitrc ]] && chmod +x $HOME/.xinitrc
 
-# Check if we are in a non-graphical login session on a local TTY
-# $XDG_VTNR is usually set on a virtual terminal (TTY)
 if [[ -z $DISPLAY && $XDG_VTNR ]]; then
     TIMESTAMP=$(date +%H%M%S%s)
 
@@ -24,9 +21,7 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
     create_xinitrc() {
         local session_cmd="$1"
         local session_name="$2"
-        
-        # Write the executable script to ~/.xinitrc
-        # This includes redirecting session output to a unique log file
+
         cat > "$HOME/.xinitrc" <<EOF
 #!/usr/bin/env bash
 exec $session_cmd > "\$HOME/.local/share/${session_name}-${TIMESTAMP}.log" 2>&1
@@ -52,5 +47,4 @@ EOF
             ;;
     esac
     exec startx
-
 fi

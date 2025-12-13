@@ -100,7 +100,6 @@ alias emacs='$HOME/.local/bin/emacsscript.sh'
 alias cat='bat -p'
 
 source ~/.exportrc
-source ~/.secret
 pokemon-colorscripts \
     --no-title -sr | \
     fastfetch \
