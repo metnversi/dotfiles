@@ -18,6 +18,7 @@ prepare(){
     mkdir -p "${HOME}/.local/bin" "${HOME}/repos"
     cp "${HOME}/.bashrc" "${HOME}/.bashrc.bak-$(date +%H.%M.%S.%s-%d.%m.%Y)"
     cp $WORKDIR/pref/exportrc $HOME/.exportrc
+    PDISPLAY=$(xrandr | grep ' connected' | awk '{ print $1 }' | head -n1)
 }
 
 tsoding_update(){

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Intended for high advance usage - Designed to exec startx from TTY login
 
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
 [[ -f $HOME/.xinitrc ]] && chmod +x $HOME/.xinitrc
 
 if [[ -z $DISPLAY && $XDG_VTNR ]]; then
@@ -41,6 +45,11 @@ EOF
             echo "Starting KDE Plasma..."
             create_xinitrc "startplasma-x11" "kde" 
             ;;
+	    4)
+	        echo "Do nothing"
+	        rm -f "$HOME/.xinitrc"
+            return
+	        ;;
         *)
             echo "No input or invalid choice. Starting i3 by default."
             create_xinitrc "i3" "i3"
@@ -48,3 +57,4 @@ EOF
     esac
     exec startx
 fi
+
