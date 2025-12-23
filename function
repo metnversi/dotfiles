@@ -18,7 +18,7 @@ prepare(){
     mkdir -p "${HOME}/.local/bin" "${HOME}/repos"
     cp "${HOME}/.bashrc" "${HOME}/.bashrc.bak-$(date +%H.%M.%S.%s-%d.%m.%Y)"
     cp $WORKDIR/pref/exportrc $HOME/.exportrc
-    PDISPLAY=$(xrandr | grep ' connected' | awk '{ print $1 }' | head -n1)
+    #PDISPLAY=$(xrandr | grep ' connected' | awk '{ print $1 }' | head -n1)
 }
 
 tsoding_update(){
@@ -163,7 +163,7 @@ fi
 
 
 emacsrun () {
-    go install golang.org/x/tools/gopls@latest
+    # go install golang.org/x/tools/gopls@latest
     cat > ~/.local/bin/emacsscript.sh <<'EOF'
 #!/bin/env bash
 
@@ -185,4 +185,49 @@ fi
 
 exec google-chrome \$extra_flags "\$@"
 EOF'
+}
+
+lockScreen () {
+if ! exist "betterlockscreen"; then
+    ERRI=""
+    for i in autoconf gcc make pkg-config libpam0g-dev libcairo2-dev libfontconfig1-dev \
+    libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev \
+    libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev \
+    libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick bc; do 
+    
+    if ! dpkg -l "$i" > /dev/null 2>&1; then 
+        ERRI+="$i " 
+    fi
+done
+
+if [[ -n $ERRI ]]; then 
+    echo -e "Required packages for i3lock-color: \e[31m$ERRI \e[0m" 
+    exit 127
+fi
+  # git clone https://github.com/Raymo111/i3lock-color.git
+  # cd i3lock-color && bash ./install-i3lock-color.sh
+  # git clone https://github.com/betterlockscreen/betterlockscreen.git
+  wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | bash -s user
+  echo -e "[Unit]
+Description = Lock screen when going to sleep/suspend
+Before=sleep.target
+Before=suspend.target
+
+[Service]
+User=%I
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/local/bin/betterlockscreen --lock
+TimeoutSec=infinity
+ExecStartPost=/usr/bin/sleep 1
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service
+  systemctl --user daemon-reload
+  systemctl --user enable betterlockscreen
+  installed "betterlockscreen"
+else
+  echo skip "betterlockscreen"
+fi
 }

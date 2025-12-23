@@ -8,16 +8,7 @@ PFILE=$WORKDIR/../packages.yaml
 is_installed() { dpkg -l | grep -qw "$1"; }
 exist() { command -v "$1" >/dev/null 2>&1; }
 
-extract_section(){
-  # exist awk || echo "please install gawk package" && exit 1
-  # exist paste || echo "please install coreutils package" && exit 1
-  awk -v section="$1" '
-    $0 ~ section {flag=1; next}
-    flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}
-    flag && !/^\s*-/ {flag=0}
-  ' $2 | paste -sd ' '
-}
-
+# Ignore sleeping on close the lib
 laptoplid (){
 	CHECK=$(grep -v ^# /etc/systemd/logind.conf | grep HandleLid)
 	if [[ -z ${CHECK} ]]; then
@@ -28,6 +19,15 @@ HandleLidSwitchExternalPower=ignore
 HandleLidSwitchDocked=ignore
 EOF
         fi
+}
+
+# trixie packaging setup
+extract_section(){
+  awk -v section="$1" '
+    $0 ~ section {flag=1; next}
+    flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}
+    flag && !/^\s*-/ {flag=0}
+  ' $2 | paste -sd ' '
 }
 
 trixieftp () {
@@ -41,27 +41,10 @@ trixieftp () {
 	  deb-src http://security.debian.org/debian-security ${CODENAME}-security main non-free-firmware
 	
 	  deb http://deb.debian.org/debian/ ${CODENAME}-updates main non-free-firmware
-	  deb-src http://deb.debian.org/debian/ ${CODENAME}-updates main non-free-firmware" | tee -a /etc/apt/sources.list
+	  deb-src http://deb.debian.org/debian/ ${CODENAME}-updates main non-free-firmware" | tee /etc/apt/sources.list
 	  dpkg --add-architecture i386
 	  apt update
 fi
-}
-
-avatar () {
-	if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
-	  echo 
-	else
-	  cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${USER}.png"
-	  cat >> /var/lib/AccountsService/users/${USER} <<EOF
-[org.freedesktop.DisplayManager.AccountsService]
-BackgroundFile='/home/${USER}/Pictures/bg.jpg'
-
-[User]
-XSession=i3
-Icon=/var/lib/AccountsService/icons/${USER}.png
-SystemAccount=false
-EOF
-	fi
 }
 
 dependencies () {
@@ -88,8 +71,28 @@ dependencies () {
         && apt install -y $packages_to_install \
             || echo "All packages are already installed."
 }
+#------------------------------------------------------------- end trixie packaging setup
 
 
+# avatar to use with display manager such as GNOME. Now I don't use it anymore.
+avatar () {
+	if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
+	  echo 
+	else
+	  cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${USER}.png"
+	  cat >> /var/lib/AccountsService/users/${USER} <<EOF
+[org.freedesktop.DisplayManager.AccountsService]
+BackgroundFile='/home/${USER}/Pictures/bg.jpg'
+
+[User]
+XSession=i3
+Icon=/var/lib/AccountsService/icons/${USER}.png
+SystemAccount=false
+EOF
+	fi
+}
+
+# laptop touch pad allow to click/doubke click on X11.
 laptopTouchPadX11 () {
 if [[ -e /etc/X11/xorg.conf.d/90-touchpad.conf ]]; then
     echo 
@@ -108,42 +111,8 @@ EOF
 chmod +x ~/.xsession 
 }
 
-lockScreen () {
-if ! exist "betterlockscreen"; then
-  echo "please build i3lock-color from source first!"
-  git clone https://github.com/betterlockscreen/betterlockscreen.git
-  apt install autoconf gcc make pkg-config libpam0g-dev libcairo2-dev libfontconfig1-dev \
-       libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev \
-       libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev \
-       libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick bc 
-  git clone https://github.com/Raymo111/i3lock-color.git
-  cd i3lock-color && bash ./install-i3lock-color.sh
-  wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | bash -s system
-  echo -e "betterlockscreen -w dim\nsource ~/.fehbg" > ~/.xinitrc
-  chmod +x ~/.xinitrc
-  echo -e "[Unit]
-Description = Lock screen when going to sleep/suspend
-Before=sleep.target
-Before=suspend.target
 
-[Service]
-User=%I
-Type=simple
-Environment=DISPLAY=:0
-ExecStart=/usr/local/bin/betterlockscreen --lock
-TimeoutSec=infinity
-ExecStartPost=/usr/bin/sleep 1
-
-[Install]
-WantedBy=sleep.target
-WantedBy=suspend.target" | tee /etc/systemd/system/betterlockscreen@.service
-  systemctl enable "betterlockscreen@${USER}"
-  installed "betterlockscreen"
-else
-  echo
-fi
-}
-
+# Some sysctl paramters that I frequently use
 sysctl(){
     cat > /etc/sysctl.d/dot.conf <<'EOF'
 vm.swappiness                     =  5
@@ -155,6 +124,7 @@ net.core.busy_poll                =  50
 net.ipv4.tcp_fastopen             =  3
 net.ipv6.conf.all.disable_ipv6    =  1
 net.ipv6.conf.all.disable_policy  =  1
+net.ipv4.ip_local_port_range      =  32000    60000
 
 kernel.nmi_watchdog               =  0
 kernel.timer_migration            =  0
@@ -164,11 +134,14 @@ command sysctl --system 1> /dev/null
 }
 
 
-ipv6(){
-    echo "precedence ::ffff:0:0/96  10" | tee -a /etc/gai.conf 
-}
+# Ban IPv6, an evil past :)
+# ipv6(){
+#     echo "precedence ::ffff:0:0/96  10" | tee -a /etc/gai.conf 
+# }
 
-
+# Another evil past: build Hyprland. I actually did it successful, but
+# it cannot compare to i3wm. After all, simplicity is the best!
+# Just keep it here in case building on some VM for testing.
 # hyprland_dep(){
 # apt install libpugixml-dev \
 #  libgbm-dev libdisplay-info-dev \
@@ -206,6 +179,8 @@ ipv6(){
 # echo "$list" | xargs -n 1 git clone
 # }
 
+
+# Add global alias
 alias_add(){
     if [[ -f /etc/bash.bashrc ]]; then 
         BASH_GLOBAL=/etc/bash.bashrc
@@ -217,7 +192,9 @@ alias_add(){
     echo "source /etc/aliasrc" | tee -a $BASH_GLOBAL
 }
 
+# compile suckless terminal.
 st(){
+    command -v curl > /dev/null || (echo "No curl binary. Stop program." && exit 1)
     STFILE=st-0.9.tar.gz
     curl -LO https://dl.suckless.org/st/$STFILE
     tar xvzf $STFILE
@@ -229,7 +206,6 @@ st(){
     rm $STFILE
 }
 
-st
 alias_add
 dependencies
 if [ -d /sys/class/power_supply/BAT0/ ]; then
@@ -238,9 +214,9 @@ if [ -d /sys/class/power_supply/BAT0/ ]; then
 fi
 
 if [ -n "$DISPLAY" ]; then
-    lockScreen
     avatar
 fi
 
 sysctl
+st
 # ipv6

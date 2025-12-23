@@ -253,3 +253,8 @@ workspace_layout tabbed
 for_window [all] title_window_icon padding 1px
 default_border pixel 3
 #for_window [class="Conky"] floating enable, border pixel 0, sticky enable, manage off
+# for_window [class="copyq"] floating enable, \
+#                              resize set 600 400, \
+#                              move position 660 340, \
+#                              border pixel 0, \
+#                              focus mode_toggle

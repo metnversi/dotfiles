@@ -17,6 +17,7 @@ source ${WORKDIR}/function
 if [ -n "$DISPLAY" ]; then
     iosevka
     chromeWayland
+    lockScreen
 fi
 
 header
