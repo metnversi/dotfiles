@@ -32,6 +32,7 @@ pref/.fehbg|symlink|.fehbg
 #pref/asset/theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 #pref/asset/theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme
 pref/.bash_profile|symlink|.bash_profile
+pref/toprc|symlink|.config/procps/toprc
 #pref/asset/theme/cyberdream.wezterm.lua|symlink|.config/wezterm/cyberdream.lua
 
 #pref/Hyprland/hypr|symlink|.config/hypr

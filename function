@@ -179,7 +179,7 @@ sh -c 'cat > ~/.local/bin/chrome <<EOF
 #!/bin/env bash
 extra_flags="--enable-features=UseOzonePlatform"
 
-if [[ -n "$WAYLAND_DISPLAY" ]]; then
+if [[ -n "\$WAYLAND_DISPLAY" ]]; then
     extra_flags+=" --ozone-platform=wayland"
 fi
 

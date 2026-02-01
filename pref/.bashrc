@@ -96,8 +96,9 @@ fi
 alias offscr='xset dpms force off'
 alias cd='z'
 alias e='$HOME/.local/bin/emacsscript.sh'
-alias emacs='$HOME/.local/bin/emacsscript.sh'
+# alias emacs='$HOME/.local/bin/emacsscript.sh'
 alias cat='bat -p'
+alias copyc='xclip -i -selection clipboard'
 
 source ~/.exportrc
 pokemon-colorscripts \
