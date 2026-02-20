@@ -1,8 +1,8 @@
+# bashrc
 
-PATH="$HOME/.nimble/bin:$HOME/bin:$HOME/myvenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/sbin:/$HOME/.local/bin"
-PATH="$PATH:/opt/nvim-linux64/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.config/emacs/bin:$HOME/.bun/bin:$HOME/cmake/bin:$HOME/.linkerd2/bin"
-PATH="$PATH:/usr/local/go/bin:/home/$USER/.cargo/bin"
-export PATH="$HOME/.config/rofi/scripts:$BUN_INSTALL/bin:/opt/nvim-linux-x86_64/bin:$HOME/go/bin:$PATH"
+PATH="$HOME/.local/bin:$HOME/.dev/bin:/usr/local/bin:/usr/bin:/usr/sbin:/home/linuxbrew/.linuxbrew/bin"
+PATH="$PATH:$HOME/.bun/bin:$HOME/.linkerd2/bin:/home/$USER/.cargo/bin:$HOME/.config/rofi/scripts:$HOME/go/bin"
+export PATH
 
 case $- in
 *i*) ;;
@@ -95,8 +95,7 @@ fi
 
 alias offscr='xset dpms force off'
 alias cd='z'
-alias e='$HOME/.local/bin/emacsscript.sh'
-# alias emacs='$HOME/.local/bin/emacsscript.sh'
+#alias emacs='$HOME/.local/bin/emacsscript.sh'
 alias cat='bat -p'
 alias copyc='xclip -i -selection clipboard'
 
@@ -111,4 +110,3 @@ pokemon-colorscripts \
         --logo -
 complete -C /usr/bin/mc mc
 TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text) && echo -e "$TEXT"
-cd

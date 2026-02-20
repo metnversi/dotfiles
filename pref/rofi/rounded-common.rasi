@@ -10,8 +10,12 @@
 }
 
 window {
-    location:       north;
-    y-offset:       calc(50% - 176px);
+    //to centering: use north instead south east
+    location:       south east;
+    anchor:       south east;
+    // y-offset:       calc(50% - 176px);
+    x-offset: -20px;
+    y-offset: -20px;
     width:          480;
     border-radius:  0px;
     background-color:   @bg0;

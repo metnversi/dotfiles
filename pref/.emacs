@@ -1,10 +1,10 @@
 ;; global emacs configuration files
+;; edited from https://github.com/rexim/dotfiles/blob/master/.emacs
+;; to suit personal use
 
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
-
 (add-to-list 'load-path "~/.emacs.local/")
-
 (load "~/.emacs.rc/rc.el")
 (load "~/.emacs.rc/misc-rc.el")
 (load "~/.emacs.rc/org-mode-rc.el")
@@ -12,67 +12,30 @@
 
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-18"))
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-14:weight=bold"))
   )
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
-
+;; Remove unnecessary bar, add line number
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode -1)
 (column-number-mode 1)
 (show-paren-mode 1)
 
-(rc/require-theme 'molokai)
-(custom-set-faces
- '(line-number ((t (:foreground "#5c6370"))))  
- '(line-number-current-line ((t (:foreground "#a83264" :weight bold))))) 
+(rc/require-theme 'gruber-darker)
+;; (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
+;; (set-face-background 'default "#000000")
 
-;;(rc/require 'lsp-pyright)
-;;(use-package lsp-pyright
-;;  :ensure t
-;;  :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
-;;  :hook (python-mode . (lambda ()
-;;                          (require 'lsp-pyright)
-;;                          (lsp))))  ; or lsp-deferred
-
-(use-package lsp-mode
-  :ensure t
-  :hook  (
-	      (yaml-mode . lsp)
-          (terraform-mode . lsp-deferred)
-          (markdown-mode . lsp-deferred)
-          (bash-mode . lsp-deferred)
-          (go-mode . lsp-deferred)
-  ;;        (python-mode . lsp-deferred)
-          )     
-  :commands lsp lsp-deferred
-  :config
-
-  (setq lsp-clients-clangd-args
-        '("--header-insertion=never" "--background-index"))
-  (setq lsp-prefer-capf t)
-  )
-
-(use-package terraform-mode
-  :ensure t
-  :mode ("\\.tf\\'" . terraform-mode)
-  :hook (terraform-mode . lsp-deferred))
-
-(rc/require 'vimrc-mode)
-
-(load-theme 'molokai t)
-(set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
-(set-face-background 'default "#000000")
+(require 'project)
+(require 'generic-x)
 
 (rc/require 'smex 'ido-completing-read+)
-
-
 (require 'ido-completing-read+)
 (ido-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
 (electric-pair-mode 1)
-
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
@@ -86,7 +49,7 @@
                          (interactive)
                          (c-toggle-comment-style -1)))
 
-;; neotree, nerd font/icons
+;; neotree, nerd icons
 (rc/require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (rc/require 'nerd-icons)
@@ -94,43 +57,12 @@
 (setq confirm-kill-emacs nil)
 (setq vc-follow-symlinks t)
 
-;; paredit for parentheses navigation
-(rc/require 'paredit)
-(defun rc/turn-on-paredit ()
-  (interactive)
-  (paredit-mode 1))
-(add-hook 'emacs-lisp-mode-hook  'rc/turn-on-paredit)
-(add-hook 'clojure-mode-hook     'rc/turn-on-paredit)
-(add-hook 'lisp-mode-hook        'rc/turn-on-paredit)
-(add-hook 'common-lisp-mode-hook 'rc/turn-on-paredit)
-(add-hook 'scheme-mode-hook      'rc/turn-on-paredit)
-
 ;;; Emacs lisp
 (add-hook 'emacs-lisp-mode-hook
           '(lambda ()
              (local-set-key (kbd "C-c C-j")
                             (quote eval-print-last-sexp))))
 (add-to-list 'auto-mode-alist '("Cask" . emacs-lisp-mode))
-
-;;(rc/require 'uxntal-mode)
-
-
-;; c/c++
-(rc/require 'eglot)
-(require 'eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
-(add-hook 'python-mode-hook 'eglot-ensure)
-(setq eglot-ignored-server-capabilities '(:inlayHintProvider))
-
-;;; Haskell mode
-;;(rc/require 'haskell-mode)
-;;(setq haskell-process-type 'cabal-new-repl)
-;;(setq haskell-process-log t)
-;;(add-hook 'haskell-mode-hook 'haskell-indent-mode)
-;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-;;(add-hook 'haskell-mode-hook 'haskell-doc-mode)
 
 (require 'basm-mode)
 (require 'fasm-mode)
@@ -143,17 +75,17 @@
 ;;(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 (require 'c3-mode)
 
-(require 'conf-mode)
-(defun my/use-conf-mode-for-unknown-extensions ()
-  "If buffer is in `fundamental-mode' due to unknown file extension, switch to `conf-mode`."
-  (when (and buffer-file-name
-             (eq major-mode 'fundamental-mode)
-             (let ((ext (file-name-extension buffer-file-name)))
-               (or (not ext) ;; no extension -> conf-mode anyway
-                   t)))
-    (conf-mode)))
-
-(add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
+;; (require 'conf-mode)
+;; (defun my/use-conf-mode-for-unknown-extensions ()
+;;   "If buffer is in fundamental-mode due to unknown file extension, switch to conf-mode."
+;;   (when (and buffer-file-name
+;;              (eq major-mode 'fundamental-mode)
+;;              (let ((ext (file-name-extension buffer-file-name)))
+;;                (or (not ext) ;; no extension -> conf-mode anyway
+;;                    t)))
+;;     (conf-mode)))
+;; 
+;; (add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
 
 ;;; Whitespace mode
 (defun rc/set-up-whitespace-handling ()
@@ -161,29 +93,20 @@
   (whitespace-mode 1)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace))
 
-;;(add-hook 'tuareg-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'c++-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'c-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'simpc-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
-;;(add-hook 'java-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'erlang-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'asm-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'fasm-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'go-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
-;;(add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
-
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
+
+;; paredit for parentheses navigation
+(rc/require 'paredit)
+(defun rc/turn-on-paredit ()
+  (interactive)
+  (paredit-mode 1))
+(add-hook 'emacs-lisp-mode-hook  'rc/turn-on-paredit)
+(add-hook 'clojure-mode-hook     'rc/turn-on-paredit)
+(add-hook 'lisp-mode-hook        'rc/turn-on-paredit)
+(add-hook 'common-lisp-mode-hook 'rc/turn-on-paredit)
+(add-hook 'scheme-mode-hook      'rc/turn-on-paredit)
 
 ;;; magit
 (rc/require 'cl-lib)
@@ -242,9 +165,9 @@
 ;;; http://stackoverflow.com/questions/13794433/how-to-disable-autosave-for-tramp-buffers-in-emacs
 (setq tramp-auto-save-directory "/tmp")
 
-;;(rc/require 'powershell)
-;;(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode))
-;;(add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
+(rc/require 'powershell)
+(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode))
+(add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
 
 (defun rc/turn-on-eldoc-mode ()
   (interactive)
@@ -259,9 +182,6 @@
           (lambda ()
             (interactive)
             (company-mode 0)))
-
-(rc/require 'typescript-mode)
-(add-to-list 'auto-mode-alist '("\\.mts\\'" . typescript-mode))
 
 (rc/require 'tide)
 (defun rc/turn-on-tide-and-flycheck ()  ;Flycheck is a dependency of tide
@@ -282,7 +202,6 @@
           (lambda ()
             (interactive)
             (add-to-list 'tex-verbatim-environments "code")))
-
 (setq font-latex-fontify-sectioning 'color)
 
 (rc/require 'move-text)
@@ -293,38 +212,82 @@
 
 (rc/require
  'scala-mode
- 'd-mode
  'yaml-mode
- 'glsl-mode
- 'tuareg
  'lua-mode
  'less-css-mode
  'graphviz-dot-mode
- 'clojure-mode
  'cmake-mode
  'rust-mode
  'csharp-mode
- 'nim-mode
  'jinja2-mode
  'markdown-mode
- 'purescript-mode
  'nix-mode
  'dockerfile-mode
  'toml-mode
  'nginx-mode
- 'kotlin-mode
  'go-mode
  'php-mode
- ;;'racket-mode
  'qml-mode
  'ag
  'elpy
- 'typescript-mode
+ ;;'typescript-mode
+ ;;'glsl-mode
+ ;;'tuareg
+ ;;'sml-mode
+ ;;'d-mode
+ ;;'racket-mode
+ ;;'kotlin-mode
+ ;;'purescript-mode
+ ;;'nim-mode
+ ;;'clojure-mode
  'rfc-mode
- 'sml-mode
+ 'systemd
+ 'vimrc-mode
  )
 
+;; NOTE: I use mixed of both lsp and eglot
+(use-package lsp-mode
+  :ensure t
+  :hook  (
+	      (yaml-mode . lsp)
+          (sh-mode . lsp)
+          (terraform-mode . lsp-deferred)
+          (markdown-mode . lsp-deferred)
+          (go-mode . lsp-deferred)
+          )
+  :commands lsp lsp-deferred
+  :config
+  (setq lsp-clients-clangd-args
+        '("--header-insertion=never" "--background-index"))
+  (setq lsp-prefer-capf t)
+  )
+
+(use-package terraform-mode
+  :ensure t
+  :mode ("\\.tf\\'" . terraform-mode)
+  :hook (terraform-mode . lsp-deferred))
+
+(rc/require 'eglot)
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(setq eglot-ignored-server-capabilities '(:inlayHintProvider))
+
+;; go mode specific
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+(add-hook 'project-find-functions #'project-find-go-module)
+
 (load "~/.emacs.shadow/shadow-rc.el" t)
+
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
 
 (defun astyle-buffer (&optional justify)
   (interactive)
@@ -349,5 +312,18 @@ compilation-error-regexp-alist-alist
 (add-to-list 'compilation-error-regexp-alist
              '("\\([a-zA-Z0-9\\.]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?"
                1 2 (4) (5)))
+
+(custom-set-faces
+ '(default ((t (:background "#000000" :foreground "#ffffff"))))
+ '(line-number ((t (:foreground "#5c6370"))))
+ '(line-number-current-line ((t (:foreground "#a83264" :weight bold))))
+ '(magit-diff-removed ((t (:background "#3d0000" :foreground "#ff8888"))))
+ '(magit-diff-removed-highlight ((t (:background "#550000" :foreground "#ffaaaa"))))
+ '(magit-diff-added ((t (:background "#002200" :foreground "#88ff88"))))
+ '(magit-diff-added-highlight ((t (:background "#004400" :foreground "#aaffaa"))))
+)
+
+(setq display-line-numbers-type 'relative)
+(setq elpy-rpc-virtualenv-path "~/.dev")
 
 (load-file custom-file)

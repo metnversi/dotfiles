@@ -33,7 +33,7 @@ export LANG=en_US.UTF-8
 #if command -v tmux >/dev/null 2>&1; then
 #    [ -z "$TMUX" ] && exec tmux
 #fi
-[ -s "/home/oriana/.bun/_bun" ] && source "/home/oriana/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 export BUN_INSTALL="$HOME/.bun"
 export LESS_TERMCAP_mb=$'\e[1;32m'
