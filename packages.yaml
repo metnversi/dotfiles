@@ -1,31 +1,43 @@
 required:
-  - curl wget nftables rename kubectl libbpfcc-dev libdevmapper-dev libgpgme-dev
-  - zsh yt-dlp mtp-tools clangd
-  - tmux adb ansible wireguard openresolv
-  - autoconf tlp xclip gcc make libimlib2-dev gettext
-  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
-  - pkg-config collectd-core linux-cpupower aide rsyslog xdg-desktop-portal
-  - meson ninja-build uthash-dev aptitude deborphan apt-show-versions
-  - asciidoctor vim-gtk3 ruby-dev apt-file python3-sphinx
-  - fortune cowsay bat xsel pipx libelf-dev quota sqlite3 pass libcurl-ocaml-dev libutempter-dev
-  - uml-utilities p7zip-full make dmg2img genisoimage net-tools screen
+  - curl wget nftables rename unzip tar git fastfetch sudo
+  - yt-dlp mtp-tools clangd emacs vim-gtk3
+  - tmux openresolv
+  - autoconf tlp xclip gcc gettext
+  - pkg-config
+  - fortune cowsay bat xsel
+  - meson ninja-build make bc
 
 gui:
-  - x11-utils xorg papirus-icon-theme xdg-utils
-  - emacs default-jre imagemagick
-  - lightdm i3 rofi i3status libnotify-bin light
+  - x11-utils xorg xdg-desktop-portal xdg-utils
+  - i3 rofi i3status libnotify-bin light
   - imagemagick feh gimp flameshot
-  - okular qtspeech5-speechd-plugin mpd mpc vlc wildmidi
+  - mpd mpc vlc wildmidi
   - libgtk-3-dev ddcutil gammastep
-  - acpi pulseaudio-utils
+  - pulseaudio-utils
+  - libpam0g-dev libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-x11-dev libgif-dev
 
 optional:
-  - obs-studio
+  - obs-studio default-jre okular qtspeech5-speechd-plugin
   - g++ gcc-multilib g++-multilib
   - dialog
   - libgl1-mesa-glx
-  - gnome synaptic
+  - gnome synaptic lightdm papirus-icon-theme
   - wine ttf-mscorefonts-installer
+  - zsh acpi
+
+admin:
+  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
+  - aptitude deborphan apt-show-versions apt-file
+  - p7zip-full dmg2img genisoimage net-tools screen
+  - wireguard ansible kubectl
+  - adb
+  - collectd-core linux-cpupower aide rsyslog
+
+dev:
+  - pipx libelf-dev quota sqlite3 pass libcurl-ocaml-dev libutempter-dev
+  - asciidoctor ruby-dev python3-sphinx bison
+  - libimlib2-dev uthash-dev
+  - libbpfcc-dev libdevmapper-dev libgpgme-dev
 
 hyprland:
-  - cava nwg-displays scdoc bison meson 
+  - cava nwg-displays scdoc

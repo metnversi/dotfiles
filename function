@@ -15,7 +15,7 @@ is_installed() { dpkg -l | grep -qw "$1"; }
 exist() { command -v "$1" >/dev/null 2>&1; }
 
 prepare(){
-    mkdir -p "${HOME}/.local/bin" "${HOME}/repos"
+    mkdir -p ${HOME}/{.local/bin,repos,Downloads}
     cp "${HOME}/.bashrc" "${HOME}/.bashrc.bak-$(date +%H.%M.%S.%s-%d.%m.%Y)"
     cp $WORKDIR/pref/exportrc $HOME/.exportrc
     mkdir $HOME/.dev
@@ -23,49 +23,48 @@ prepare(){
 }
 
 tsoding_update(){
-[ -d "tsoding/.git" ] && \
-    (
-        git -C tsoding pull --recurse-submodules && \
-        git -C tsoding submodule update --init --recursive
-    ) || \
-        git clone --recurse-submodules https://github.com/rexim/dotfiles.git tsoding 2>/dev/null
+    [ -d "tsoding/.git" ] && \
+        (
+            git -C tsoding pull --recurse-submodules && \
+                git -C tsoding submodule update --init --recursive
+        ) || \
+            git clone --recurse-submodules https://github.com/rexim/dotfiles.git tsoding 2>/dev/null
 
-sed -i "/gitconfig/d" ${WORKDIR}/tsoding/MANIFEST
-bash ${WORKDIR}/tsoding/deploy.sh  MANIFEST
-echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
+    sed -i "/gitconfig/d" ${WORKDIR}/tsoding/MANIFEST
+    bash ${WORKDIR}/tsoding/deploy.sh  MANIFEST
+    echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
 }
 
 symlinkFile(){
-  filename="${WORKDIR}/$1"
-  destination="${HOME}/$2"
-  if [[ -d "$destination" ]]; then
-      rm -rf $destination
-  fi
-  mkdir -p "$(dirname "$destination")"
-  ln -sf "$filename" "$destination"
-  echo -e "\033[32m[OK]\033[0m $filename -> $destination"
+    filename="${WORKDIR}/$1"
+    destination="${HOME}/$2"
+    if [[ -d "$destination" ]]; then
+        rm -rf $destination
+    fi
+    mkdir -p "$(dirname "$destination")"
+    ln -sf "$filename" "$destination"
+    echo -e "\033[32m[OK]\033[0m $filename -> $destination"
 }
 
 deployManifest(){
-  while IFS='|' read -r filename operation destination; do
-    [[ -z "$filename" ]] && continue
-    if [[ $filename =~ ^# ]]; then
-      echo -e "\033[33m[DELETE]\033[0m $destination"
-      rm -f "${HOME}/$destination"
-      continue
-    fi
+    while IFS='|' read -r filename operation destination; do
+        [[ -z "$filename" ]] && continue
+        if [[ $filename =~ ^# ]]; then
+            echo -e "\033[33m[DELETE]\033[0m $destination"
+            rm -f "${HOME}/$destination"
+            continue
+        fi
 
-    case $operation in
-    symlink | override)
-      symlinkFile "$filename" "$destination"
-      ;;
-    *)
-      echo -e "\033[31m[ERROR]\033[0m You fucked up with $filename"
-      ;;
-    esac
-  done <"${WORKDIR}/$1"
+        case $operation in
+            symlink | override)
+                symlinkFile "$filename" "$destination"
+                ;;
+            *)
+                echo -e "\033[31m[ERROR]\033[0m You fucked up with $filename"
+                ;;
+        esac
+    done <"${WORKDIR}/$1"
 }
-
 
 youtube () {
 	exist dyt \
@@ -86,23 +85,24 @@ youtube () {
 
 
 iosevka () {
-	if fc-list | grep -i "Iosevka" >/dev/null; then
-	  skip "Iosevka"
-	else
-	  read -p "Install Iosevka Nerd font? (Y/n) " install
-	  case ${install:0:1} in
-	  n | N)
+	if fc-list | grep -i "Iosevka" >/dev/null ; then
 	    skip "Iosevka"
-	    ;;
-	  *)
-	    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip -P "/home/${USER}/Downloads"
-	    unzip "/home/${USER}/Downloads/*Iosevka*.zip" -d "/home/${USER}/Downloads/Iosevka"
-        mkdir -p $HOME/.fonts
-	    mv "/home/${USER}/Downloads/Iosevka/*.ttf" $HOME/.fonts/
-	    fc-cache
-	    installed "Isoveka"
-	    ;;
-	  esac
+	else
+        mkdir $HOME/Downloads
+	    read -p "Install Iosevka Nerd font? (Y/n) " install
+	    case ${install:0:1} in
+	        n | N)
+	            skip "Iosevka"
+	            ;;
+	        *)
+	            wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip -P "/home/${USER}/Downloads"
+	            unzip "/home/${USER}/Downloads/*Iosevka*.zip" -d "/home/${USER}/Downloads/Iosevka"
+                mkdir -p $HOME/.fonts
+	            mv /home/${USER}/Downloads/Iosevka/*.ttf $HOME/.fonts/
+	            fc-cache
+	            installed "Isoveka"
+	            ;;
+	    esac
 	fi
 }
 
@@ -112,12 +112,12 @@ miscInstall () {
         #'! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && rm -rf ~/.local/nvim && tar -C ~/.local/ -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim'
         '! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo || skip cargo'
         #'! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi'
-        '! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship'
-        # '! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun'
+        #'! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship'
+        #'! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun'
         #'! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm'
-        '! exist greenclip && wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && install -m 0755 greenclip $HOME/.local/bin && installed greenclip || skip greenclip'
+        '! exist greenclip && wget -O /tmp/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && mv /tmp/greenclip $HOME/.local/bin/greenclip && chmod +x $HOME/.local/bin/greenclip && installed greenclip || skip greenclip'        
+        '[ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai || skip molokai'        
         '[ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle'
-        '[ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai || skip molokai'
         '[ ! -d "${HOME}/.vim/pack/css-color/start/css-color" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color && installed css-color || skip css-color'
     )
 
@@ -133,14 +133,14 @@ brew_install () {
 
 
 motd () {
-cat > ${HOME}/.run-web.sh <<'EOF'
+    cat > ${HOME}/.run-web.sh <<'EOF'
 urls = ( $url  )
 for url in "${urls[@]}"; do
     /bin/google-chrome-stable "$url" &
 done
 EOF
 
-cat > ${HOME}/.welcome <<'EOF'
+    cat > ${HOME}/.welcome <<'EOF'
 echo "Here are your favorite URLs:"
 for url in "${urls[@]}"; do
     echo "$url"
@@ -149,17 +149,17 @@ EOF
 }
 
 omzshInstall () {
-if [ -d "${HOME}/.oh-my-zsh" ]; then
-  skip "omz"
-else
-  mkdir -p "${HOME}/.oh-my-zsh/custom"
-  git clone https://github.com/ohmyzsh/ohmyzsh.git "${HOME}/.oh-my-zsh" \
-      && git clone https://github.com/oldratlee/hacker-quotes.git "${HOME}/.oh-my-zsh/custom/plugins/hacker-quotes" \
-      && git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" \
-      && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" \
-      && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-      && installed "omz"
-fi
+    if [ -d "${HOME}/.oh-my-zsh" ]; then
+        skip "omz"
+    else
+        mkdir -p "${HOME}/.oh-my-zsh/custom"
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "${HOME}/.oh-my-zsh" \
+            && git clone https://github.com/oldratlee/hacker-quotes.git "${HOME}/.oh-my-zsh/custom/plugins/hacker-quotes" \
+            && git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" \
+            && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" \
+            && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+            && installed "omz"
+    fi
 }
 
 
@@ -180,7 +180,8 @@ EOF
 
 
 chromeWayland(){
-sh -c 'cat > ~/.local/bin/chrome <<EOF
+    mkdir -p $HOME/.local/bin
+    cat > $HOME/.local/bin/chrome <<EOF
 #!/bin/env bash
 extra_flags="--enable-features=UseOzonePlatform"
 
@@ -189,31 +190,32 @@ if [[ -n "\$WAYLAND_DISPLAY" ]]; then
 fi
 
 exec google-chrome \$extra_flags "\$@"
-EOF'
+EOF
+    chmod +x $HOME/.local/bin/chrome
 }
 
 lockScreen () {
-if ! exist "betterlockscreen"; then
-    ERRI=""
-    for i in autoconf gcc make pkg-config libpam0g-dev libcairo2-dev libfontconfig1-dev \
-    libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev \
-    libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev \
-    libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick bc; do
+    if ! exist "betterlockscreen"; then
+        ERRI=""
+        for i in autoconf gcc make pkg-config libpam0g-dev libcairo2-dev libfontconfig1-dev \
+                          libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev \
+                          libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-dev \
+                          libxkbcommon-x11-dev libjpeg-dev libgif-dev imagemagick bc; do
 
-    if ! dpkg -l "$i" > /dev/null 2>&1; then
-        ERRI+="$i "
-    fi
-done
+            if ! dpkg -l "$i" > /dev/null 2>&1; then
+                ERRI+="$i "
+            fi
+        done
 
-if [[ -n $ERRI ]]; then
-    echo -e "Required packages for i3lock-color: \e[31m$ERRI \e[0m"
-    exit 127
-fi
-  # git clone https://github.com/Raymo111/i3lock-color.git
-  # cd i3lock-color && bash ./install-i3lock-color.sh
-  # git clone https://github.com/betterlockscreen/betterlockscreen.git
-  wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | bash -s user
-  echo -e "[Unit]
+        if [[ -n $ERRI ]]; then
+            echo -e "Required packages for i3lock-color: \e[31m$ERRI \e[0m"
+            exit 127
+        fi
+        # git clone https://github.com/Raymo111/i3lock-color.git
+        # cd i3lock-color && bash ./install-i3lock-color.sh
+        # git clone https://github.com/betterlockscreen/betterlockscreen.git
+        wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | bash -s user
+        echo -e "[Unit]
 Description = Lock screen when going to sleep/suspend
 Before=sleep.target
 Before=suspend.target
@@ -229,10 +231,10 @@ ExecStartPost=/usr/bin/sleep 1
 [Install]
 WantedBy=sleep.target
 WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service
-  systemctl --user daemon-reload
-  systemctl --user enable betterlockscreen
-  installed "betterlockscreen"
-else
-  echo skip "betterlockscreen"
-fi
+        systemctl --user daemon-reload
+        systemctl --user enable betterlockscreen
+        installed "betterlockscreen"
+    else
+        echo skip "betterlockscreen"
+    fi
 }

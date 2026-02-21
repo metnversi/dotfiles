@@ -12,7 +12,9 @@
 
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-14:weight=bold"))
+   ((eq system-type 'darwin) "Iosevka Nerd Font-14:weight=bold")
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-14:weight=bold")
+   )
   )
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 
@@ -24,14 +26,11 @@
 (show-paren-mode 1)
 
 (rc/require-theme 'gruber-darker)
-;; (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
-;; (set-face-background 'default "#000000")
 
 (require 'project)
 (require 'generic-x)
 
 (rc/require 'smex 'ido-completing-read+)
-(require 'ido-completing-read+)
 (ido-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
@@ -71,11 +70,11 @@
 ;;(require 'porth-mode)
 (require 'noq-mode)
 (require 'jai-mode)
+(require 'c3-mode)
 ;;(require 'simpc-mode)
 ;;(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-(require 'c3-mode)
 
-;; (require 'conf-mode)
+(require 'conf-mode)
 ;; (defun my/use-conf-mode-for-unknown-extensions ()
 ;;   "If buffer is in fundamental-mode due to unknown file extension, switch to conf-mode."
 ;;   (when (and buffer-file-name
@@ -84,7 +83,7 @@
 ;;                (or (not ext) ;; no extension -> conf-mode anyway
 ;;                    t)))
 ;;     (conf-mode)))
-;; 
+;;
 ;; (add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
 
 ;;; Whitespace mode
@@ -125,7 +124,7 @@
 (global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this)
 
-;;; dired
+;;; dired-x
 (require 'dired-x)
 (setq dired-omit-files
       (concat dired-omit-files "\\|^\\..+$"))
@@ -262,10 +261,10 @@
   (setq lsp-prefer-capf t)
   )
 
-(use-package terraform-mode
-  :ensure t
-  :mode ("\\.tf\\'" . terraform-mode)
-  :hook (terraform-mode . lsp-deferred))
+;; (use-package terraform-mode
+;;   :ensure t
+;;   :mode ("\\.tf\\'" . terraform-mode)
+;;   :hook (terraform-mode . lsp-deferred))
 
 (rc/require 'eglot)
 (require 'eglot)
@@ -306,22 +305,27 @@
             (setq-local fill-paragraph-function 'astyle-buffer)))
 
 (require 'compile)
-
 compilation-error-regexp-alist-alist
-
 (add-to-list 'compilation-error-regexp-alist
              '("\\([a-zA-Z0-9\\.]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?"
                1 2 (4) (5)))
 
+(defun my-yaml-highlights ()
+  "Custom highlights for YAML mode only."
+  (face-remap-add-relative 'font-lock-variable-name-face '(:foreground "cyan"))
+  (face-remap-add-relative 'font-lock-constant-face '(:foreground "cyan")))
+(add-hook 'yaml-mode-hook #'my-yaml-highlights)
+
 (custom-set-faces
  '(default ((t (:background "#000000" :foreground "#ffffff"))))
+ '(yaml-tab-face ((t (:foreground "cyan"))))
  '(line-number ((t (:foreground "#5c6370"))))
  '(line-number-current-line ((t (:foreground "#a83264" :weight bold))))
  '(magit-diff-removed ((t (:background "#3d0000" :foreground "#ff8888"))))
  '(magit-diff-removed-highlight ((t (:background "#550000" :foreground "#ffaaaa"))))
  '(magit-diff-added ((t (:background "#002200" :foreground "#88ff88"))))
  '(magit-diff-added-highlight ((t (:background "#004400" :foreground "#aaffaa"))))
-)
+ )
 
 (setq display-line-numbers-type 'relative)
 (setq elpy-rpc-virtualenv-path "~/.dev")

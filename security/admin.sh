@@ -18,12 +18,12 @@ HandleLidSwitch=ignore
 HandleLidSwitchExternalPower=ignore
 HandleLidSwitchDocked=ignore
 EOF
-        fi
+    fi
 }
 
 # trixie packaging setup
 extract_section(){
-  awk -v section="$1" '
+    awk -v section="$1" '
     $0 ~ section {flag=1; next}
     flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}
     flag && !/^\s*-/ {flag=0}
@@ -31,10 +31,10 @@ extract_section(){
 }
 
 trixieftp () {
-	CHECK=$(grep -v ^# /etc/apt/sources.list | grep ftp)
-	CODENAME=$(lsb_release -c | awk '{print $2}')
+	CHECK=$(grep -v ^# /etc/apt/sources.list | grep ftp || false)
+	CODENAME=$(grep CODENAME /etc/os-release | awk -F'=' '{print $2}')
 	if [[ -z ${CHECK} ]]; then
-	  echo -e "deb http://ftp.hk.debian.org/debian bookworm main contrib non-free non-free-firmware 
+	    echo -e "deb http://ftp.hk.debian.org/debian bookworm main contrib non-free non-free-firmware 
 	  deb http://ftp.hk.debian.org/debian ${CODENAME} main contrib non-free non-free-firmware
 	  deb-src http://deb.debian.org/debian/ ${CODENAME} main non-free-firmware
 	  deb http://security.debian.org/debian-security ${CODENAME}-security main non-free-firmware
@@ -42,30 +42,35 @@ trixieftp () {
 	
 	  deb http://deb.debian.org/debian/ ${CODENAME}-updates main non-free-firmware
 	  deb-src http://deb.debian.org/debian/ ${CODENAME}-updates main non-free-firmware" | tee /etc/apt/sources.list
-	  dpkg --add-architecture i386
-	  apt update
-fi
+	    dpkg --add-architecture i386
+	    apt update
+    fi
 }
 
 dependencies () {
+    local graphical=$1
     trixieftp
-	echo -e "\033[31m\033[1m[NOTE]\e[0m Make sure you checked packages.yaml for required packages, gui and optional packages!"
+
+    if [[ ! -t 0 ]]; then
+        echo "Non-interactive environment detected. Installing optional packages by default."
+        include_optional=false
+    else
+        echo -e "\033[33m\033[1m[WARNING]\033[0m Do you want optional package\n${optional_packages} [y/N]? (auto-selects 'N' in 3s)"
+        read -t 3 -p "> " include_optional
+        [[ "$include_optional" =~ ^[Yy]$ ]] && include_optional=true || include_optional=false
+    fi
+    
 	required_packages=$(extract_section "required:" "$PFILE")
 	gui_packages=$(extract_section "gui:" "$PFILE")
 	optional_packages=$(extract_section "optional:" "$PFILE")
-    echo -e "\033[33m\033[1m[WARNING]\033[0m Do you want optional package\n${optional_packages} [y/N]? (auto-selects 'N' in 5s)"
-    read -t 5 -p "> " include_optional
-    [[ "$include_optional" =~ ^[Yy]$ ]] && include_optional=true || include_optional=false
-	#[[ "$include_optional" =~ ^[Nn]$ || -z "$include_optional" ]] && include_optional=false || include_optional=true
-	
-	is_graphical=$([ "$(systemctl get-default)" = "graphical.target" ] && echo true || echo false)
-	packages="${required_packages}"
+
+    packages="${required_packages}"
 	$include_optional && packages+=" ${optional_packages}"
-	$is_graphical && packages+=" ${gui_packages}"
+	$graphical && packages+=" ${gui_packages}"
 
     packages_to_install=""
 	for pkg in $packages; do
-	  is_installed "$pkg" || packages_to_install+=" $pkg"
+	    is_installed "$pkg" || packages_to_install+=" $pkg"
 	done
 	[ -n "${packages_to_install}" ] \
         && apt install -y $packages_to_install \
@@ -76,11 +81,13 @@ dependencies () {
 
 # avatar to use with display manager such as GNOME. Now I don't use it anymore.
 avatar () {
-	if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
-	  echo 
-	else
-	  cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${USER}.png"
-	  cat >> /var/lib/AccountsService/users/${USER} <<EOF
+    local graphical=$1
+    if [[ -n $graphical ]]; then
+	    if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
+	        echo 
+	    else
+	        cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${USER}.png"
+	        cat >> /var/lib/AccountsService/users/${USER} <<EOF
 [org.freedesktop.DisplayManager.AccountsService]
 BackgroundFile='/home/${USER}/Pictures/bg.jpg'
 
@@ -89,26 +96,27 @@ XSession=i3
 Icon=/var/lib/AccountsService/icons/${USER}.png
 SystemAccount=false
 EOF
-	fi
+	    fi
+    fi
 }
 
 # laptop touch pad allow to click/doubke click on X11.
 laptopTouchPadX11 () {
-if [[ -e /etc/X11/xorg.conf.d/90-touchpad.conf ]]; then
-    echo 
-else
-  mkdir -p /etc/X11/xorg.conf.d/
-  echo -e 'Section "InputClass"
+    if [[ -e /etc/X11/xorg.conf.d/90-touchpad.conf ]]; then
+        echo 
+    else
+        mkdir -p /etc/X11/xorg.conf.d/
+        echo -e 'Section "InputClass"
         Identifier "touchpad"
         MatchIsTouchpad "on"
         Driver "libinput"
         Option "Tapping" "on"
   EndSection' | tee /etc/X11/xorg.conf.d/90-touchpad.conf
-fi
-cat > ~/.xsession <<'EOF'
+    fi
+    cat > ~/.xsession <<'EOF'
 exec i3
 EOF
-chmod +x ~/.xsession 
+    chmod +x ~/.xsession 
 }
 
 
@@ -130,7 +138,7 @@ kernel.nmi_watchdog               =  0
 kernel.timer_migration            =  0
 EOF
 
-command sysctl --system 1> /dev/null
+    command sysctl --system 1> /dev/null
 }
 
 
@@ -144,14 +152,14 @@ command sysctl --system 1> /dev/null
 # Just keep it here in case building on some VM for testing.
 # hyprland_dep(){
 # apt install libpugixml-dev \
-#  libgbm-dev libdisplay-info-dev \
-#  hwdata libmagic-dev \
-#  libtomlplusplus-dev libudis86-dev \
-#  libxcb-errors-dev libnotify-dev \
-#  qt6-base-dev qt6-declarative-dev \
-#  qt6-wayland-dev qml-module-qtquick-layouts \
-#  qml-module-qtquick-shapes libsdbus-c++-dev \
-#  libgbm-dev libaudit-dev -y
+    #  libgbm-dev libdisplay-info-dev \
+    #  hwdata libmagic-dev \
+    #  libtomlplusplus-dev libudis86-dev \
+    #  libxcb-errors-dev libnotify-dev \
+    #  qt6-base-dev qt6-declarative-dev \
+    #  qt6-wayland-dev qml-module-qtquick-layouts \
+    #  qml-module-qtquick-shapes libsdbus-c++-dev \
+    #  libgbm-dev libaudit-dev -y
 # 
 # mkdir -p ~/repos/hyprland && cd ~/repos/hyprland
 # list=$(cat <<EOF
@@ -206,16 +214,20 @@ st(){
     rm $STFILE
 }
 
-alias_add
-dependencies
+graphical=''
+#alias_add
+
+if [ -n "$DISPLAY" ]; then
+    graphical=true
+fi
+
+dependencies $graphical
 if [ -d /sys/class/power_supply/BAT0/ ]; then
     laptoplid
     laptopTouchPadX11
 fi
 
-if [ -n "$DISPLAY" ]; then
-    avatar
-fi
+avatar $graphical
 
 sysctl
 st

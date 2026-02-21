@@ -18,8 +18,8 @@ case $1 in
         systemctl reboot
 	    ;;
 	"-u"|"--uninstall"|"-r")                 
-	     apt purge "*nvidia*"
-         rm -rf /etc/default/grub.d/nvidia-modeset.cfg &&  update-grub
+	    apt purge "*nvidia*"
+        rm -rf /etc/default/grub.d/nvidia-modeset.cfg &&  update-grub
 	    # systemctl reboot
 	    # apt install --reinstall xserver-xorg-core xserver-xorg-video-nouveau
 	    #X -configure
@@ -27,4 +27,4 @@ case $1 in
 	*)
 	    echo invalid option.
 	    ;;
- esac
+esac

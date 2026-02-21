@@ -109,4 +109,5 @@ pokemon-colorscripts \
         --logo-width 5 \
         --logo -
 complete -C /usr/bin/mc mc
-TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text) && echo -e "$TEXT"
+TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text)
+[[ -n $TEXT ]] && echo -e "$TEXT"

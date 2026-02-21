@@ -9,30 +9,29 @@ pref/i3/dunstrc|symlink|.config/dunst/dunstrc
 
 pref/.tmux.conf|symlink|.tmux.conf
 pref/.bashrc|symlink|.bashrc
-pref/.zshrc|symlink|.zshrc
-#pref/.wezterm.lua|symlink|.wezterm.lua
-#pref/.p10k.zsh|symlink|.p10k.zsh
 pref/starship/starship.toml|symlink|.config/starship.toml
 pref/.chromaterm.yml|symlink|.chromaterm.yml
 pref/alacritty.toml|symlink|.config/alacritty/alacritty.toml
-#pref/picom.conf|symlink|.config/picom.conf
 pref/batconfig|symlink|.config/bat/config
 pref/ncmpcpp/config|symlink|.config/ncmpcpp/config
-#pref/kitty.conf|symlink|.config/kitty/kitty.conf
 pref/.emacs|symlink|.emacs
 pref/mpd|symlink|.config/mpd
 pref/.bash_profile|symlink|.bash_profile
-
-#pref/yazi|symlink|.config/yazi
 pref/rofi|symlink|.config/rofi
 pref/.fehbg|symlink|.fehbg
+pref/toprc|symlink|.config/procps/toprc
+
+#pref/.zshrc|symlink|.zshrc
+#pref/.wezterm.lua|symlink|.wezterm.lua
+#pref/.p10k.zsh|symlink|.p10k.zsh
+#pref/picom.conf|symlink|.config/picom.conf
+#pref/kitty.conf|symlink|.config/kitty/kitty.conf
+#pref/yazi|symlink|.config/yazi
 #pref/.xinitrc|symlink|.xinitrc
 #pref/.Xresources|symlink|.Xresources
 
 #pref/asset/theme/cyberdream.toml|symlink|.config/alacritty/cyberdream.toml
 #pref/asset/theme/cyberdream.tmuxtheme|symlink|.tmux/plugins/tmux/themes/catppuccin_cyberdream.tmuxtheme
-pref/.bash_profile|symlink|.bash_profile
-pref/toprc|symlink|.config/procps/toprc
 #pref/asset/theme/cyberdream.wezterm.lua|symlink|.config/wezterm/cyberdream.lua
 
 #pref/Hyprland/hypr|symlink|.config/hypr
