@@ -1,11 +1,9 @@
 
-#pref/nvim|symlink|.config/nvim
 pref/.vimrc|symlink|.vimrc
 
 pref/i3/config|symlink|.config/i3/config
 pref/i3/.i3status.conf|symlink|.i3status.conf
 pref/i3/dunstrc|symlink|.config/dunst/dunstrc
-#pref/i3/polybarconfig.ini|symlink|.config/polybar/config.ini
 
 pref/.tmux.conf|symlink|.tmux.conf
 pref/.bashrc|symlink|.bashrc
@@ -21,6 +19,8 @@ pref/rofi|symlink|.config/rofi
 pref/.fehbg|symlink|.fehbg
 pref/toprc|symlink|.config/procps/toprc
 
+#pref/i3/polybarconfig.ini|symlink|.config/polybar/config.ini
+#pref/nvim|symlink|.config/nvim
 #pref/.zshrc|symlink|.zshrc
 #pref/.wezterm.lua|symlink|.wezterm.lua
 #pref/.p10k.zsh|symlink|.p10k.zsh
@@ -42,4 +42,3 @@ pref/toprc|symlink|.config/procps/toprc
 #pref/Hyprland/yad.conf|symlink|.config/yad.conf
 #pref/Hyprland/qt5ct|symlink|.config/qt5ct
 #pref/Hyprland/qt6ct|symlink|.config/qt6ct
-#pref/Hyprland/rofi|symlink|.config/rofi

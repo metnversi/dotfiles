@@ -8,6 +8,21 @@ PFILE=$WORKDIR/../packages.yaml
 is_installed() { dpkg -l | grep -qw "$1"; }
 exist() { command -v "$1" >/dev/null 2>&1; }
 
+log() {
+    local done=0
+    if [[ "$1" == "-d" ]]; then
+        done=1
+        shift
+    fi
+    local mod="$1"
+    shift
+    if (( done )); then
+        echo -e "\r\e[K\e[32m[$mod]\e[0m $*"
+    else
+        echo -ne "\r\e[K\e[32m[$mod]\e[0m $*..."
+    fi
+}
+
 # Ignore sleeping on close the lib
 laptoplid (){
 	CHECK=$(grep -v ^# /etc/systemd/logind.conf | grep HandleLid)
@@ -22,13 +37,25 @@ EOF
 }
 
 # trixie packaging setup
+# extract_section(){
+#     awk -v section="$1" '
+#     /^\s*#/ {next}
+#     $0 ~ section {flag=1; next}
+#     flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}
+#     flag && !/^\s*-/ {flag=0}
+#   ' $2 | paste -sd ' '
+# }
+
 extract_section(){
-    awk -v section="$1" '
+  awk -v section="$1" '
+    { sub(/#.*$/, ""); sub(/[ \t]+$/, ""); }
+    /^$/ {next}
     $0 ~ section {flag=1; next}
-    flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}
+    flag && /^\s*-/ {sub(/^\s*-\s*/, ""); print; next}    
     flag && !/^\s*-/ {flag=0}
-  ' $2 | paste -sd ' '
+  ' "$2" | paste -sd ' '
 }
+
 
 trixieftp () {
 	CHECK=$(grep -v ^# /etc/apt/sources.list | grep ftp || false)
@@ -68,6 +95,7 @@ dependencies () {
 	$include_optional && packages+=" ${optional_packages}"
 	$graphical && packages+=" ${gui_packages}"
 
+    echo -e "\n\e[32m----------------------------\n\e[0mPackage to install:\n$packages\n\e[32m-----------------------------\e[0m\n"
     packages_to_install=""
 	for pkg in $packages; do
 	    is_installed "$pkg" || packages_to_install+=" $pkg"
@@ -82,21 +110,25 @@ dependencies () {
 # avatar to use with display manager such as GNOME. Now I don't use it anymore.
 avatar () {
     local graphical=$1
+    local ACT_USER=${SUDO_USER:-$USER}
+
     if [[ -n $graphical ]]; then
-	    if [[ -e "/var/lib/AccountsService/icons/${USER}.png" ]]; then
-	        echo 
-	    else
-	        cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${USER}.png"
-	        cat >> /var/lib/AccountsService/users/${USER} <<EOF
+        if [[ -e "/var/lib/AccountsService/icons/${ACT_USER}.png" ]]; then
+            echo "Avatar already exists for ${ACT_USER}."
+        else
+            cp "${WORKDIR}/../pref/asset/user.png" "/var/lib/AccountsService/icons/${ACT_USER}.png"
+            
+            # Use the correct user variable for the filename and the content
+            cat >> "/var/lib/AccountsService/users/${ACT_USER}" <<EOF
 [org.freedesktop.DisplayManager.AccountsService]
-BackgroundFile='/home/${USER}/Pictures/bg.jpg'
+BackgroundFile='/home/${ACT_USER}/Pictures/bg.jpg'
 
 [User]
 XSession=i3
-Icon=/var/lib/AccountsService/icons/${USER}.png
+Icon=/var/lib/AccountsService/icons/${ACT_USER}.png
 SystemAccount=false
 EOF
-	    fi
+        fi
     fi
 }
 
@@ -197,25 +229,36 @@ alias_add(){
     fi
     cp ${WORKDIR}/../pref/aliasrc /etc/aliasrc 
     sed -i "/aliasrc/d" $BASH_GLOBAL
-    echo "source /etc/aliasrc" | tee -a $BASH_GLOBAL
+    echo "source /etc/aliasrc" >> $BASH_GLOBAL
 }
 
 # compile suckless terminal.
 st(){
-    command -v curl > /dev/null || (echo "No curl binary. Stop program." && exit 1)
-    STFILE=st-0.9.tar.gz
-    curl -LO https://dl.suckless.org/st/$STFILE
-    tar xvzf $STFILE
-    chown $USER:$USER st-0.9 -R
-    rm st-0.9/config.h 
-    ln -sf $WORKDIR/../pref/config.h st-0.9/config.h
-    cd st-0.9 && make clean install
-    cd ..
-    rm $STFILE
+    local MOD="st"
+    local STFILE=st-0.9.tar.gz
+    local ACT_USER=${SUDO_USER:-$USER}
+
+    log "$MOD" "Start installer"
+    command -v curl > /dev/null || { log -d "$MOD" "No curl. Stop."; return 1; }
+    log "$MOD" "Downloading source"
+    curl -sLO "https://dl.suckless.org/st/$STFILE" || { log -d "$MOD" "Download failed"; return 1; }
+    log "$MOD" "Configuring"
+    tar xzf "$STFILE"
+    chown -R "$ACT_USER:$ACT_USER" st-0.9
+    rm -f st-0.9/config.h
+    ln -sf "$WORKDIR/../pref/config.h" st-0.9/config.h
+    log "$MOD" "Compiling"
+    (
+        cd st-0.9 || exit 1
+        make clean install > /dev/null 2>&1
+    ) || { log -d "$MOD" "Compilation failed"; return 1; }
+    log "$MOD" "Cleaning up"
+    rm "$STFILE"    
+    log -d "$MOD" "Installed"
 }
 
 graphical=''
-#alias_add
+alias_add
 
 if [ -n "$DISPLAY" ]; then
     graphical=true

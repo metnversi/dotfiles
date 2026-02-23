@@ -20,19 +20,17 @@ if [ -n "$DISPLAY" ]; then
     lockScreen
 fi
 
-header
 prepare
 tsoding_update
 deployManifest MANIFEST.linux
 youtube
 miscInstall
-
 # brew_install
 motd
 # gdmMacOS
-# sysctl
 # ipv6
 emacsrun
 # omzshInstall
-echo "Please source bashrc/zshrc after done install to make change applied, or just simply logout and login back."
 header
+log -d "Success" "Please restart bash/zsh and emacs."
+

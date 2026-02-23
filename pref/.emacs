@@ -330,4 +330,10 @@ compilation-error-regexp-alist-alist
 (setq display-line-numbers-type 'relative)
 (setq elpy-rpc-virtualenv-path "~/.dev")
 
+(rc/require 'pdf-tools)
+(setq pdf-info-restart-process-p t)
+(pdf-tools-install t)
+(pdf-loader-install)
+(add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
+
 (load-file custom-file)

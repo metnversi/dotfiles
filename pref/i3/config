@@ -114,7 +114,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 
 
 #bindsym $mod+z exec emacs -fs
-bindsym $mod+z exec emacs
+bindsym $mod+z exec ~/.local/bin/e -g
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec i3-msg exit

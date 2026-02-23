@@ -9,17 +9,31 @@
 header(){
     echo -e "\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
 }
+
 installed() { echo -e "\e[32m[OK]\e[0m $1"; }
 skip() { echo -e "\e[31m[SKIP]\e[0m $1"; }
 is_installed() { dpkg -l | grep -qw "$1"; }
 exist() { command -v "$1" >/dev/null 2>&1; }
 
+log() {
+    local done=0
+    if [[ "$1" == "-d" ]]; then
+        done=1
+        shift
+    fi
+    local mod="$1"
+    shift
+    if (( done )); then
+        echo -e "\r\e[K\e[32m[$mod]\e[0m $*"
+    else
+        echo -ne "\r\e[K\e[32m[$mod]\e[0m $*..."
+    fi
+}
+
 prepare(){
-    mkdir -p ${HOME}/{.local/bin,repos,Downloads}
+    mkdir -p ${HOME}/{.local/bin,repos,Downloads,.dev}
     cp "${HOME}/.bashrc" "${HOME}/.bashrc.bak-$(date +%H.%M.%S.%s-%d.%m.%Y)"
     cp $WORKDIR/pref/exportrc $HOME/.exportrc
-    mkdir $HOME/.dev
-    # PDISPLAY=$(xrandr | grep ' connected' | awk '{ print $1 }' | head -n1)
 }
 
 tsoding_update(){
@@ -32,7 +46,7 @@ tsoding_update(){
 
     sed -i "/gitconfig/d" ${WORKDIR}/tsoding/MANIFEST
     bash ${WORKDIR}/tsoding/deploy.sh  MANIFEST
-    echo -e "\e[32m[Emacs]\e[0m Done\n\e[32m$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')\e[0m"
+    log -d "tsoding" "Up-to-date"
 }
 
 symlinkFile(){
@@ -50,7 +64,7 @@ deployManifest(){
     while IFS='|' read -r filename operation destination; do
         [[ -z "$filename" ]] && continue
         if [[ $filename =~ ^# ]]; then
-            echo -e "\033[33m[DELETE]\033[0m $destination"
+            echo -e "\033[33m[DELETE]\033[0m $HOME/$destination"
             rm -f "${HOME}/$destination"
             continue
         fi
@@ -85,25 +99,15 @@ youtube () {
 
 
 iosevka () {
-	if fc-list | grep -i "Iosevka" >/dev/null ; then
-	    skip "Iosevka"
-	else
-        mkdir $HOME/Downloads
-	    read -p "Install Iosevka Nerd font? (Y/n) " install
-	    case ${install:0:1} in
-	        n | N)
-	            skip "Iosevka"
-	            ;;
-	        *)
-	            wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip -P "/home/${USER}/Downloads"
-	            unzip "/home/${USER}/Downloads/*Iosevka*.zip" -d "/home/${USER}/Downloads/Iosevka"
-                mkdir -p $HOME/.fonts
-	            mv /home/${USER}/Downloads/Iosevka/*.ttf $HOME/.fonts/
-	            fc-cache
-	            installed "Isoveka"
-	            ;;
-	    esac
+    if ! fc-list | grep -iq "Iosevka"; then
+        mkdir -p $HOME/Downloads
+	    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip -P "/home/${USER}/Downloads"
+	    unzip "/home/${USER}/Downloads/*Iosevka*.zip" -d "/home/${USER}/Downloads/Iosevka"
+        mkdir -p $HOME/.fonts
+	    mv /home/${USER}/Downloads/Iosevka/*.ttf $HOME/.fonts/
+	    fc-cache
 	fi
+    log -d "Iosevka" "installed"
 }
 
 miscInstall () {
@@ -119,6 +123,7 @@ miscInstall () {
         '[ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai || skip molokai'        
         '[ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle'
         '[ ! -d "${HOME}/.vim/pack/css-color/start/css-color" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color && installed css-color || skip css-color'
+        '(git clone https://github.com/cask/cask 2>/dev/null && make -C cask install && installed cask) || skip cask'
     )
 
     for cmd in "${installations[@]}"; do
@@ -128,7 +133,7 @@ miscInstall () {
 
 brew_install () {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew install thefuck zoxide fzf yazi batcat kubectl
+    brew install thefuck zoxide fzf yazi batcat
 }
 
 
@@ -149,17 +154,15 @@ EOF
 }
 
 omzshInstall () {
-    if [ -d "${HOME}/.oh-my-zsh" ]; then
-        skip "omz"
-    else
+    if [ ! -d "${HOME}/.oh-my-zsh" ]; then
         mkdir -p "${HOME}/.oh-my-zsh/custom"
         git clone https://github.com/ohmyzsh/ohmyzsh.git "${HOME}/.oh-my-zsh" \
             && git clone https://github.com/oldratlee/hacker-quotes.git "${HOME}/.oh-my-zsh/custom/plugins/hacker-quotes" \
             && git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" \
             && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" \
-            && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-            && installed "omz"
+            && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \            
     fi
+    log -d "omz" "installed"
 }
 
 
@@ -170,12 +173,19 @@ emacsrun () {
     cat > $EMACS_PATH <<'EOF'
 #!/bin/env bash
 
-(emacsclient -e "(emacs-pid)" >/dev/null 2>&1 || emacs --daemon) && exec emacsclient -t "$@"
+(emacsclient -e "(emacs-pid)" >/dev/null 2>&1 || emacs --daemon)
+if [[ "$1" == "-g" ]]; then
+    shift 
+    exec emacsclient -c -n "$@"
+else
+    exec emacsclient -t "$@"
+fi
 EOF
 
     chmod +x $EMACS_PATH
     ln -sf $EMACS_PATH $HOME/.local/bin/e
     ln -sf $EMACS_PATH $HOME/.local/bin/emacs
+    log -d "emacs" "Added alias daemon/client"
 }
 
 
@@ -192,6 +202,7 @@ fi
 exec google-chrome \$extra_flags "\$@"
 EOF
     chmod +x $HOME/.local/bin/chrome
+    log -d "chrome" "patched"
 }
 
 lockScreen () {
@@ -233,8 +244,6 @@ WantedBy=sleep.target
 WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service
         systemctl --user daemon-reload
         systemctl --user enable betterlockscreen
-        installed "betterlockscreen"
-    else
-        echo skip "betterlockscreen"
     fi
+    log "betterlockscreen" "Installed"
 }

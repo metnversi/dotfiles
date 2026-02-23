@@ -5,8 +5,8 @@ Def	fieldscur=  75   81   79   97  103  105  119  123  129  137  111  223  109  
 		   142  186  145  227  169  156  139  146  148  150  152  158  160  162  164  166  170  172  174  176 
 		   178  180  182  184  190  192  194  196  198  200  202  204  214  216  218  220  224  228  230  232 
 		   234  236  238  240  242  244  246  248  250  252  254  256  258  260  262  264  266  268  270  272 
-	winflags=4389172, sortindx=21, maxtasks=0, graph_cpus=0, graph_mems=0, double_up=0, combine_cpus=0, core_types=0
-	summclr=2, msgsclr=1, headclr=3, taskclr=4
+	winflags=4389300, sortindx=21, maxtasks=0, graph_cpus=0, graph_mems=0, double_up=0, combine_cpus=0, core_types=0
+	summclr=4, msgsclr=1, headclr=4, taskclr=4
 Job	fieldscur=  75   77  115  111  117   80  103  105  137  119  123  128  120   79  139   82   84   86   88   90 
 		    92   94   96   98  100  106  108  112  124  126  130  132  134  140  142  144  146  148  150  152 
 		   154  156  158  160  162  164  166  168  170  172  174  176  178  180  182  184  186  188  190  192 

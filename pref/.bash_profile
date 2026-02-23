@@ -14,9 +14,9 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
     echo "  Select session to start: "
     echo "==================================="
     echo "1) GNOME"
-    echo "2) i3"
+    echo "2) i3 (or press Enter)"
     echo "3) KDE"
-    echo "4) Do nothing (or press Enter)"
+    echo "4) Do nothing"
     echo "-----------------------------------"
     echo "Automatically starting i3 in 2 seconds..."
 

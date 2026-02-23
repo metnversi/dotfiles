@@ -15,6 +15,7 @@ gui:
   - libgtk-3-dev ddcutil gammastep
   - pulseaudio-utils
   - libpam0g-dev libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-x11-dev libgif-dev
+  - libpoppler-glib-dev libpoppler-private-dev
 
 optional:
   - obs-studio default-jre okular qtspeech5-speechd-plugin
