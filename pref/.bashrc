@@ -101,13 +101,13 @@ alias copyc='xclip -i -selection clipboard'
 
 source ~/.exportrc
 pokemon-colorscripts \
-    --no-title -sr | \
-    fastfetch \
-        -c $HOME/.config/fastfetch/config-pokemon.jsonc \
-        --logo-type file-raw \
-        --logo-height 10 \
-        --logo-width 5 \
-        --logo -
+     --no-title -sr | \
+     fastfetch \
+         -c $HOME/.config/fastfetch/config-pokemon.jsonc \
+         --logo-type file-raw \
+         --logo-height 10 \
+         --logo-width 5 \
+         --logo -
 complete -C /usr/bin/mc mc
 TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text)
 [[ -n $TEXT ]] && echo -e "$TEXT"

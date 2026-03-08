@@ -155,22 +155,37 @@ EOF
 # Some sysctl paramters that I frequently use
 sysctl(){
     cat > /etc/sysctl.d/dot.conf <<'EOF'
-vm.swappiness                     =  5
-vm.drop_caches                    =  3
+# zram installed to use with 100% swappiness 
+vm.swappiness                     =  150
+vm.watermark_boost_factor         =  0
+vm.watermark_scale_factor         =  125
+vm.page-cluster                   =  0
 vm.stat_interval                  =  10
+vm.vfs_cache_pressure             =  50
+vm.dirty_ratio                    =  10
+vm.dirty_background_ratio         =  5
 
 net.core.busy_read                =  50
 net.core.busy_poll                =  50
+net.ipv4.ip_forward               =  1
 net.ipv4.tcp_fastopen             =  3
 net.ipv6.conf.all.disable_ipv6    =  1
 net.ipv6.conf.all.disable_policy  =  1
-net.ipv4.ip_local_port_range      =  32000    60000
+net.ipv4.ip_local_port_range      =  32000  60000
 
 kernel.nmi_watchdog               =  0
 kernel.timer_migration            =  0
+
 EOF
 
     command sysctl --system 1> /dev/null
+    cat > /etc/default/zramswap <<'EOF'
+ALGO=zstd
+PERCENT=70
+SIZE=512
+PRIORITY=100
+EOF
+systemctl restart zramswap
 }
 
 

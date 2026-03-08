@@ -18,13 +18,13 @@ pref/.bash_profile|symlink|.bash_profile
 pref/rofi|symlink|.config/rofi
 pref/.fehbg|symlink|.fehbg
 pref/toprc|symlink|.config/procps/toprc
+pref/picom.conf|symlink|.config/picom.conf
 
 #pref/i3/polybarconfig.ini|symlink|.config/polybar/config.ini
 #pref/nvim|symlink|.config/nvim
 #pref/.zshrc|symlink|.zshrc
 #pref/.wezterm.lua|symlink|.wezterm.lua
 #pref/.p10k.zsh|symlink|.p10k.zsh
-#pref/picom.conf|symlink|.config/picom.conf
 #pref/kitty.conf|symlink|.config/kitty/kitty.conf
 #pref/yazi|symlink|.config/yazi
 #pref/.xinitrc|symlink|.xinitrc

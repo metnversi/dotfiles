@@ -28,6 +28,24 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
 
         cat > "$HOME/.xinitrc" <<EOF
 #!/usr/bin/env bash
+
+export XDG_CURRENT_DESKTOP="$session_name"
+export XDG_SESSION_DESKTOP="$session_name"
+export DESKTOP_SESSION="$session_name"
+export XDG_SESSION_TYPE="x11"
+export QT_QPA_PLATFORMTHEME=gtk3
+
+if [ -z "\$DBUS_SESSION_BUS_ADDRESS" ]; then
+    #eval \$(dbus-launch --sh-syntax --exit-with-session)
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/\$(id -u)/bus"
+
+fi
+
+DBUS_UPDATE=\$(which dbus-update-activation-environment)
+if [ -x "\$DBUS_UPDATE" ]; then
+    \$DBUS_UPDATE --systemd --all
+fi
+
 exec $session_cmd > "\$HOME/.local/share/${session_name}-${TIMESTAMP}.log" 2>&1
 EOF
         chmod +x "$HOME/.xinitrc"

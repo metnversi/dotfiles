@@ -1,17 +1,16 @@
 required:
-  - curl wget nftables rename unzip tar git fastfetch sudo
+  - curl wget nftables rename unzip tar git fastfetch sudo zram-tools
   - yt-dlp mtp-tools clangd emacs vim-gtk3
   - tmux openresolv
-  - autoconf tlp xclip gcc gettext
-  - pkg-config
+  - autoconf tlp xclip gcc gettext pkg-config
   - fortune cowsay bat xsel
   - meson ninja-build make bc
 
 gui:
   - x11-utils xorg xdg-desktop-portal xdg-utils
-  - i3 rofi i3status libnotify-bin light
+  - i3 rofi i3status libnotify-bin light tnef picom
   - imagemagick feh gimp flameshot
-  - mpd mpc vlc wildmidi
+  - mpd mpc vlc wildmidi fetchmail msmtp mu4e isync
   - libgtk-3-dev ddcutil gammastep
   - pulseaudio-utils
   - libpam0g-dev libxcb-composite0-dev libev-dev libx11-xcb-dev libxcb-xkb-dev libxcb-xinerama0-dev libxcb-randr0-dev libxcb-image0-dev libxcb-util0-dev libxcb-xrm-dev libxkbcommon-x11-dev libgif-dev

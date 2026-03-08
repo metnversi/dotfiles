@@ -180,3 +180,4 @@ configuration {
 	me-accept-custom: "Control+MouseDPrimary";
 */
 }
+@theme "/home/oriana/.local/share/rofi/themes/launchpad.rasi"
