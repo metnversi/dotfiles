@@ -29,6 +29,7 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
         cat > "$HOME/.xinitrc" <<EOF
 #!/usr/bin/env bash
 
+export SAL_USE_VCLPLUGIN=gtk3
 export XDG_CURRENT_DESKTOP="$session_name"
 export XDG_SESSION_DESKTOP="$session_name"
 export DESKTOP_SESSION="$session_name"

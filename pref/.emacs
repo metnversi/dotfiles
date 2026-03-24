@@ -75,16 +75,6 @@
 ;;(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
 (require 'conf-mode)
-;; (defun my/use-conf-mode-for-unknown-extensions ()
-;;   "If buffer is in fundamental-mode due to unknown file extension, switch to conf-mode."
-;;   (when (and buffer-file-name
-;;              (eq major-mode 'fundamental-mode)
-;;              (let ((ext (file-name-extension buffer-file-name)))
-;;                (or (not ext) ;; no extension -> conf-mode anyway
-;;                    t)))
-;;     (conf-mode)))
-;;
-;; (add-hook 'find-file-hook #'my/use-conf-mode-for-unknown-extensions)
 
 ;;; Whitespace mode
 (defun rc/set-up-whitespace-handling ()
@@ -144,7 +134,7 @@
 
 ;;; yasnippet
 (rc/require 'yasnippet)
-(require 'yasnippet)
+;;(require 'yasnippet)
 (setq yas/triggers-in-field nil)
 (setq yas-snippet-dirs '("~/.emacs.snippets/"))
 (yas-global-mode 1)
@@ -234,7 +224,7 @@
  ;;'tuareg
  ;;'sml-mode
  ;;'d-mode
- ;;'racket-mode
+ 'racket-mode
  ;;'kotlin-mode
  ;;'purescript-mode
  ;;'nim-mode
@@ -249,7 +239,6 @@
   :ensure t
   :hook  (
 	      (yaml-mode . lsp)
-          (sh-mode . lsp)
           (terraform-mode . lsp-deferred)
           (markdown-mode . lsp-deferred)
           (go-mode . lsp-deferred)
@@ -335,5 +324,4 @@ compilation-error-regexp-alist-alist
 (pdf-tools-install t)
 (pdf-loader-install)
 (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
-
 (load-file custom-file)

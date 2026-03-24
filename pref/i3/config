@@ -215,7 +215,7 @@ bindsym $mod+Shift+F4 exec --no-startup-id systemctl poweroff
 #bindsym $mod+g exec --no-startup-id gns3
 bindsym $mod+g exec --no-startup-id $HOME/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
-bindsym $mod+c exec --no-startup-id ~/.local/bin/dinf
+bindsym $mod+c exec --no-startup-id /usr/bin/firefox-esr
 bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable --password-store=basic
 #bindsym $mode+Shift+c exec --no-startup-id /bin/brave-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
