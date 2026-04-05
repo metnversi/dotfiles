@@ -1,32 +1,16 @@
 #!/usr/bin/env bash
 # Intended for high advance usage - Designed to exec startx from TTY login
 
+# Ensure we have PATH env :)
 if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
+    . ~/.bashrc
 fi
 
-[[ -f $HOME/.xinitrc ]] && chmod +x $HOME/.xinitrc
+create_xinitrc() {
+    local session_cmd="$1"
+    local session_name="$2"
 
-if [[ -z $DISPLAY && $XDG_VTNR ]]; then
-    TIMESTAMP=$(date +%H%M%S%s)
-
-    echo "==================================="
-    echo "  Select session to start: "
-    echo "==================================="
-    echo "1) GNOME"
-    echo "2) i3 (or press Enter)"
-    echo "3) KDE"
-    echo "4) Do nothing"
-    echo "-----------------------------------"
-    echo "Automatically starting i3 in 2 seconds..."
-
-    read -t 2 -rp "Enter choice: " choice
-
-    create_xinitrc() {
-        local session_cmd="$1"
-        local session_name="$2"
-
-        cat > "$HOME/.xinitrc" <<EOF
+    cat > "$HOME/.xinitrc" <<EOF
 #!/usr/bin/env bash
 
 export SAL_USE_VCLPLUGIN=gtk3
@@ -35,9 +19,9 @@ export XDG_SESSION_DESKTOP="$session_name"
 export DESKTOP_SESSION="$session_name"
 export XDG_SESSION_TYPE="x11"
 export QT_QPA_PLATFORMTHEME=gtk3
+export LVM_SUPPRESS_FD_WARNINGS=1
 
 if [ -z "\$DBUS_SESSION_BUS_ADDRESS" ]; then
-    #eval \$(dbus-launch --sh-syntax --exit-with-session)
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/\$(id -u)/bus"
 
 fi
@@ -47,10 +31,28 @@ if [ -x "\$DBUS_UPDATE" ]; then
     \$DBUS_UPDATE --systemd --all
 fi
 
-exec $session_cmd > "\$HOME/.local/share/${session_name}-${TIMESTAMP}.log" 2>&1
+exec > "\$HOME/.local/share/${session_name}-${TIMESTAMP}.log"
+exec $session_cmd
 EOF
-        chmod +x "$HOME/.xinitrc"
-    }
+    chmod +x "$HOME/.xinitrc"
+}
+
+if [[ -z $DISPLAY && $XDG_VTNR ]]; then
+    TIMESTAMP=$(date +%H%M%S%s)
+
+    cat << EOF
+===================================
+  Select session to start: 
+===================================
+1) GNOME
+2) i3 (or press Enter)
+3) KDE
+4) Do nothing
+-----------------------------------
+Automatically starting i3 in 2 seconds...
+EOF
+    read -t 2 -rp "Enter choice: " choice
+
     case $choice in
         1)
             echo "Starting GNOME..."

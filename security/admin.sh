@@ -3,6 +3,8 @@
 # This is a privilege script
 # Use with caution
 
+update-alternatives --set editor /usr/bin/emacs
+
 _is_installed() { dpkg -l | grep -qw "$1"; }
 _is_existed() { command -v "$1" >/dev/null 2>&1; }
 
@@ -75,7 +77,7 @@ trixieftp () {
 dependencies () {
     local graphical=$1
     trixieftp
-    
+
 	local required_packages=$(_extract_section "required:" "$PFILE")
 	local gui_packages=$(_extract_section "gui:" "$PFILE")
 	local optional_packages=$(_extract_section "optional:" "$PFILE")
@@ -159,8 +161,12 @@ vm.stat_interval                      =  10
 vm.vfs_cache_pressure                 =  50
 vm.dirty_ratio                        =  10
 vm.dirty_background_ratio             =  5
+
 kernel.nmi_watchdog                   =  0
 kernel.timer_migration                =  0
+kernel.hung_task_panic                =  1
+kernel.hung_task_timeout_secs         =  600
+
 net.core.busy_read                    =  50
 net.core.busy_poll                    =  50
 net.ipv4.ip_forward                   =  1
@@ -201,6 +207,13 @@ net.core.rmem_default                 =  262144
 net.core.wmem_default                 =  262144
 EOF
 
+    if [[ -f /sys/class/dmi/id/board_vendor ]]; then
+        cat > /etc/sysctl.d/00-dot.conf <<'EOF'
+kernel.softlockup_panic               =  1
+EOF
+    fi
+    
+    
     command sysctl --system 1> /dev/null
     cat > /etc/default/zramswap <<'EOF'
 ALGO=zstd
@@ -260,14 +273,8 @@ systemctl restart zramswap
 
 # Add global alias
 alias_add(){
-    if [[ -f /etc/bash.bashrc ]]; then
-        BASH_GLOBAL=/etc/bash.bashrc
-    else
-        BASH_GLOBAL=/etc/bashrc
-    fi
-    cp ${WORKDIR}/../pref/aliasrc /etc/aliasrc
-    sed -i "/aliasrc/d" $BASH_GLOBAL
-    echo "source /etc/aliasrc" >> $BASH_GLOBAL
+    cp ${WORKDIR}/../pref/aliasrc /etc/profile.d/aliasrc.sh
+    ln -sfn /etc/profile.d/aliasrc.sh /etc/aliasrc
 }
 
 # compile suckless terminal.
@@ -346,6 +353,58 @@ process_limits() {
     echo "Summary: System Max: $GLOBAL_MAX | Configured: $total_current_config | Available: $free"
 }
 
+conntrackd_no_root(){
+    useradd -r -M -s /usr/sbin/nologin conntrackd
+    chown -R root:conntrackd /etc/conntrackd
+    chmod 640 /etc/conntrackd/conntrackd.conf
+
+    # hence we use systemd ambient capabilities instead setcap
+    # this require us to use /proc/<pid>/status and capsh --decode to check instead
+    mkdir -p /etc/systemd/system/conntrackd.service.d/
+    cat > /etc/systemd/system/conntrackd.service.d/override.conf <<EOF
+[Service]
+RuntimeDirectory=conntrackd
+User=conntrackd
+Group=conntrackd
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW CAP_SYS_NICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_RAW CAP_SYS_NICE
+NoNewPrivileges=yes
+EOF
+    systemctl daemon-reload
+    systemctl restart conntrackd
+}
+
+os_cpu_perf(){
+    # note that, the CPU register will prefer the BIOS profile, not OS-level
+    echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+    sed -i '/GRUB_CMDLINE_LINUX_DEFAULT=".*cpufreq.default_governor=performance/! s/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 cpufreq.default_governor=performance"/' /etc/default/grub
+    update-grub
+}
+
+ovs_ovn_non_root() {
+    local user="openvswitch"
+    local group="hugetlbfs"
+    local paths=("/etc/openvswitch/" "/run/openvswitch/" "/var/lib/openvswitch/")
+    getent group "$group" >/dev/null || groupadd "$group"
+    getent passwd "$user" >/dev/null || \
+        useradd -r -M -s /sbin/nologin -G kvm,"$group" "$user"
+    chown -R "$user:kvm" "${paths[@]}"
+    update_ovs_config() {
+        local file=$1
+        local key=$2
+        local value=$3
+        touch "$file"
+
+        if ! grep -q "$key" "$file"; then
+            echo "${key}=\"${value}\"" >> "$file"
+        elif ! grep -q "$value" "$file"; then
+            sed -i "s|^${key}=\"\(.*\)\"|${key}=\"\1 ${value}\"|" "$file"
+        fi
+    }
+    update_ovs_config "/etc/default/ovn-central"        "OVN_CTL_OPTS" "--ovn-user=$user:$group"
+    update_ovs_config "/etc/default/ovn-host"           "OVN_CTL_OPTS" "--ovn-user=$user:$group"
+    update_ovs_config "/etc/default/openvswitch-switch" "OVS_CTL_OPTS" "--ovs-user=$user:$group"
+}
 
 WORKDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 PFILE=$WORKDIR/../packages.yaml
@@ -367,9 +426,12 @@ main(){
         laptopTouchPadX11
     fi
     xorg_no_root
+    conntrackd_no_root
+    ovs_ovn_non_root
     sysctl
     #process_limits "nofile" 65535 33000 $MAX_FILE_TOTAL
     process_limits "nproc" 8192 4096 $MAX_PROC_TOTAL
+    os_cpu_perf
     st
     # ipv6
 }

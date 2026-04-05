@@ -1,6 +1,6 @@
 required:
   - curl wget nftables rename unzip tar git fastfetch sudo zram-tools
-  - yt-dlp mtp-tools clangd emacs vim-gtk3
+  - yt-dlp mtp-tools clangd emacs emacs-common vim-gtk3
   - tmux openresolv
   - autoconf tlp xclip gcc gettext pkg-config
   - fortune cowsay bat xsel
@@ -26,8 +26,8 @@ optional:
   - zsh acpi
 
 admin:
-  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace
-  - aptitude deborphan apt-show-versions apt-file
+  - bpfcc-tools valgrind strace sysstat irqbalance numactl numad bpftrace kdump-tools
+  - aptitude deborphan apt-show-versions apt-file linux-doc
   - p7zip-full dmg2img genisoimage net-tools screen
   - wireguard ansible kubectl
   - adb

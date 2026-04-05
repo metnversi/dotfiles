@@ -12,8 +12,9 @@
 
 (defun rc/get-default-font ()
   (cond
-   ((eq system-type 'darwin) "Iosevka Nerd Font-14:weight=bold")
-   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-14:weight=bold")
+   ((eq system-type 'darwin) "Iosevka Nerd Font-20:weight=bold")
+   ;;((eq system-type 'gnu/linux) "Iosevka Nerd Font-20:weight=bold")
+   ((eq system-type 'gnu/linux) "Iosevka Nerd Font-20")
    )
   )
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
@@ -24,6 +25,7 @@
 (scroll-bar-mode -1)
 (column-number-mode 1)
 (show-paren-mode 1)
+(setq-default tab-width 4)
 
 (rc/require-theme 'gruber-darker)
 
@@ -81,6 +83,31 @@
   (interactive)
   (whitespace-mode 1)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+(setq whitespace-style '(face spaces space-mark))
+(setq whitespace-display-mappings
+      '((space-mark 32 [183] [46])))
+(custom-set-faces
+ '(whitespace-space ((t (:foreground "#3e4451" :background unspecified)))))
+
+;;(add-hook 'tuareg-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'c++-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'c-mode-hook 'rc/set-up-whitespace-handling)
+;;(add-hook 'simpc-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'emacs-lisp-mode 'rc/set-up-whitespace-handling)
+(add-hook 'java-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'lua-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'rust-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'scala-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'markdown-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'haskell-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'python-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'erlang-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'asm-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'fasm-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'go-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'nim-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'yaml-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'porth-mode-hook 'rc/set-up-whitespace-handling)
 
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
@@ -324,4 +351,12 @@ compilation-error-regexp-alist-alist
 (pdf-tools-install t)
 (pdf-loader-install)
 (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
+(use-package pdf-tools
+  :config
+  (setq pdf-view-prefetch-pages nil)
+  (setq image-cache-eviction-delay 5)
+  (setq image-cache-maximum-size 30)
+  (add-hook 'pdf-view-after-change-page-hook #'garbage-collect)
+  (setq pdf-view-use-scaling t
+        pdf-view-display-size 'fit-width))
 (load-file custom-file)
