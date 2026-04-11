@@ -2,7 +2,7 @@
 
 
 static char *font =
-    "Iosevka Nerd Font:pixelsize=16:style=Bold:antialias=true:autohint=true";
+    "Iosevka Nerd Font:pixelsize=16:weight=160:antialias=true:autohint=true";
 //static char *font = "Iosevka Nerd Font:pixelsize=16:style=Bold:antialias=true:autohint=true";
 static int borderpx = 2;
 

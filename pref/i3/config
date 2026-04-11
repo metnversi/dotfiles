@@ -64,7 +64,7 @@ bindsym $mod+space focus mode_toggle
 
 #set $first_monitor eDP-1
 #set $second_monitor HDMI-1
-set $first_monitor DP-0
+set $first_monitor HDMI-0
 set $second_monitor DP-4
 workspace 1 output $first_monitor
 workspace 2 output $first_monitor
@@ -136,7 +136,6 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
-#exec --no-startup-id ibus-daemon -drx
 
 # class                 border  bground text    indicator child_border
 client.focused          #000000 #cc0066 #FFFFFF #2E9EF4   #000000

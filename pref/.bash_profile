@@ -42,7 +42,7 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
 
     cat << EOF
 ===================================
-  Select session to start: 
+  Select session to start:
 ===================================
 1) GNOME
 2) i3 (or press Enter)
@@ -64,7 +64,7 @@ EOF
             ;;
         3)
             echo "Starting KDE Plasma..."
-            create_xinitrc "startplasma-x11" "kde" 
+            create_xinitrc "startplasma-x11" "kde"
             ;;
 	    4)
 	        echo "Do nothing"
@@ -78,4 +78,3 @@ EOF
     esac
     exec startx
 fi
-
