@@ -247,7 +247,7 @@
 (use-package lsp-mode
   :ensure t
   :hook  (
-	      (yaml-mode . lsp)
+;;	      (yaml-mode . lsp)
           (terraform-mode . lsp-deferred)
           (markdown-mode . lsp-deferred)
           (go-mode . lsp-deferred)

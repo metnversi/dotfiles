@@ -200,7 +200,7 @@ exec --no-startup-id /usr/bin/picom -b
 #exec --no-startup-id /usr/bin/xbacklight -set 88
 
 exec --no-startup-id betterlockscreen -w dim
-exec --no-startup-id ibus-daemon -drx
+#exec --no-startup-id ibus-daemon -drx
 #exec --no-startup-id flameshot
 #exec --no-startup-id "pkill -9 conky; sleep 2; /usr/bin/conky"
 #exec --no-startup-id source ~/.fehbg
