@@ -194,6 +194,7 @@ exec --no-startup-id /usr/bin/xset -dpms
 exec --no-startup-id /usr/bin/xset s off
 exec --no-startup-id /usr/bin/xset b off
 exec --no-startup-id $HOME/.local/bin/greenclip daemon
+#exec --no-startup-id $HOME/.local/bin/clipmenud
 exec --no-startup-id /usr/bin/dunst
 #exec --no-startup-id $HOME/.local/bin/emacs
 exec --no-startup-id /usr/bin/picom -b
@@ -215,6 +216,7 @@ bindsym $mod+Shift+F4 exec --no-startup-id systemctl poweroff
 bindsym $mod+g exec --no-startup-id $HOME/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+c exec --no-startup-id /usr/bin/firefox-esr
+bindsym $mod+Ctrl+c exec --no-startup-id /usr/bin/thorium-browser
 bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable --password-store=basic
 #bindsym $mode+Shift+c exec --no-startup-id /bin/brave-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
@@ -234,6 +236,7 @@ bindsym Ctrl+Shift+Return exec /usr/bin/kitty
 #bindsym $mod+Return exec /usr/bin/xterm
 #bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme $HOME/.config/rofi/rounded-pink-dark.rasi
+#bindsym $mod+v exec --no-startup-id CM_LAUNCHER=rofi clipmenu -theme $HOME/.config/rofi/rounded-pink-dark.rasi
 # bindsym $mod+v exec /bin/sh -c "rofi -modi \"clipboard:greenclip print\" -show clipboard -theme-str 'window { location: south east; anchor: south east; x-offset: -20px; y-offset: -20px; }' -run-command '{cmd}' -theme $HOME/.config/rofi/rounded-pink-dark.rasi"
 #bindsym $mod+l exec "i3lock -c 000000"
 bindsym $mod+l exec betterlockscreen -l dim

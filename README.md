@@ -19,6 +19,7 @@ GNU Awk 5.2.1...
 - `audit_cap.sh` to audit processes capabilities: ambient/effective cap.
 - `nftables.conf` for general firewall filter
 - `nvidia.sh` as simple nvidia driver install/uninstall script.
+- `inspect_fd2.py` as simple fd inspect script for process.
 
 ### Docker deployment 
 - Intent for development only.
