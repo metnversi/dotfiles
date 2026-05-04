@@ -64,7 +64,7 @@ bindsym $mod+space focus mode_toggle
 
 #set $first_monitor eDP-1
 #set $second_monitor HDMI-1
-set $first_monitor DP-0
+set $first_monitor HDMI-0
 set $second_monitor DP-4
 workspace 1 output $first_monitor
 workspace 2 output $first_monitor
@@ -136,7 +136,6 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
-#exec --no-startup-id ibus-daemon -drx
 
 # class                 border  bground text    indicator child_border
 client.focused          #000000 #cc0066 #FFFFFF #2E9EF4   #000000
@@ -195,14 +194,15 @@ exec --no-startup-id /usr/bin/xset -dpms
 exec --no-startup-id /usr/bin/xset s off
 exec --no-startup-id /usr/bin/xset b off
 exec --no-startup-id $HOME/.local/bin/greenclip daemon
+#exec --no-startup-id $HOME/.local/bin/clipmenud
 exec --no-startup-id /usr/bin/dunst
 #exec --no-startup-id $HOME/.local/bin/emacs
 exec --no-startup-id /usr/bin/picom -b
 #exec --no-startup-id /usr/bin/xbacklight -set 88
 
 exec --no-startup-id betterlockscreen -w dim
-exec --no-startup-id ibus-daemon -drx
-exec --no-startup-id flameshot
+#exec --no-startup-id ibus-daemon -drx
+#exec --no-startup-id flameshot
 #exec --no-startup-id "pkill -9 conky; sleep 2; /usr/bin/conky"
 #exec --no-startup-id source ~/.fehbg
 #bindsym Mod1+Shift+space exec --no-startup-id /usr/bin/ibus engine Bamboo
@@ -216,6 +216,7 @@ bindsym $mod+Shift+F4 exec --no-startup-id systemctl poweroff
 bindsym $mod+g exec --no-startup-id $HOME/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+c exec --no-startup-id /usr/bin/firefox-esr
+bindsym $mod+Ctrl+c exec --no-startup-id /usr/bin/thorium-browser
 bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable --password-store=basic
 #bindsym $mode+Shift+c exec --no-startup-id /bin/brave-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
@@ -235,6 +236,7 @@ bindsym Ctrl+Shift+Return exec /usr/bin/kitty
 #bindsym $mod+Return exec /usr/bin/xterm
 #bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' -theme $HOME/.config/rofi/rounded-pink-dark.rasi
+#bindsym $mod+v exec --no-startup-id CM_LAUNCHER=rofi clipmenu -theme $HOME/.config/rofi/rounded-pink-dark.rasi
 # bindsym $mod+v exec /bin/sh -c "rofi -modi \"clipboard:greenclip print\" -show clipboard -theme-str 'window { location: south east; anchor: south east; x-offset: -20px; y-offset: -20px; }' -run-command '{cmd}' -theme $HOME/.config/rofi/rounded-pink-dark.rasi"
 #bindsym $mod+l exec "i3lock -c 000000"
 bindsym $mod+l exec betterlockscreen -l dim

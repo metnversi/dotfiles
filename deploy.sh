@@ -63,7 +63,7 @@ symlinkFile(){
         rm -rf $destination
     fi
     mkdir -p "$(dirname "$destination")"
-    ln -sf "$filename" "$destination"
+    ln -sfn "$filename" "$destination"
     echo -e "\033[32m[OK]\033[0m $filename -> $destination"
 }
 
@@ -105,38 +105,36 @@ youtube () {
 }
 
 
-iosevka () {
-    if ! fc-list | grep -iq "Iosevka"; then
-        mkdir -p $HOME/Downloads
-	    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip -P "/home/${USER}/Downloads"
-	    unzip "/home/${USER}/Downloads/*Iosevka*.zip" -d "/home/${USER}/Downloads/Iosevka"
-        mkdir -p $HOME/.fonts
-	    mv /home/${USER}/Downloads/Iosevka/*.ttf $HOME/.fonts/
-	    fc-cache
-	fi
-    log -d "Iosevka" "installed"
+iosevka() {
+    if fc-list | grep -iq "Iosevka"; then
+        log -d "Iosevka" "Already installed"
+        return
+    fi
+    (
+        local tmp_zip="/tmp/iosevka.zip"
+        wget -q "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.zip" -O "$tmp_zip"
+        unzip -qo "$tmp_zip" -d "/tmp/iosevka_font"
+        mkdir -p "$HOME/.fonts"
+        mv /tmp/iosevka_font/*.ttf "$HOME/.fonts/"
+        fc-cache -f
+        rm -rf "$tmp_zip" /tmp/iosevka_font
+    ) & # Run in background
 }
 
 miscInstall () {
-    installations=(
-        '! exist tpm && [ ! -d "${HOME}/.tmux/plugins/tpm" ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && installed "tpm (tmux manager)" || skip "tpm (tmux-manager)"'
-        #'! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && rm -rf ~/.local/nvim && tar -C ~/.local/ -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim'
-        '! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo || skip cargo'
-        #'! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi'
-        #'! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship'
-        #'! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun'
-        #'! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm'
-        '! exist greenclip && wget -O /tmp/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && mv /tmp/greenclip $HOME/.local/bin/greenclip && chmod +x $HOME/.local/bin/greenclip && installed greenclip || skip greenclip'
-        '[ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai.vim || skip molokai.vim'
-        '[ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle'
-        '[ ! -d "${HOME}/.vim/pack/css-color/start/css-color" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color && installed css-color || skip css-color'
-        #'git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git /tmp/pokemon && cd /tmp/pokemon && /tmp/pokemon/install.sh '
-        #'(git clone https://github.com/cask/cask 2>/dev/null && make -C cask install && installed cask) || skip cask'
-    )
-
-    for cmd in "${installations[@]}"; do
-        eval "$cmd"
-    done
+        ! exist tpm && [ ! -d "${HOME}/.tmux/plugins/tpm" ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && installed "tpm (tmux manager)" || skip "tpm (tmux-manager)"
+        #! exist nvim && curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz && rm -rf ~/.local/nvim && tar -C ~/.local/ -xzf nvim-linux-x86_64.tar.gz && rm nvim-linux-x86_64.tar.gz && installed nvim || skip nvim
+        ! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo |a| skip cargo
+        #! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi
+        #! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship
+        #! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun
+        #! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm
+        ! exist greenclip && wget -O /tmp/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && mv /tmp/greenclip $HOME/.local/bin/greenclip && chmod +x $HOME/.local/bin/greenclip && installed greenclip || skip greenclip
+        [ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai.vim || skip molokai.vim
+        [ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle
+        [ ! -d "${HOME}/.vim/pack/css-color/start/css-color" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color && installed css-color || skip css-color
+        #git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git /tmp/pokemon && cd /tmp/pokemon && /tmp/pokemon/install.sh 
+        #(git clone https://github.com/cask/cask 2>/dev/null && make -C cask install && installed cask) || skip cask
 }
 
 brew_install () {
@@ -191,7 +189,21 @@ EOF
     chmod +x $EMACS_PATH
     ln -sf $EMACS_PATH $HOME/.local/bin/e
     ln -sf $EMACS_PATH $HOME/.local/bin/emacs
-    systemctl --user enable --now emacs || true
+
+    WATCHER_PATH="$HOME/.local/bin/emacs-watcher.sh"
+    cat > $WATCHER_PATH <<'EOF'
+#!/bin/env bash
+while true; do
+    # Check if emacs is running
+    if ! pgrep -x "emacs" > /dev/null; then
+        emacs --daemon
+    fi
+    sleep 5
+done
+EOF
+
+    chmod +x $WATCHER_PATH    
+    #systemctl --user enable --now emacs || true
     log -d "emacs" "Added alias daemon/client"
 }
 
@@ -233,24 +245,25 @@ lockScreen () {
         # cd i3lock-color && bash ./install-i3lock-color.sh
         # git clone https://github.com/betterlockscreen/betterlockscreen.git
         wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | bash -s user
-        echo -e "[Unit]
-Description = Lock screen when going to sleep/suspend
-Before=sleep.target
-Before=suspend.target
-
-[Service]
-User=%I
-Type=simple
-Environment=DISPLAY=:0
-ExecStart=/usr/local/bin/betterlockscreen --lock
-TimeoutSec=infinity
-ExecStartPost=/usr/bin/sleep 1
-
-[Install]
-WantedBy=sleep.target
-WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service
-        systemctl --user daemon-reload
-        systemctl --user enable betterlockscreen
+# Note: remove systemd thing
+#         echo -e "[Unit]
+# Description = Lock screen when going to sleep/suspend
+# Before=sleep.target
+# Before=suspend.target
+# 
+# [Service]
+# User=%I
+# Type=simple
+# Environment=DISPLAY=:0
+# ExecStart=/usr/local/bin/betterlockscreen --lock
+# TimeoutSec=infinity
+# ExecStartPost=/usr/bin/sleep 1
+# 
+# [Install]
+# WantedBy=sleep.target
+# WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service
+#         systemctl --user daemon-reload
+#         systemctl --user enable betterlockscreen
     fi
     log "betterlockscreen" "Installed"
 }
@@ -277,4 +290,5 @@ motd
 emacsrun
 # omzshInstall
 header
+wait
 log -d "Success" "Please restart bash/zsh and emacs."

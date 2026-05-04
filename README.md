@@ -4,18 +4,22 @@
 
 ### Prerequisites
 - Debian 13, emacs >= 29.0
-- X11 as I use i3wm, not sway.
 - Internet connection
+- Linux homebrew
 - GNU Awk (`gawk`) if run admin script (manually, require root privilege)
 ```shell
 $ awk --version
-GNU Awk 5.2.1, API 3.2, PMA Avon 8-g1, (GNU MPFR 4.2.2, GNU MP 6.3.0)
-Copyright (C) 1989, 1991-2022 Free Software Foundation.
+GNU Awk 5.2.1...
 ```
 
 ### Deployment
-- In any circumstance, the `deploy.sh` script does not need root privlege.
-- Clone the repo, run `deploy.sh`.
+- Clone the repo, run `deploy.sh` as non-root user.
+
+### Security script
+- `audit_cap.sh` to audit processes capabilities: ambient/effective cap.
+- `nftables.conf` for general firewall filter
+- `nvidia.sh` as simple nvidia driver install/uninstall script.
+- `inspect_fd2.py` as simple fd inspect script for process.
 
 ### Docker deployment 
 - Intent for development only.
@@ -29,8 +33,8 @@ $ docker build --network host -f Dockerfile -t test:trixie .
 # Note that I does not use $USER var, as with rootful container, 
 # I can perform installation as any docker admin user.
 
-$ MYUSER=rose
-$ docker run -it --rm \
+$ xhost +local:docker
+$ MYUSER=rose docker run -it --rm \
     --network=host \
     -e DISPLAY=$DISPLAY \
     -e DUID=$(id -u $MYUSER) \
