@@ -3,7 +3,11 @@
 # This is a privilege script
 # Use with caution
 
-update-alternatives --set editor /usr/bin/emacs
+if [ "$EUID" -ne 0 ]; then
+  echo "Running with sudo"
+  exec sudo "$0" "$@"
+  exit 1
+fi
 
 _is_installed() { dpkg -l | grep -qw "$1"; }
 _is_existed() { command -v "$1" >/dev/null 2>&1; }
@@ -212,8 +216,8 @@ EOF
 kernel.softlockup_panic               =  1
 EOF
     fi
-    
-    
+
+
     command sysctl --system 1> /dev/null
     cat > /etc/default/zramswap <<'EOF'
 ALGO=zstd
@@ -434,6 +438,7 @@ main(){
     os_cpu_perf
     st
     # ipv6
+    update-alternatives --set editor /usr/bin/emacs
 }
 
 if [[ -n "$1" && "$1" != _* ]] && declare -f "$1" > /dev/null; then
