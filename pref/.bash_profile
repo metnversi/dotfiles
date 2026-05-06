@@ -2,9 +2,11 @@
 # Intended for high advance usage - Designed to exec startx from TTY login
 
 # Ensure we have PATH env :)
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+if [ -f $HOME/.bashrc ]; then
+    . $HOME/.bashrc
 fi
+
+rm -rf $HOME/.xinitrc
 
 create_xinitrc() {
     local session_cmd="$1"
@@ -18,7 +20,11 @@ export XDG_CURRENT_DESKTOP="$session_name"
 export XDG_SESSION_DESKTOP="$session_name"
 export DESKTOP_SESSION="$session_name"
 export XDG_SESSION_TYPE="x11"
-export QT_QPA_PLATFORMTHEME=gtk3
+if [[ "$session_name" == "lxqt" || "$session_name" == "kde" ]]; then
+    export QT_QPA_PLATFORMTHEME=qt6ct
+else
+    export QT_QPA_PLATFORMTHEME=gtk3
+fi
 export LVM_SUPPRESS_FD_WARNINGS=1
 
 if [ -z "\$DBUS_SESSION_BUS_ADDRESS" ]; then
@@ -37,7 +43,7 @@ EOF
     chmod +x "$HOME/.xinitrc"
 }
 
-if [[ -z $DISPLAY && $XDG_VTNR ]]; then
+if [[ -z "$DISPLAY" && -n "$XDG_VTNR" ]]; then
     TIMESTAMP=$(date +%H%M%S%s)
 
     cat << EOF
@@ -47,7 +53,8 @@ if [[ -z $DISPLAY && $XDG_VTNR ]]; then
 1) GNOME
 2) i3 (or press Enter)
 3) KDE
-4) Do nothing
+4) LXQt
+5) Do nothing
 -----------------------------------
 Automatically starting i3 in 2 seconds...
 EOF
@@ -66,11 +73,15 @@ EOF
             echo "Starting KDE Plasma..."
             create_xinitrc "startplasma-x11" "kde"
             ;;
-	    4)
-	        echo "Do nothing"
-	        rm -f "$HOME/.xinitrc"
+        4)
+            echo "Starting LXQt..."
+            create_xinitrc "startlxqt" "lxqt"
+            ;;
+        5)
+            echo "Do nothing"
+            rm -f "$HOME/.xinitrc"
             return
-	        ;;
+            ;;
         *)
             echo "No input or invalid choice. Starting i3 by default."
             create_xinitrc "i3" "i3"
