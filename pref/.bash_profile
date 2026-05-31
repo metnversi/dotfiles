@@ -43,7 +43,7 @@ EOF
     chmod +x "$HOME/.xinitrc"
 }
 
-if [[ -z "$DISPLAY" && -n "$XDG_VTNR" ]]; then
+if [[ -z "$DISPLAY" && -n "$XDG_VTNR" && -z "$TMUX" ]]; then
     TIMESTAMP=$(date +%H%M%S%s)
 
     cat << EOF
