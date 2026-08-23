@@ -73,16 +73,16 @@ dummy {
 }
 
 textbox-prompt-colon {
-    enabled:                     true;
+    enabled:                     false;
     expand:                      false;
-    str:                         "  System";
+    str:                         "System";
     padding:                     12px;
     border-radius:               12px;
     background-color:            @urgent;
     text-color:                  @background;
 }
 prompt {
-    enabled:                     true;
+    enabled:                     false;
     padding:                     12px;
     border-radius:               12px;
     background-color:            @active;
@@ -102,7 +102,7 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
     
-    spacing:                     15px;
+    spacing:                     10px;
     margin:                      15px;
     background-color:            transparent;
     cursor:                      "default";
@@ -111,7 +111,7 @@ listview {
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    padding:                     30px 10px;
+    padding:                     10px 5px;
     border-radius:               12px;
     background-color:            @background-alt;
     text-color:                  @foreground;

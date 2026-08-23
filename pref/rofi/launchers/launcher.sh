@@ -11,7 +11,7 @@
 ## style-6     style-7     style-8     style-9     style-10
 
 dir="$HOME/.config/rofi/launchers"
-theme='style-6'
+theme='launcher'
 #theme='style-7'
 
 ## Run

@@ -111,4 +111,11 @@ pokemon-colorscripts \
 complete -C /usr/bin/mc mc
 TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text || true)
 [[ -n $TEXT ]] && echo -e "$TEXT"
-[[ -n ~/.libvirtd ]] && . ~/.libvirtd
+[[ -f ~/.libvirtd ]] && . ~/.libvirtd
+[[ -n $HOME/.ops.bash ]] && source $HOME/.ops.bash
+[[ -n $HOME/.kube/config ]] && export KUBECONFIG=$HOME/.kube/config
+if [[ -f $HOME/.dev/bin/activate ]]; then
+p(){
+ source $HOME/.dev/bin/activate
+}
+fi

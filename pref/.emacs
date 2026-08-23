@@ -1,6 +1,5 @@
 ;; global emacs configuration files
-;; edited from https://github.com/rexim/dotfiles/blob/master/.emacs
-;; to suit personal use
+;; reference: https://github.com/rexim/dotfiles/blob/master/.emacs
 
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
@@ -25,7 +24,8 @@
 (scroll-bar-mode -1)
 (column-number-mode 1)
 (show-paren-mode 1)
-(setq-default tab-width 4)
+(setq-default tab-width 8)
+(setq-default fill-column 80)
 
 (rc/require-theme 'gruber-darker)
 
@@ -90,6 +90,10 @@
  '(whitespace-space ((t (:foreground "#3e4451" :background unspecified)))))
 
 (add-hook 'prog-mode-hook 'rc/set-up-whitespace-handling)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'prog-mode-hook 'turn-on-auto-fill)
+(setq-default display-fill-column-indicator-column 80)
+;;(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 
 ;;; display-line-numbers-mode
 (when (version<= "26.0.50" emacs-version)
@@ -228,7 +232,7 @@
  'qml-mode
  'ag
  'elpy
- ;;'typescript-mode
+ 'typescript-mode
  ;;'glsl-mode
  ;;'tuareg
  ;;'sml-mode
@@ -270,6 +274,10 @@
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (setq eglot-ignored-server-capabilities '(:inlayHintProvider))
+
+(setq-default eglot-ignored-server-capabilities '(:documentFormattingProvider
+                                                  :documentRangeFormattingProvider
+                                                  :onTypeFormattingProvider))
 
 ;; go mode specific
 (defun project-find-go-module (dir)

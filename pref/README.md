@@ -14,7 +14,6 @@ Description: A list of plugin used
 - [Starship](https://github.com/starship/starship.git)
 - [tmux plugin manager](https://github.com/tmux-plugins/tpm.git)
 - [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
-- [bun](https://github.com/oven-sh/bun)
 - [catppuccin](https://github.com/catppuccin/bat/tree/d714cc1d358ea51bfc02550dabab693f70cccea0)
 - [nerd font](https://www.nerdfonts.com/font-downloads)
 
