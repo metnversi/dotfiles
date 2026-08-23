@@ -1,7 +1,7 @@
 # bashrc
 
 PATH="$HOME/.local/bin:$HOME/.dev/bin:/usr/local/bin:/usr/bin:/usr/sbin:/home/linuxbrew/.linuxbrew/bin"
-PATH="$PATH:$HOME/.bun/bin:$HOME/.linkerd2/bin:/home/$USER/.cargo/bin:$HOME/.config/rofi/scripts:$HOME/go/bin"
+PATH="$PATH:$HOME/.linkerd2/bin:/home/$USER/.cargo/bin:$HOME/.config/rofi/scripts:$HOME/go/bin"
 export PATH
 
 case $- in
@@ -35,8 +35,8 @@ unset color_prompt force_color_prompt
 #    xterm* | rxvt*)
 #        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 #        ;;
-#    *) 
-#        PS1= "$ " 
+#    *)
+#        PS1= "$ "
 #        ;;
 #esac
 
@@ -89,9 +89,9 @@ source <(talosctl completion bash)
 source "$HOME/.cargo/env"
 
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
-  export PS1="[ssh]$PS1"
+  export PS1="(*ssh)$PS1"
 fi
-# source ~/.dev/bin/activate 
+# source ~/.dev/bin/activate
 
 alias offscr='xset dpms force off'
 alias cd='z'
@@ -111,3 +111,11 @@ pokemon-colorscripts \
 complete -C /usr/bin/mc mc
 TEXT=$(sed 's/||/\\e\[32m||\\e\[0m/g' $HOME/.text || true)
 [[ -n $TEXT ]] && echo -e "$TEXT"
+[[ -f ~/.libvirtd ]] && . ~/.libvirtd
+[[ -n $HOME/.ops.bash ]] && source $HOME/.ops.bash
+[[ -n $HOME/.kube/config ]] && export KUBECONFIG=$HOME/.kube/config
+if [[ -f $HOME/.dev/bin/activate ]]; then
+p(){
+ source $HOME/.dev/bin/activate
+}
+fi

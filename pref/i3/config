@@ -190,9 +190,11 @@ exec --no-startup-id sh -c "pkill -9 gammastep; gammastep -P -O 4000"
 #exec --no-startup-id /usr/bin/xrandr --output DP-0 --mode 1920x1080 --rate 165
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-exec --no-startup-id /usr/bin/xset -dpms
+#exec --no-startup-id /usr/bin/xset -dpms
 exec --no-startup-id /usr/bin/xset s off
 exec --no-startup-id /usr/bin/xset b off
+exec --no-startup-id /usr/bin/xset dpms 0 0 1800  # turn off screen after 1800s
+
 exec --no-startup-id $HOME/.local/bin/greenclip daemon
 #exec --no-startup-id $HOME/.local/bin/clipmenud
 exec --no-startup-id /usr/bin/dunst
@@ -217,7 +219,7 @@ bindsym $mod+g exec --no-startup-id $HOME/.local/bin/gns3
 #bindsym $mod+Shift+c exec --no-startup-id /usr/bin/librewolf
 bindsym $mod+c exec --no-startup-id /usr/bin/firefox-esr
 bindsym $mod+Ctrl+c exec --no-startup-id /usr/bin/thorium-browser
-bindsym $mod+Shift+c exec --no-startup-id /usr/bin/google-chrome-stable --password-store=basic
+#bindsym $mod+Shift+c exec --no-startup-id /usr/bin/chrome           # this is my custom chrome script
 #bindsym $mode+Shift+c exec --no-startup-id /bin/brave-browser
 bindsym $mod+n exec --no-startup-id /usr/bin/wireshark
 bindsym $mod+q exec --no-startup-id /usr/bin/gromit-mpx
@@ -229,7 +231,7 @@ bindsym $mod+Shift+m bar hidden_state toggle
 bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launchers/launcher.sh
 bindsym $mod+x exec --no-startup-id $HOME/.config/rofi/scripts/powermenu_t5
 bindsym Mod1+Tab exec --no-startup-id $HOME/.config/rofi/tab/launcher.sh
-bindsym $mod+o exec --no-startup-id /bin/bash -c "pkill -9 picom && /usr/bin/steam"
+bindsym $mod+o exec --no-startup-id /bin/bash -c $HOME/.local/bin/steam
 
 bindsym $mod+Return exec /usr/local/bin/st
 bindsym Ctrl+Shift+Return exec /usr/bin/kitty

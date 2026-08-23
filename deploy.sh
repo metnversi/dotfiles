@@ -127,13 +127,12 @@ miscInstall () {
         ! exist cargo && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && installed cargo |a| skip cargo
         #! exist yazi && cargo install --locked yazi-cli && installed yazi || skip yazi
         #! exist starship && curl -sS https://starship.rs/install.sh | sh -s -- -y && curl -Lo ~/.config/starship-schema.json https://starship.rs/config-schema.json && installed starship || skip starship
-        #! exist bun && curl -fsSL https://bun.sh/install | bash && installed bun || skip bun
         #! exist ct && pipx install chromaterm && installed chromaterm || skip chromaterm
         ! exist greenclip && wget -O /tmp/greenclip https://github.com/erebe/greenclip/releases/download/v4.2/greenclip && mv /tmp/greenclip $HOME/.local/bin/greenclip && chmod +x $HOME/.local/bin/greenclip && installed greenclip || skip greenclip
         [ ! -f "${HOME}/.vim/colors/molokai.vim" ] && mkdir -p ~/.vim/colors && curl -s https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim -o ~/.vim/colors/molokai.vim && installed molokai.vim || skip molokai.vim
         [ ! -d "${HOME}/.vim/bundle/Vundle.vim" ] && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall && installed Vundle || skip Vundle
         [ ! -d "${HOME}/.vim/pack/css-color/start/css-color" ] && git clone https://github.com/ap/vim-css-color.git ~/.vim/pack/css-color/start/css-color && installed css-color || skip css-color
-        #git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git /tmp/pokemon && cd /tmp/pokemon && /tmp/pokemon/install.sh 
+        #git clone https://gitlab.com/phoneybadger/pokemon-colorscripts.git /tmp/pokemon && cd /tmp/pokemon && /tmp/pokemon/install.sh
         #(git clone https://github.com/cask/cask 2>/dev/null && make -C cask install && installed cask) || skip cask
 }
 
@@ -202,7 +201,7 @@ while true; do
 done
 EOF
 
-    chmod +x $WATCHER_PATH    
+    chmod +x $WATCHER_PATH
     #systemctl --user enable --now emacs || true
     log -d "emacs" "Added alias daemon/client"
 }
@@ -250,7 +249,7 @@ lockScreen () {
 # Description = Lock screen when going to sleep/suspend
 # Before=sleep.target
 # Before=suspend.target
-# 
+#
 # [Service]
 # User=%I
 # Type=simple
@@ -258,7 +257,7 @@ lockScreen () {
 # ExecStart=/usr/local/bin/betterlockscreen --lock
 # TimeoutSec=infinity
 # ExecStartPost=/usr/bin/sleep 1
-# 
+#
 # [Install]
 # WantedBy=sleep.target
 # WantedBy=suspend.target" | tee $HOME/.config/systemd/user/betterlockscreen.service

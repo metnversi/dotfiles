@@ -5,6 +5,7 @@ required:
   - autoconf tlp xclip gcc gettext pkg-config
   - fortune cowsay bat xsel
   - meson ninja-build make bc
+  - openvswitch-switch ovn-central ovn-host
 
 gui:
   - x11-utils xorg xdg-desktop-portal xdg-utils
